@@ -758,7 +758,7 @@
                             <p class="text-[11px] text-amber-800">تُعد وتُعتمد من قبل المعلم والموجه الطلابي لإشراك ولي الأمر في خطة التحسين</p>
                         </div>
                     </div>
-                    <span class="text-xs bg-amber-200 text-amber-900 font-bold px-3 py-1 rounded-full border border-amber-300">
+                    <span class="tpl-remedial-badge text-xs bg-amber-200 text-amber-900 font-bold px-3 py-1 rounded-full border border-amber-300">
                         متابعة مكثفة
                     </span>
                 </div>
@@ -772,19 +772,19 @@
                         </h4>
                         <div class="space-y-1.5">
                             <label class="flex items-center gap-2 text-slate-700">
-                                <input type="checkbox" checked class="rounded border-slate-300 text-amber-600">
+                                <input type="checkbox" data-rem="perf_1" class="rounded border-slate-300 text-amber-600 disabled:opacity-100">
                                 <span>ضعف الاستيعاب والفهم للمفاهيم الأساسية</span>
                             </label>
                             <label class="flex items-center gap-2 text-slate-700">
-                                <input type="checkbox" checked class="rounded border-slate-300 text-amber-600">
+                                <input type="checkbox" data-rem="perf_2" class="rounded border-slate-300 text-amber-600 disabled:opacity-100">
                                 <span>تشتت التركيز والانتباه أثناء الشرح الصفي</span>
                             </label>
                             <label class="flex items-center gap-2 text-slate-700">
-                                <input type="checkbox" checked class="rounded border-slate-300 text-amber-600">
+                                <input type="checkbox" data-rem="perf_3" class="rounded border-slate-300 text-amber-600 disabled:opacity-100">
                                 <span>ضعف في القراءة والكتابة وإنجاز الواجبات المنزلية</span>
                             </label>
                             <label class="flex items-center gap-2 text-slate-700">
-                                <input type="checkbox" class="rounded border-slate-300 text-amber-600">
+                                <input type="checkbox" data-rem="perf_4" class="rounded border-slate-300 text-amber-600 disabled:opacity-100">
                                 <span>قلة المشاركة الصفية والتفاعل مع المعلم</span>
                             </label>
                         </div>
@@ -798,19 +798,19 @@
                         </h4>
                         <div class="grid grid-cols-2 gap-x-2 gap-y-1.5 text-[11px]">
                             <label class="flex items-center gap-1.5 text-slate-700">
-                                <input type="checkbox" checked class="rounded border-slate-300 text-amber-600">
+                                <input type="checkbox" data-rem="cause_1" class="rounded border-slate-300 text-amber-600 disabled:opacity-100">
                                 <span>أسباب أكاديمية (تأسيس)</span>
                             </label>
                             <label class="flex items-center gap-1.5 text-slate-700">
-                                <input type="checkbox" class="rounded border-slate-300 text-amber-600">
+                                <input type="checkbox" data-rem="cause_2" class="rounded border-slate-300 text-amber-600 disabled:opacity-100">
                                 <span>قلة الثقة بالنفس</span>
                             </label>
                             <label class="flex items-center gap-1.5 text-slate-700">
-                                <input type="checkbox" checked class="rounded border-slate-300 text-amber-600">
+                                <input type="checkbox" data-rem="cause_3" class="rounded border-slate-300 text-amber-600 disabled:opacity-100">
                                 <span>ضعف متابعة ولي الأمر</span>
                             </label>
                             <label class="flex items-center gap-1.5 text-slate-700">
-                                <input type="checkbox" class="rounded border-slate-300 text-amber-600">
+                                <input type="checkbox" data-rem="cause_4" class="rounded border-slate-300 text-amber-600 disabled:opacity-100">
                                 <span>صعوبات تعلم نوعية</span>
                             </label>
                         </div>
@@ -824,15 +824,15 @@
                         </h4>
                         <div class="space-y-1.5 text-[11px]">
                             <label class="flex items-center gap-2 text-slate-700">
-                                <input type="checkbox" checked class="rounded border-slate-300 text-emerald-600">
+                                <input type="checkbox" data-rem="proc_1" class="rounded border-slate-300 text-emerald-600 disabled:opacity-100">
                                 <span>تخصيص وقت إضافي للطالب وتبسيط الشرح الفردي</span>
                             </label>
                             <label class="flex items-center gap-2 text-slate-700">
-                                <input type="checkbox" checked class="rounded border-slate-300 text-emerald-600">
+                                <input type="checkbox" data-rem="proc_2" class="rounded border-slate-300 text-emerald-600 disabled:opacity-100">
                                 <span>تقديم أنشطة تفاعلية وأوراق عمل علاجية ميسرة</span>
                             </label>
                             <label class="flex items-center gap-2 text-slate-700">
-                                <input type="checkbox" checked class="rounded border-slate-300 text-emerald-600">
+                                <input type="checkbox" data-rem="proc_3" class="rounded border-slate-300 text-emerald-600 disabled:opacity-100">
                                 <span>متابعة إنجاز الطالب ودفتر المادة يومياً</span>
                             </label>
                         </div>
@@ -846,15 +846,15 @@
                         </h4>
                         <div class="space-y-1.5 text-[11px]">
                             <label class="flex items-center gap-2 text-slate-700">
-                                <input type="checkbox" checked class="rounded border-slate-300 text-blue-600">
+                                <input type="checkbox" data-rem="out_1" class="rounded border-slate-300 text-blue-600 disabled:opacity-100">
                                 <span>تواصل الموجه الطلابي المباشر مع ولي الأمر</span>
                             </label>
                             <label class="flex items-center gap-2 text-slate-700">
-                                <input type="checkbox" checked class="rounded border-slate-300 text-blue-600">
+                                <input type="checkbox" data-rem="out_2" class="rounded border-slate-300 text-blue-600 disabled:opacity-100">
                                 <span>إشراك الطالب في مجموعات الأقران والتعلم التعاوني</span>
                             </label>
                             <label class="flex items-center gap-2 text-slate-700">
-                                <input type="checkbox" class="rounded border-slate-300 text-blue-600">
+                                <input type="checkbox" data-rem="out_3" class="rounded border-slate-300 text-blue-600 disabled:opacity-100">
                                 <span>توجيه الطالب لبرامج المنصة الإلكترونية الإثرائية</span>
                             </label>
                         </div>
@@ -916,6 +916,22 @@
                     participation: { digital: 5, islamic: 5, english: 3, arabic: 1, science: 2, math: 1 },
                     behavior:      { digital: 5, islamic: 5, english: 3, arabic: 1, science: 2, math: 1 },
                     attendance:    { digital: 5, islamic: 5, english: 3, arabic: 1, science: 2, math: 1 }
+                },
+                remedial: {
+                    perf_1: true,
+                    perf_2: true,
+                    perf_3: true,
+                    perf_4: false,
+                    cause_1: true,
+                    cause_2: false,
+                    cause_3: true,
+                    cause_4: false,
+                    proc_1: true,
+                    proc_2: true,
+                    proc_3: true,
+                    out_1: true,
+                    out_2: true,
+                    out_3: false
                 }
             },
             faisal: {
@@ -932,6 +948,22 @@
                     participation: { digital: 5, islamic: 5, english: 4, arabic: 4, science: 5, math: 4 },
                     behavior:      { digital: 5, islamic: 5, english: 5, arabic: 5, science: 5, math: 5 },
                     attendance:    { digital: 5, islamic: 5, english: 5, arabic: 5, science: 5, math: 5 }
+                },
+                remedial: {
+                    perf_1: false,
+                    perf_2: false,
+                    perf_3: false,
+                    perf_4: false,
+                    cause_1: false,
+                    cause_2: false,
+                    cause_3: false,
+                    cause_4: false,
+                    proc_1: false,
+                    proc_2: false,
+                    proc_3: false,
+                    out_1: false,
+                    out_2: false,
+                    out_3: false
                 }
             },
             rayan: {
@@ -948,9 +980,49 @@
                     participation: { digital: 4, islamic: 4, english: 3, arabic: 3, science: 3, math: 3 },
                     behavior:      { digital: 5, islamic: 4, english: 4, arabic: 4, science: 4, math: 4 },
                     attendance:    { digital: 4, islamic: 4, english: 4, arabic: 4, science: 4, math: 4 }
+                },
+                remedial: {
+                    perf_1: false,
+                    perf_2: true,
+                    perf_3: false,
+                    perf_4: false,
+                    cause_1: false,
+                    cause_2: true,
+                    cause_3: false,
+                    cause_4: false,
+                    proc_1: true,
+                    proc_2: false,
+                    proc_3: true,
+                    out_1: false,
+                    out_2: true,
+                    out_3: true
                 }
             }
         };
+
+        // Local Storage Utilities
+        function saveDbToStorage() {
+            try {
+                localStorage.setItem('andalus_academic_db_v1', JSON.stringify(studentsDb));
+            } catch(e) {}
+        }
+
+        function loadDbFromStorage() {
+            try {
+                const saved = localStorage.getItem('andalus_academic_db_v1');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    Object.keys(parsed).forEach(k => {
+                        if (studentsDb[k]) {
+                            studentsDb[k] = Object.assign(studentsDb[k], parsed[k]);
+                        } else {
+                            studentsDb[k] = parsed[k];
+                        }
+                    });
+                }
+            } catch(e) {}
+        }
+        loadDbFromStorage();
 
         const studentKeys = Object.keys(studentsDb);
         let currentActiveKey = 'azzam';
@@ -1088,6 +1160,7 @@
         // Update Period Title
         function updatePeriodTitle(val) {
             studentsDb[currentActiveKey].period = val;
+            saveDbToStorage();
             const el = document.querySelector('#teacherReportContainer .tpl-period-badge');
             if (el) el.textContent = val;
         }
@@ -1095,6 +1168,7 @@
         // Update Date
         function updateReportDate(val) {
             studentsDb[currentActiveKey].date = val;
+            saveDbToStorage();
             const el = document.querySelector('#teacherReportContainer .tpl-report-date');
             if (el) el.textContent = `التاريخ: ${val}`;
         }
@@ -1117,7 +1191,7 @@
             const notesEl = clone.querySelector('.tpl-notes-editable');
             if (mode === 'teacher') {
                 notesEl.innerHTML = `
-                    <textarea rows="2" onchange="studentsDb['${currentActiveKey}'].notes = this.value"
+                    <textarea rows="2" onchange="studentsDb['${currentActiveKey}'].notes = this.value; saveDbToStorage();"
                               class="w-full text-xs text-slate-800 bg-amber-50/50 p-2 border border-amber-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-andalus-blue">${student.notes}</textarea>
                 `;
             } else {
@@ -1241,6 +1315,55 @@
             statusTitle.textContent = lvlTitle;
             statusSub.textContent = lvlSub;
 
+            // Handle Remedial Section (Parent Read-Only vs Teacher Interactive)
+            const remSection = clone.querySelector('.tpl-remedial-section');
+            const remBadge = clone.querySelector('.tpl-remedial-badge');
+
+            if (remSection) {
+                const remData = student.remedial || {};
+                const checkboxes = remSection.querySelectorAll('input[type="checkbox"][data-rem]');
+
+                checkboxes.forEach(cb => {
+                    const remKey = cb.getAttribute('data-rem');
+                    cb.checked = !!remData[remKey];
+
+                    if (mode === 'parent') {
+                        // Strict read-only for Parent View: disabled & no pointer events
+                        cb.disabled = true;
+                        cb.classList.add('cursor-not-allowed');
+                        const lbl = cb.closest('label');
+                        if (lbl) {
+                            lbl.classList.add('cursor-default', 'pointer-events-none', 'select-none');
+                        }
+                    } else {
+                        // Fully interactive for Teacher View
+                        cb.disabled = false;
+                        cb.classList.remove('cursor-not-allowed');
+                        const lbl = cb.closest('label');
+                        if (lbl) {
+                            lbl.classList.remove('cursor-default', 'pointer-events-none', 'select-none');
+                        }
+                        cb.onchange = (e) => {
+                            if (!studentsDb[currentActiveKey].remedial) {
+                                studentsDb[currentActiveKey].remedial = {};
+                            }
+                            studentsDb[currentActiveKey].remedial[remKey] = e.target.checked;
+                            saveDbToStorage();
+                        };
+                    }
+                });
+
+                if (remBadge) {
+                    if (mode === 'parent') {
+                        remBadge.className = 'tpl-remedial-badge text-xs bg-slate-100 text-slate-700 font-bold px-3 py-1 rounded-full border border-slate-300 flex items-center gap-1.5 shadow-sm';
+                        remBadge.innerHTML = '<i data-lucide="lock" class="w-3.5 h-3.5 text-slate-500"></i> معتمد من المعلم (للاطلاع فقط)';
+                    } else {
+                        remBadge.className = 'tpl-remedial-badge text-xs bg-amber-200 text-amber-900 font-bold px-3 py-1 rounded-full border border-amber-300 flex items-center gap-1.5 shadow-sm';
+                        remBadge.innerHTML = '<i data-lucide="edit-3" class="w-3.5 h-3.5 text-amber-800"></i> رصد الخطة العلاجية للمعلم';
+                    }
+                }
+            }
+
             container.appendChild(clone);
 
             // Initialize Chart on the rendered canvas
@@ -1252,6 +1375,7 @@
         // Update single score
         function updateCellScore(critId, subId, val) {
             studentsDb[currentActiveKey].scores[critId][subId] = parseInt(val, 10);
+            saveDbToStorage();
             renderReportInContainer('teacherReportContainer', 'teacher');
         }
 
@@ -1304,7 +1428,8 @@
 
         // Save Evaluation Toast
         function saveStudentEvaluation() {
-            alert('تم حفظ التقييم واعتماده بنجاح في قاعدة بيانات مدارس الأندلس!');
+            saveDbToStorage();
+            alert('تم حفظ واعتماد التقييم الأكاديمي والخطة العلاجية بنجاح في قاعدة بيانات مدارس الأندلس!');
         }
 
         // Share WhatsApp Link
