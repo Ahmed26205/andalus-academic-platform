@@ -321,8 +321,8 @@
         <div id="viewTeacherDashboard" class="hidden space-y-6">
             
             <!-- Teacher Welcome Banner & Selector -->
-            <div class="no-print bg-white border border-slate-200 rounded-2xl p-4 sm:p-6 shadow-sm">
-                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            <div class="no-print bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-sm space-y-4">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-3 border-b border-slate-100">
                     <div class="flex items-center gap-3">
                         <div class="w-12 h-12 rounded-xl bg-andalus-gold/20 border border-andalus-gold/40 text-andalus-darkBlue flex items-center justify-center font-black text-xl">
                             <i data-lucide="graduation-cap" class="w-6 h-6 text-andalus-gold"></i>
@@ -332,69 +332,66 @@
                                 لوحة المعلم لرصد التقرير الأكاديمي
                                 <span class="text-xs bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full font-bold">مسار محمي</span>
                             </h2>
-                            <p class="text-xs text-slate-500">المرحلة الابتدائية - مكة المكرمة | الفصل الدراسي الأول 1446-1447هـ</p>
-                        </div>
-                    </div>
-
-                    <!-- Class & Student Selector Controls -->
-                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-2.5 flex-grow max-w-2xl">
-                        <!-- Class Filter -->
-                        <div>
-                            <label class="block text-[11px] font-bold text-slate-600 mb-1">الصف والفصل:</label>
-                            <select id="selectClassFilter" onchange="filterStudentsByClass(this.value)"
-                                    class="w-full text-xs font-bold text-slate-900 border border-slate-300 rounded-xl px-2 py-2 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-slate-50">
-                                <option value="all">جميع الفصول (3)</option>
-                                <option value="5/أ" selected>الخامس / أ (2)</option>
-                                <option value="5/ب">الخامس / ب (1)</option>
-                            </select>
-                        </div>
-
-                        <!-- Student Selector -->
-                        <div>
-                            <label class="block text-[11px] font-bold text-slate-600 mb-1">اسم الطالب:</label>
-                            <select id="selectStudent" onchange="switchStudent(this.value)" 
-                                    class="w-full text-xs font-bold text-slate-900 border border-slate-300 rounded-xl px-2 py-2 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-slate-50">
-                                <option value="azzam">عزام خالد المالكي</option>
-                                <option value="faisal">فيصل عمر الزهراني</option>
-                                <option value="rayan">ريان سعيد الغامدي</option>
-                            </select>
-                        </div>
-
-                        <!-- Period Selector -->
-                        <div>
-                            <label class="block text-[11px] font-bold text-slate-600 mb-1">فترة التقرير:</label>
-                            <select id="selectPeriod" onchange="updatePeriodTitle(this.value)"
-                                    class="w-full text-xs font-bold text-slate-900 border border-slate-300 rounded-xl px-2 py-2 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-slate-50">
-                                <option value="التقرير الأول خلال الفصل الدراسي الأول">التقرير الأول (شهر 1)</option>
-                                <option value="التقرير الثاني خلال الفصل الدراسي الأول">التقرير الثاني (شهر 2)</option>
-                                <option value="التقرير الثالث خلال الفصل الدراسي الأول">التقرير الثالث (شهر 3)</option>
-                            </select>
-                        </div>
-
-                        <!-- Date Picker -->
-                        <div>
-                            <label class="block text-[11px] font-bold text-slate-600 mb-1">تاريخ الرصد:</label>
-                            <input type="date" id="inputDate" value="2026-10-21" onchange="updateReportDate(this.value)"
-                                   class="w-full text-xs font-bold text-slate-900 border border-slate-300 rounded-xl px-2 py-1.5 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-slate-50">
+                            <p class="text-xs text-slate-500">المرحلة الابتدائية - مكة المكرمة | الفصل الدراسي الأول 1447هـ</p>
                         </div>
                     </div>
 
                     <!-- Quick Action Buttons -->
                     <div class="flex items-center gap-2">
-                        <button onclick="navigateStudent(-1)" title="الطالب السابق" class="p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl border border-slate-300 transition">
+                        <button onclick="navigateStudent(-1)" title="الطالب السابق" class="px-2.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl border border-slate-300 transition text-xs font-bold flex items-center gap-1">
                             <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                            <span class="hidden sm:inline">السابق</span>
                         </button>
-                        <button onclick="navigateStudent(1)" title="الطالب التالي" class="p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl border border-slate-300 transition">
+                        <button onclick="navigateStudent(1)" title="الطالب التالي" class="px-2.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl border border-slate-300 transition text-xs font-bold flex items-center gap-1">
+                            <span class="hidden sm:inline">التالي</span>
                             <i data-lucide="chevron-left" class="w-4 h-4"></i>
                         </button>
-                        <button onclick="saveStudentEvaluation()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow">
+                        <button onclick="saveStudentEvaluation()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow">
                             <i data-lucide="save" class="w-4 h-4"></i>
                             <span>حفظ</span>
                         </button>
-                        <button onclick="shareWhatsAppLink()" class="bg-green-600 hover:bg-green-500 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow">
+                        <button onclick="shareWhatsAppLink()" class="bg-green-600 hover:bg-green-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow">
                             <i data-lucide="share-2" class="w-4 h-4"></i>
                             <span>واتساب</span>
                         </button>
+                    </div>
+                </div>
+
+                <!-- Step-by-Step Class & Student Navigation Bar -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center bg-slate-50 p-3 rounded-xl border border-slate-200">
+                    <!-- Class Selector Tabs (4 cols) -->
+                    <div class="md:col-span-4">
+                        <label class="block text-[11px] font-bold text-slate-600 mb-1.5">1. اختر الفصل الدراسي:</label>
+                        <div class="grid grid-cols-2 gap-2" id="classTabsContainer">
+                            <button onclick="selectClassTab('5/أ')" id="btnClass_5A" class="class-tab-btn py-2 px-3 text-xs font-bold rounded-xl border transition flex items-center justify-center gap-1.5 bg-andalus-darkBlue text-white border-andalus-darkBlue shadow-sm">
+                                <i data-lucide="users" class="w-3.5 h-3.5"></i>
+                                <span>فصل 5 / أ</span>
+                            </button>
+                            <button onclick="selectClassTab('5/ب')" id="btnClass_5B" class="class-tab-btn py-2 px-3 text-xs font-bold rounded-xl border transition flex items-center justify-center gap-1.5 bg-white text-slate-700 border-slate-300 hover:bg-slate-100">
+                                <i data-lucide="users" class="w-3.5 h-3.5"></i>
+                                <span>فصل 5 / ب</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Student Selector Dropdown (4 cols) -->
+                    <div class="md:col-span-4">
+                        <label class="block text-[11px] font-bold text-slate-600 mb-1.5">2. اختر الطالب لرصد الدرجات:</label>
+                        <select id="selectStudent" onchange="switchStudent(this.value)" 
+                                class="w-full text-xs font-bold text-slate-900 border border-slate-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-white shadow-sm">
+                            <!-- Populated dynamically based on selected class -->
+                        </select>
+                    </div>
+
+                    <!-- Period & Month Selector (4 cols) -->
+                    <div class="md:col-span-4">
+                        <label class="block text-[11px] font-bold text-slate-600 mb-1.5">3. شهر التقرير الأكاديمي:</label>
+                        <select id="selectPeriod" onchange="updatePeriodTitle(this.value)"
+                                class="w-full text-xs font-bold text-slate-900 border border-slate-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-white shadow-sm">
+                            <option value="تقرير شهر جمادى الأولى 1447هـ (التقرير الأول)" selected>تقرير شهر جمادى الأولى 1447هـ</option>
+                            <option value="تقرير شهر جمادى الآخرة 1447هـ (التقرير الثاني)">تقرير شهر جمادى الآخرة 1447هـ</option>
+                            <option value="تقرير شهر رجب 1447هـ (التقرير الثالث)">تقرير شهر رجب 1447هـ</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -449,16 +446,12 @@
             <!-- School Header (Print Grid Optimized - Never Collides) -->
             <div class="border-b-2 border-andalus-darkBlue pb-4 mb-4">
                 <div class="print-header-grid flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <!-- Brand & Logo -->
+                    <!-- Brand & Logo (Logo already has full official school text) -->
                     <div class="flex items-center gap-3">
-                        <img src="assets/images/alandalus-logo.png" alt="مدارس الأندلس الأهلية" class="h-14 sm:h-16 w-auto object-contain" onerror="this.src='assets/images/alandalus-rosette.png'">
-                        <div>
-                            <div class="flex items-center gap-2">
-                                <span class="text-lg sm:text-xl font-black text-andalus-darkBlue tracking-tight">مدارس الأندلس الأهلية</span>
-                                <span class="text-xs bg-andalus-gold/20 text-andalus-gold font-bold px-2 py-0.5 rounded border border-andalus-gold/40">1984</span>
-                            </div>
-                            <p class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-widest">ALANDALUS PRIVATE SCHOOLS</p>
-                            <p class="text-xs font-semibold text-andalus-blue mt-0.5">مكة المكرمة - المرحلة الابتدائية - بنين</p>
+                        <img src="assets/images/alandalus-logo.png" alt="مدارس الأندلس الأهلية" class="h-16 sm:h-20 w-auto object-contain" onerror="this.src='assets/images/alandalus-rosette.png'">
+                        <div class="border-r-2 border-slate-300 pr-3 hidden sm:block">
+                            <span class="text-xs font-black text-andalus-darkBlue block">المرحلة الابتدائية (بنين)</span>
+                            <span class="text-[10.5px] font-bold text-slate-500 block">مكة المكرمة</span>
                         </div>
                     </div>
 
@@ -483,9 +476,9 @@
 
                 <!-- Main Report Title Banner -->
                 <div class="mt-4 bg-andalus-darkBlue text-white text-center py-2 px-4 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-2 shadow-sm">
-                    <span class="text-xs text-andalus-lightGold font-semibold">العام الدراسي: 1446-1447هـ (2024-2025م)</span>
+                    <span class="text-xs text-andalus-lightGold font-semibold">العام الدراسي: 1446-1447هـ</span>
                     <h2 class="text-sm sm:text-base font-black tracking-wide text-white">التقرير الأكاديمي ( تعليمي / سلوكي )</h2>
-                    <span class="tpl-period-badge text-xs bg-andalus-blue text-white px-3 py-0.5 rounded-full font-bold border border-white/20">التقرير الأول خلال الفصل الدراسي الأول</span>
+                    <span class="tpl-period-badge text-xs bg-andalus-blue text-white px-3 py-0.5 rounded-full font-bold border border-white/20">تقرير شهر جمادى الأولى 1447هـ</span>
                 </div>
             </div>
 
@@ -677,15 +670,15 @@
                         
                         <div class="space-y-2 text-xs">
                             <div class="bg-white border border-slate-200 rounded-lg p-2">
-                                <span class="font-bold text-andalus-darkBlue block text-[10.5px] mb-0.5">التقرير الأول:</span>
+                                <span class="font-bold text-andalus-darkBlue block text-[10.5px] mb-0.5">تقرير شهر جمادى الأولى 1447هـ (الحالي):</span>
                                 <div class="tpl-notes-editable text-slate-700 text-[11px] leading-relaxed">نشكر أسرة الطالب على الاهتمام والمتابعة، ونوصي بالتركيز الإضافي على مهارات القراءة في لغتي والرياضيات ليلتحق بزملائه المتفوقين بإذن الله.</div>
                             </div>
                             <div class="bg-white/60 border border-slate-200/60 rounded-lg p-1.5">
-                                <span class="font-bold text-slate-500 block text-[10px] mb-0.5">التقرير الثاني:</span>
+                                <span class="font-bold text-slate-500 block text-[10px] mb-0.5">تقرير شهر جمادى الآخرة 1447هـ (الشهر القادم):</span>
                                 <p class="text-[10px] text-slate-400 italic">يُسجل تقييم الشهر الثاني بعد تنفيذ الخطة العلاجية المقترحة.</p>
                             </div>
                             <div class="bg-white/60 border border-slate-200/60 rounded-lg p-1.5">
-                                <span class="font-bold text-slate-500 block text-[10px] mb-0.5">التقرير الثالث:</span>
+                                <span class="font-bold text-slate-500 block text-[10px] mb-0.5">تقرير شهر رجب 1447هـ (نهاية الفصل):</span>
                                 <p class="text-[10px] text-slate-400 italic">التقييم الختامي والتقرير الشامل للتحصيل الأكاديمي والسلوكي.</p>
                             </div>
                         </div>
@@ -898,7 +891,7 @@
                 grade: 'الخامس الابتدائي / أ',
                 classCode: '5/أ',
                 date: '2026-10-21',
-                period: 'التقرير الأول خلال الفصل الدراسي الأول',
+                period: 'تقرير شهر جمادى الأولى 1447هـ',
                 notes: 'نشكر أسرة الطالب على الاهتمام والمتابعة، ونوصي بالتركيز الإضافي على مهارات القراءة في لغتي والرياضيات ليلتحق بزملائه المتفوقين بإذن الله.',
                 scores: {
                     exams:         { digital: 5, islamic: 5, english: 3, arabic: 1, science: 2, math: 1 },
@@ -914,7 +907,7 @@
                 grade: 'الخامس الابتدائي / أ',
                 classCode: '5/أ',
                 date: '2026-10-21',
-                period: 'التقرير الأول خلال الفصل الدراسي الأول',
+                period: 'تقرير شهر جمادى الأولى 1447هـ',
                 notes: 'طالب متميز ومتعاون، مستواه في المهارات الرقمية والعلوم مبهر ومتقدم، نبارك للأسرة الكريمة هذا التميز.',
                 scores: {
                     exams:         { digital: 5, islamic: 5, english: 5, arabic: 4, science: 5, math: 4 },
@@ -930,7 +923,7 @@
                 grade: 'الخامس الابتدائي / ب',
                 classCode: '5/ب',
                 date: '2026-10-21',
-                period: 'التقرير الأول خلال الفصل الدراسي الأول',
+                period: 'تقرير شهر جمادى الأولى 1447هـ',
                 notes: 'أداء مستقر في أغلب المقررات، يحتاج تعزيز مهارات التحدث باللغة الإنجليزية وحل التدريبات الإضافية.',
                 scores: {
                     exams:         { digital: 4, islamic: 4, english: 3, arabic: 3, science: 4, math: 3 },
@@ -1016,8 +1009,24 @@
             document.getElementById('sessionRoleText').textContent = 'لوحة رصد المعلم';
             document.getElementById('sessionRoleBadge').className = 'w-2 h-2 rounded-full bg-amber-400 animate-pulse';
 
-            renderReportInContainer('teacherReportContainer', 'teacher');
+            selectClassTab('5/أ');
             lucide.createIcons();
+        }
+
+        // Class Tabs Selector
+        function selectClassTab(classCode) {
+            const btnA = document.getElementById('btnClass_5A');
+            const btnB = document.getElementById('btnClass_5B');
+            if (btnA && btnB) {
+                if (classCode === '5/أ') {
+                    btnA.className = 'class-tab-btn py-2 px-3 text-xs font-bold rounded-xl border transition flex items-center justify-center gap-1.5 bg-andalus-darkBlue text-white border-andalus-darkBlue shadow-sm';
+                    btnB.className = 'class-tab-btn py-2 px-3 text-xs font-bold rounded-xl border transition flex items-center justify-center gap-1.5 bg-white text-slate-700 border-slate-300 hover:bg-slate-100';
+                } else {
+                    btnB.className = 'class-tab-btn py-2 px-3 text-xs font-bold rounded-xl border transition flex items-center justify-center gap-1.5 bg-andalus-darkBlue text-white border-andalus-darkBlue shadow-sm';
+                    btnA.className = 'class-tab-btn py-2 px-3 text-xs font-bold rounded-xl border transition flex items-center justify-center gap-1.5 bg-white text-slate-700 border-slate-300 hover:bg-slate-100';
+                }
+            }
+            filterStudentsByClass(classCode);
         }
 
         // Filter Students by Class in Teacher Mode
@@ -1033,7 +1042,7 @@
             filteredKeys.forEach(k => {
                 const opt = document.createElement('option');
                 opt.value = k;
-                opt.textContent = `${studentsDb[k].name} (${studentsDb[k].classCode})`;
+                opt.textContent = `${studentsDb[k].name}`;
                 selectEl.appendChild(opt);
             });
 
