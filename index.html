@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة التقرير الأكاديمي والتعليمي السلوكي | مدارس الأندلس الأهلية</title>
+    
+    <!-- Meta SEO -->
+    <meta name="description" content="منظومة التقرير الأكاديمي والتعليمي السلوكي لمدارس الأندلس الأهلية - بوابات المعلمين وأولياء الأمور">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+
+    <!-- Google Fonts: Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                    },
+                    colors: {
+                        andalus: {
+                            navy: '#0b2341',
+                            darkBlue: '#133966',
+                            blue: '#1b4d89',
+                            sky: '#0284c7',
+                            gold: '#c59b27',
+                            lightGold: '#e8c468',
+                            emerald: '#059669',
+                            crimson: '#dc2626',
+                            slate: '#f8fafc',
+                            cardBg: '#ffffff',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f8fafc;
+        }
+
+        /* Printable Sheet Optimization */
+        @media print {
+            body {
+                background: white !important;
+                color: #0f172a !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-container {
+                box-shadow: none !important;
+                border: 1px solid #cbd5e1 !important;
+                padding: 0.5rem !important;
+                max-width: 100% !important;
+                width: 100% !important;
+                margin: 0 !important;
+            }
+            .break-inside-avoid {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            @page {
+                size: A4 portrait;
+                margin: 8mm;
+            }
+        }
+        
+        .matrix-table th, .matrix-table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- ========================================================================= -->
+    <!-- 1. TOP GLOBAL NAVBAR (NO-PRINT) -->
+    <!-- ========================================================================= -->
+    <header class="no-print bg-andalus-navy text-white sticky top-0 z-50 shadow-md border-b border-andalus-blue/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Brand -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="goToView('portalSelect')">
+                <div class="w-10 h-10 rounded-xl bg-andalus-gold/20 flex items-center justify-center border border-andalus-gold/40 text-andalus-gold font-bold text-xl shadow-inner">
+                    1984
+                </div>
+                <div>
+                    <h1 class="font-bold text-base sm:text-lg leading-tight text-white flex items-center gap-2">
+                        منصة التقرير الأكاديمي والسلوكي
+                        <span class="text-xs bg-andalus-gold/20 text-andalus-gold border border-andalus-gold/40 px-2 py-0.5 rounded-full font-normal hidden sm:inline-block">مدارس الأندلس الأهلية</span>
+                    </h1>
+                    <p class="text-xs text-slate-300">مكة المكرمة - المرحلة الابتدائية (بنين) | بوابة موحدة</p>
+                </div>
+            </div>
+
+            <!-- Current Session / Switcher -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <div id="sessionIndicator" class="hidden text-xs bg-slate-800/80 px-3 py-1.5 rounded-xl border border-slate-700 flex items-center gap-2">
+                    <span id="sessionRoleBadge" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span id="sessionRoleText" class="font-bold text-slate-200">جلسة نشطة</span>
+                </div>
+
+                <button id="btnExitPortal" onclick="goToView('portalSelect')" class="hidden text-xs bg-rose-900/60 hover:bg-rose-800 text-rose-200 px-3 py-1.5 rounded-xl font-bold border border-rose-700/60 transition flex items-center gap-1.5">
+                    <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+                    <span>تبديل البوابة</span>
+                </button>
+
+                <!-- Print Button (Shown when viewing report) -->
+                <button id="btnGlobalPrint" onclick="window.print()" class="hidden bg-emerald-600 hover:bg-emerald-500 text-white px-3 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition shadow">
+                    <i data-lucide="printer" class="w-4 h-4"></i>
+                    <span>طباعة التقرير (PDF)</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dynamic Content Container -->
+    <main class="flex-grow max-w-6xl w-full mx-auto p-3 sm:p-6 lg:p-8 flex flex-col justify-center">
+
+        <!-- ========================================================================= -->
+        <!-- VIEW 1: PORTAL SELECTION & AUTHENTICATION GATEWAY -->
+        <!-- ========================================================================= -->
+        <div id="viewPortalSelect" class="space-y-8 py-6">
+            <!-- Hero Heading -->
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <div class="inline-flex items-center gap-2 bg-andalus-darkBlue/10 text-andalus-darkBlue px-3.5 py-1 rounded-full text-xs font-bold border border-andalus-darkBlue/20">
+                    <i data-lucide="shield-check" class="w-4 h-4 text-andalus-gold"></i>
+                    منظومة القياس والتقويم الأكاديمي المعتمدة
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-black text-andalus-darkBlue tracking-tight">
+                    مرحباً بكم في منصة تقارير الأندلس
+                </h2>
+                <p class="text-sm text-slate-600">
+                    نظام تقني متكامل يربط بين تقييم المعلمين اليومي وإطلاع أولياء الأمور الدوري، وفقاً لمعايير الجودة والاعتماد المدرسي.
+                </p>
+            </div>
+
+            <!-- Two Distinct Portals (Parent vs Teacher) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                
+                <!-- 1. PARENT PORTAL (ولي الأمر) -->
+                <div class="bg-white border-2 border-slate-200 hover:border-andalus-blue rounded-3xl p-6 sm:p-8 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between group">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-200 text-andalus-blue flex items-center justify-center font-bold mb-5 group-hover:scale-105 transition-transform">
+                            <i data-lucide="user-check" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-andalus-darkBlue mb-2">بوابة ولي الأمر</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-6">
+                            الاستعلام الفوري عن التقرير الأكاديمي والتعليمي السلوكي للابن، والاطلاع على الدرجة الموزونة والرسم البياني وملاحظات الموجه الطلابي.
+                        </p>
+
+                        <!-- Input: Student National ID -->
+                        <div class="space-y-3 bg-slate-50 border border-slate-200 rounded-2xl p-4">
+                            <label class="block text-xs font-bold text-slate-700">أدخل رقم هوية الطالب:</label>
+                            <div class="relative">
+                                <input type="text" id="parentInputId" placeholder="مثال: 1102938475" 
+                                       class="w-full text-sm font-bold text-slate-900 bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 pl-10 focus:ring-2 focus:ring-andalus-blue focus:outline-none tracking-widest text-center"
+                                       value="1102938475">
+                                <i data-lucide="id-card" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
+                            </div>
+                            <p class="text-[11px] text-slate-500">
+                                💡 تجربة سريعة: تم تعيين هوية تجريبية للطالب (عزام المالكي).
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-slate-100">
+                        <button onclick="parentLogin()" class="w-full bg-andalus-darkBlue hover:bg-andalus-blue text-white py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition shadow-md hover:shadow-lg">
+                            <span>عرض التقرير الأكاديمي للابن</span>
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 2. TEACHER PORTAL (المعلم / الموجه) -->
+                <div class="bg-white border-2 border-slate-200 hover:border-andalus-gold rounded-3xl p-6 sm:p-8 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between group">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-amber-50 border border-amber-200 text-andalus-gold flex items-center justify-center font-bold mb-5 group-hover:scale-105 transition-transform">
+                            <i data-lucide="lock" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-andalus-darkBlue mb-2">بوابة المعلمين والإشراف</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-6">
+                            مسار مخصص ومحمي لكل معلم لرصد درجات الـ 30 معياراً في المقررات، وتفعيل الخطط العلاجية للطلاب منخفضي التحصيل.
+                        </p>
+
+                        <!-- Input: Teacher Phone or Passcode -->
+                        <div class="space-y-3 bg-slate-50 border border-slate-200 rounded-2xl p-4">
+                            <label class="block text-xs font-bold text-slate-700">رمز المعلم أو رقم الجوال:</label>
+                            <div class="relative">
+                                <input type="password" id="teacherInputCode" placeholder="أدخل رمز الدخول (مثال: 1234)" 
+                                       class="w-full text-sm font-bold text-slate-900 bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 pl-10 focus:ring-2 focus:ring-andalus-gold focus:outline-none tracking-widest text-center"
+                                       value="1234">
+                                <i data-lucide="key" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
+                            </div>
+                            <div class="flex items-center justify-between text-[11px] text-slate-500">
+                                <span>المسار: معلم الابتدائي / الموجه</span>
+                                <span class="text-emerald-700 font-bold bg-emerald-100 px-2 py-0.5 rounded">كود تجريبي جاهز</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-slate-100">
+                        <button onclick="teacherLogin()" class="w-full bg-andalus-gold hover:bg-andalus-lightGold text-slate-950 py-3 rounded-xl font-black text-sm flex items-center justify-center gap-2 transition shadow-md hover:shadow-lg">
+                            <span>دخول لوحة الرصد والتقييم</span>
+                            <i data-lucide="edit-3" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- VIEW 2: TEACHER DASHBOARD (CLASS SELECTION & ACTIVE GRADING) -->
+        <!-- ========================================================================= -->
+        <div id="viewTeacherDashboard" class="hidden space-y-6">
+            
+            <!-- Teacher Welcome Banner & Selector -->
+            <div class="no-print bg-white border border-slate-200 rounded-2xl p-4 sm:p-6 shadow-sm">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-xl bg-andalus-gold/20 border border-andalus-gold/40 text-andalus-darkBlue flex items-center justify-center font-black text-xl">
+                            <i data-lucide="graduation-cap" class="w-6 h-6 text-andalus-gold"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-base sm:text-lg font-black text-andalus-darkBlue flex items-center gap-2">
+                                لوحة المعلم لرصد التقرير الأكاديمي
+                                <span class="text-xs bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full font-bold">مسار محمي</span>
+                            </h2>
+                            <p class="text-xs text-slate-500">المرحلة الابتدائية - مكة المكرمة | الفصل الدراسي الأول 1446-1447هـ</p>
+                        </div>
+                    </div>
+
+                    <!-- Student Selector & Period Dropdown -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 flex-grow max-w-2xl">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">اختر الطالب للرصد:</label>
+                            <select id="selectStudent" onchange="switchStudent(this.value)" 
+                                    class="w-full text-xs font-bold text-slate-900 border border-slate-300 rounded-xl px-2.5 py-2 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-slate-50">
+                                <option value="azzam">عزام خالد بن شعف المالكي (الخامس / أ)</option>
+                                <option value="faisal">فيصل عمر بن عبد الله الزهراني (الخامس / أ)</option>
+                                <option value="rayan">ريان سعيد بن سعد الغامدي (الخامس / ب)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">فترة التقرير:</label>
+                            <select id="selectPeriod" onchange="updatePeriodTitle(this.value)"
+                                    class="w-full text-xs font-bold text-slate-900 border border-slate-300 rounded-xl px-2.5 py-2 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-slate-50">
+                                <option value="التقرير الأول خلال الفصل الدراسي الأول">التقرير الأول (الشهر 1)</option>
+                                <option value="التقرير الثاني خلال الفصل الدراسي الأول">التقرير الثاني (الشهر 2)</option>
+                                <option value="التقرير الثالث خلال الفصل الدراسي الأول">التقرير الثالث (الشهر 3)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">تاريخ الرصد:</label>
+                            <input type="date" id="inputDate" value="2026-10-21" onchange="updateReportDate(this.value)"
+                                   class="w-full text-xs font-bold text-slate-900 border border-slate-300 rounded-xl px-2.5 py-2 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-slate-50">
+                        </div>
+                    </div>
+
+                    <!-- Quick Action Buttons -->
+                    <div class="flex items-center gap-2">
+                        <button onclick="saveStudentEvaluation()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow">
+                            <i data-lucide="save" class="w-4 h-4"></i>
+                            <span>حفظ التقييم</span>
+                        </button>
+                        <button onclick="shareWhatsAppLink()" class="bg-green-600 hover:bg-green-500 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow">
+                            <i data-lucide="share-2" class="w-4 h-4"></i>
+                            <span>مشاركة واتساب</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Embedded Report Card in Teacher Edit Mode -->
+            <div id="teacherReportContainer"></div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- VIEW 3: PARENT REPORT VIEW (READ-ONLY CLEAN OFFICIAL SHEET) -->
+        <!-- ========================================================================= -->
+        <div id="viewParentReport" class="hidden space-y-6">
+            <!-- Notice for Parents (No-Print) -->
+            <div class="no-print bg-blue-50 border border-blue-200 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-sm">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-andalus-blue/10 text-andalus-blue flex items-center justify-center font-bold">
+                        <i data-lucide="check-circle" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold text-andalus-darkBlue">مرحباً بولي أمر الطالب: <span id="parentStudentGreet" class="text-andalus-blue font-black">عزام خالد المالكي</span></h3>
+                        <p class="text-xs text-slate-600">يمكنكم الاطلاع على تقرير الأداء المعتمد، أو طباعته وحفظه كملف PDF رسمي.</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow">
+                        <i data-lucide="printer" class="w-4 h-4"></i>
+                        <span>طباعة التقرير (A4)</span>
+                    </button>
+                    <button onclick="goToView('portalSelect')" class="bg-slate-200 hover:bg-slate-300 text-slate-800 px-3.5 py-2 rounded-xl text-xs font-bold transition">
+                        تسجيل خروج
+                    </button>
+                </div>
+            </div>
+
+            <!-- Embedded Report Card in Parent View Mode -->
+            <div id="parentReportContainer"></div>
+        </div>
+
+    </main>
+
+    <!-- Bottom Footer (No-Print) -->
+    <footer class="no-print bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500">
+        <p>منظومة التقرير الأكاديمي والتعليمي السلوكي © مدارس الأندلس الأهلية بمكة المكرمة - جميع الحقوق محفوظة 2026</p>
+    </footer>
+
+    <!-- ========================================================================= -->
+    <!-- TEMPLATE COMPONENT: THE OFFICIAL ANDALUS REPORT SHEET (REUSABLE) -->
+    <!-- ========================================================================= -->
+    <template id="reportTemplate">
+        <div class="report-root print-container bg-white border border-slate-300 rounded-2xl p-4 sm:p-6 lg:p-8 shadow-sm">
+            
+            <!-- School Header -->
+            <div class="border-b-2 border-andalus-darkBlue pb-4 mb-4">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <!-- Brand & Logo -->
+                    <div class="flex items-center gap-3">
+                        <img src="assets/images/alandalus-logo.png" alt="مدارس الأندلس الأهلية" class="h-16 w-auto object-contain" onerror="this.style.display='none'">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xl font-black text-andalus-darkBlue tracking-tight">مدارس الأندلس الأهلية</span>
+                                <span class="text-xs bg-andalus-gold/20 text-andalus-gold font-bold px-2 py-0.5 rounded border border-andalus-gold/40">1984</span>
+                            </div>
+                            <p class="text-xs font-bold text-slate-500 uppercase tracking-widest">ALANDALUS PRIVATE SCHOOLS</p>
+                            <p class="text-xs font-semibold text-andalus-blue mt-0.5">مكة المكرمة - المرحلة الابتدائية - بنين</p>
+                        </div>
+                    </div>
+
+                    <!-- Vision & Mission Header Cards -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-right max-w-lg w-full">
+                        <div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5">
+                            <h4 class="text-[11px] font-extrabold text-andalus-darkBlue flex items-center gap-1">
+                                <i data-lucide="compass" class="w-3 h-3 text-andalus-gold"></i>
+                                رؤيتنا
+                            </h4>
+                            <p class="text-[10px] text-slate-600 leading-tight mt-0.5">منظومة تعليمية رائدة تبني جيلاً يمتلك قدرات تعلم عالمية.</p>
+                        </div>
+                        <div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5">
+                            <h4 class="text-[11px] font-extrabold text-andalus-darkBlue flex items-center gap-1">
+                                <i data-lucide="target" class="w-3 h-3 text-andalus-blue"></i>
+                                رسالتنا
+                            </h4>
+                            <p class="text-[10px] text-slate-600 leading-tight mt-0.5">بناء جيل رائد يحب التعلم يرعاه فريق معد في مؤسسة تربوية تلبي تطلعات المجتمع.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Report Title Banner -->
+                <div class="mt-4 bg-andalus-darkBlue text-white text-center py-2.5 px-4 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-2 shadow-sm">
+                    <span class="text-xs text-andalus-lightGold font-semibold">العام الدراسي: 1446-1447هـ (2024-2025م)</span>
+                    <h2 class="text-base sm:text-lg font-black tracking-wide text-white">التقرير الأكاديمي ( تعليمي / سلوكي )</h2>
+                    <span class="tpl-period-badge text-xs bg-andalus-blue text-white px-3 py-1 rounded-full font-bold border border-white/20">التقرير الأول خلال الفصل الدراسي الأول</span>
+                </div>
+            </div>
+
+            <!-- Objectives & Definition Summary Strip -->
+            <div class="bg-blue-50/60 border border-blue-100 rounded-xl p-3 mb-6 grid grid-cols-1 md:grid-cols-3 gap-3 text-xs leading-relaxed">
+                <div class="border-b md:border-b-0 md:border-l border-blue-200/80 pl-2">
+                    <span class="font-extrabold text-andalus-darkBlue block mb-0.5 flex items-center gap-1">
+                        <i data-lucide="info" class="w-3.5 h-3.5 text-andalus-blue"></i>
+                        ما هو التقرير الأكاديمي؟
+                    </span>
+                    <p class="text-[11px] text-slate-600">تقرير نوعي يتم إعداده دورياً لقياس مدى التحسن أو الانخفاض في المستوى السلوكي والأكاديمي في المقررات المستهدفة.</p>
+                </div>
+                <div class="border-b md:border-b-0 md:border-l border-blue-200/80 pl-2">
+                    <span class="font-extrabold text-andalus-darkBlue block mb-0.5 flex items-center gap-1">
+                        <i data-lucide="calendar" class="w-3.5 h-3.5 text-andalus-blue"></i>
+                        الفترة الزمنية
+                    </span>
+                    <p class="text-[11px] text-slate-600">يقوم الفريق المختص بإعداد 3 تقارير أكاديمية للطالب خلال الفصل الدراسي بمعدل تقرير واحد شهرياً.</p>
+                </div>
+                <div>
+                    <span class="font-extrabold text-andalus-darkBlue block mb-0.5 flex items-center gap-1">
+                        <i data-lucide="check-circle" class="w-3.5 h-3.5 text-andalus-blue"></i>
+                        أهداف المنظومة
+                    </span>
+                    <p class="text-[11px] text-slate-600">تتبع النمو الأكاديمي، تعزيز نقاط القوة، إشراك الأسرة الدائم، وتطبيق الخطط العلاجية الفورية.</p>
+                </div>
+            </div>
+
+            <!-- Student Profile & Score KPI Dashboard -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mb-6">
+                <!-- Student Info Card (4 cols) -->
+                <div class="md:col-span-5 bg-slate-50 border border-slate-200 rounded-2xl p-4 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between border-b border-slate-200 pb-2 mb-3">
+                            <span class="text-xs text-slate-500 font-bold">بطاقة الطالب</span>
+                            <span class="tpl-report-date text-xs text-slate-500 font-semibold">التاريخ: 2026/10/21</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div>
+                                <span class="text-[11px] font-bold text-slate-500 block">اسم الطالب الرباعي:</span>
+                                <h3 class="tpl-student-name text-base font-black text-andalus-darkBlue">عزام خالد بن شعف المالكي</h3>
+                            </div>
+                            <div class="flex items-center justify-between pt-1">
+                                <div>
+                                    <span class="text-[11px] font-bold text-slate-500 block">الصف الدراسي:</span>
+                                    <span class="tpl-student-grade text-xs font-bold text-slate-800">الخامس الابتدائي / أ</span>
+                                </div>
+                                <div>
+                                    <span class="text-[11px] font-bold text-slate-500 block">حالة التقرير:</span>
+                                    <span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">مكتمل ومعتمد</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Progress Gauge Bar -->
+                    <div class="mt-4 pt-3 border-t border-slate-200">
+                        <div class="flex justify-between items-center text-xs mb-1">
+                            <span class="font-bold text-slate-600">نسبة الإنجاز الإجمالي:</span>
+                            <span class="tpl-percentage font-extrabold text-andalus-blue">56.7%</span>
+                        </div>
+                        <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                            <div class="tpl-progress-bar bg-andalus-blue h-full rounded-full transition-all duration-500" style="width: 56.7%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KPI Metric Cards (7 cols) -->
+                <div class="md:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    
+                    <!-- Dynamic Status Card (Hero KPI) -->
+                    <div class="tpl-status-card col-span-2 sm:col-span-1 bg-amber-50 border-2 border-amber-300 rounded-2xl p-3 flex flex-col justify-center items-center text-center shadow-sm">
+                        <span class="text-[11px] font-bold text-amber-800">مستوى الطالب المعتمد</span>
+                        <div class="tpl-status-title text-sm font-black text-amber-900 mt-1 leading-tight">
+                            يحتاج الى دعم ومتابعة
+                        </div>
+                        <span class="tpl-status-sub text-[10px] text-amber-700 mt-1 font-semibold">نطاق الدرجات: 60 - 89</span>
+                    </div>
+
+                    <!-- Total Weighted Score Card -->
+                    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3 flex flex-col justify-center items-center text-center">
+                        <span class="text-[11px] font-bold text-slate-500">الدرجة الموزونة للمقررات</span>
+                        <div class="flex items-baseline gap-1 mt-1">
+                            <span class="tpl-total-score text-2xl font-black text-andalus-darkBlue">85</span>
+                            <span class="text-xs font-bold text-slate-400">/ 150</span>
+                        </div>
+                        <span class="text-[10px] text-slate-500 mt-0.5">إجمالي الـ 30 معياراً</span>
+                    </div>
+
+                    <!-- Average GPA Card -->
+                    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3 flex flex-col justify-center items-center text-center">
+                        <span class="text-[11px] font-bold text-slate-500">معدل التقييم العام</span>
+                        <div class="flex items-baseline gap-1 mt-1">
+                            <span class="tpl-gpa text-2xl font-black text-emerald-600">2.8</span>
+                            <span class="text-xs font-bold text-slate-400">/ 5.0</span>
+                        </div>
+                        <span class="text-[10px] text-slate-500 mt-0.5">متوسط أداء المعايير</span>
+                    </div>
+
+                    <!-- Grading Scale Legend Box -->
+                    <div class="col-span-2 sm:col-span-3 bg-slate-50/80 border border-slate-200 rounded-xl p-2.5 flex flex-wrap items-center justify-between text-[11px]">
+                        <span class="font-extrabold text-slate-700 ml-2">سلم المستويات المعتمد:</span>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold border border-emerald-200">متفوق: 150-130</span>
+                            <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-bold border border-blue-200">متقدم: 129-105</span>
+                            <span class="px-2 py-0.5 rounded bg-sky-100 text-sky-800 font-bold border border-sky-200">متمكن: 104-90</span>
+                            <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold border border-amber-300">يحتاج لدعم: 89-60</span>
+                            <span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-bold border border-rose-200">منخفض جداً: &lt;60</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================================================= -->
+            <!-- THE 30-CRITERIA EVALUATION MATRIX -->
+            <!-- ========================================================================= -->
+            <div class="mb-6">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-sm font-extrabold text-andalus-darkBlue flex items-center gap-1.5">
+                        <i data-lucide="table" class="w-4 h-4 text-andalus-blue"></i>
+                        المقررات المستهدفة وعناصر التقييم في التقرير الأكاديمي
+                    </h3>
+                    <div class="flex items-center gap-2 text-[11px] text-slate-600">
+                        <span class="font-bold">المقياس:</span>
+                        <span class="text-emerald-700 font-bold">5 = متفوق</span> | 
+                        <span class="text-blue-700 font-bold">4 = متقدم</span> | 
+                        <span class="text-sky-700 font-bold">3 = متمكن</span> | 
+                        <span class="text-amber-700 font-bold">2 = مقبول</span> | 
+                        <span class="text-rose-700 font-bold">1 = ضعيف</span>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto rounded-xl border border-slate-300 shadow-sm">
+                    <table class="w-full text-xs matrix-table border-collapse">
+                        <thead>
+                            <tr class="bg-andalus-darkBlue text-white font-bold">
+                                <th class="p-2.5 text-right w-44 border border-slate-400">عناصر التقييم \ المقررات</th>
+                                <th class="p-2 border border-slate-400">المهارات الرقمية</th>
+                                <th class="p-2 border border-slate-400">الدراسات الإسلامية والقرآن</th>
+                                <th class="p-2 border border-slate-400">اللغة الإنجليزية</th>
+                                <th class="p-2 border border-slate-400">لغتي الجميلة</th>
+                                <th class="p-2 border border-slate-400">العلوم</th>
+                                <th class="p-2 border border-slate-400">الرياضيات</th>
+                                <th class="p-2 border border-slate-400 bg-andalus-blue w-20">مجموع العنصر</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tpl-matrix-body divide-y divide-slate-200 font-medium"></tbody>
+                        <tfoot>
+                            <tr class="bg-slate-100 font-extrabold text-andalus-darkBlue">
+                                <td class="p-2.5 text-right border border-slate-300">إجمالي درجات المقرر (من 25)</td>
+                                <td class="tpl-col-digital p-2 border border-slate-300 text-center">25</td>
+                                <td class="tpl-col-islamic p-2 border border-slate-300 text-center">25</td>
+                                <td class="tpl-col-english p-2 border border-slate-300 text-center">15</td>
+                                <td class="tpl-col-arabic p-2 border border-slate-300 text-center">5</td>
+                                <td class="tpl-col-science p-2 border border-slate-300 text-center">10</td>
+                                <td class="tpl-col-math p-2 border border-slate-300 text-center">5</td>
+                                <td class="tpl-total-matrix-sum p-2 border border-slate-300 text-center bg-andalus-gold/20 text-andalus-navy font-black text-sm">85 / 150</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Performance Curve & Trend Graph -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-6 break-inside-avoid">
+                <div class="lg:col-span-7 bg-slate-50 border border-slate-200 rounded-2xl p-4">
+                    <div class="flex items-center justify-between mb-3 border-b border-slate-200 pb-2">
+                        <h4 class="text-xs font-bold text-andalus-darkBlue flex items-center gap-1.5">
+                            <i data-lucide="bar-chart-2" class="w-4 h-4 text-andalus-blue"></i>
+                            منحنى التغيرات لأداء الطالب في تقييم المقررات (الدرجة من 25)
+                        </h4>
+                        <span class="text-[10px] text-slate-500 font-semibold">بياني تحليلي</span>
+                    </div>
+                    <div class="relative h-56 w-full">
+                        <canvas class="tpl-chart-canvas"></canvas>
+                    </div>
+                </div>
+
+                <!-- Academic Counselor Notes across 3 Reports -->
+                <div class="lg:col-span-5 bg-slate-50 border border-slate-200 rounded-2xl p-4 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-2 border-b border-slate-200 pb-2">
+                            <h4 class="text-xs font-bold text-andalus-darkBlue flex items-center gap-1.5">
+                                <i data-lucide="message-square" class="w-4 h-4 text-andalus-gold"></i>
+                                ملاحظات وتوصيات الموجه الطلابي
+                            </h4>
+                            <span class="text-[10px] text-slate-500">الفصل الأول</span>
+                        </div>
+                        
+                        <div class="space-y-2.5 text-xs">
+                            <div class="bg-white border border-slate-200 rounded-xl p-2.5">
+                                <span class="font-bold text-andalus-darkBlue block text-[11px] mb-1">التقرير الأول:</span>
+                                <div class="tpl-notes-editable text-slate-700">نشكر أسرة الطالب على الاهتمام والمتابعة، ونوصي بالتركيز الإضافي على مهارات القراءة في لغتي والرياضيات ليلتحق بزملائه المتفوقين بإذن الله.</div>
+                            </div>
+                            <div class="bg-white/60 border border-slate-200/60 rounded-xl p-2.5">
+                                <span class="font-bold text-slate-500 block text-[11px] mb-0.5">التقرير الثاني:</span>
+                                <p class="text-[11px] text-slate-400 italic">يُسجل تقييم الشهر الثاني بعد تنفيذ الخطة العلاجية المقترحة.</p>
+                            </div>
+                            <div class="bg-white/60 border border-slate-200/60 rounded-xl p-2.5">
+                                <span class="font-bold text-slate-500 block text-[11px] mb-0.5">التقرير الثالث:</span>
+                                <p class="text-[11px] text-slate-400 italic">التقييم الختامي والتقرير الشامل للتحصيل الأكاديمي والسلوكي.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 pt-2 border-t border-slate-200 text-center">
+                        <p class="text-[11px] font-bold text-andalus-blue">
+                            «فريق المدرسة جاهز لتقديم الدعم والمساعدة وننتظر زيارتكم لنا قريباً»
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================================================= -->
+            <!-- REMEDIAL ACTION PLAN FORM (IMAGE 1 IMPLEMENTATION) -->
+            <!-- ========================================================================= -->
+            <div class="tpl-remedial-section border-2 border-amber-300 bg-amber-50/40 rounded-2xl p-4 sm:p-5 mb-6 break-inside-avoid">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 mb-3 border-b border-amber-200 gap-2">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-800 flex items-center justify-center font-bold">
+                            <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-700"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-extrabold text-amber-950">
+                                استمارة متابعة معلم لطالب منخفض مستواه الدراسي (الخطة العلاجية)
+                            </h3>
+                            <p class="text-[11px] text-amber-800">تُفعل تلقائياً للمقررات التي تتطلب دعماً ومتابعة فورية</p>
+                        </div>
+                    </div>
+                    <span class="text-xs bg-amber-200 text-amber-900 font-bold px-3 py-1 rounded-full border border-amber-300">
+                        متابعة مكثفة
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <!-- Academic Performance In Class -->
+                    <div class="bg-white border border-amber-200 rounded-xl p-3">
+                        <h4 class="font-bold text-slate-800 mb-2 border-b border-slate-100 pb-1 flex items-center gap-1.5">
+                            <i data-lucide="check-square" class="w-3.5 h-3.5 text-andalus-blue"></i>
+                            أولاً: أداء الطالب في المادة الدراسية (نقاط الضعف الملاحظة)
+                        </h4>
+                        <div class="space-y-1.5">
+                            <label class="flex items-center gap-2 text-slate-700">
+                                <input type="checkbox" checked class="rounded border-slate-300 text-amber-600">
+                                <span>ضعف الاستيعاب والفهم للمفاهيم الأساسية</span>
+                            </label>
+                            <label class="flex items-center gap-2 text-slate-700">
+                                <input type="checkbox" checked class="rounded border-slate-300 text-amber-600">
+                                <span>تشتت التركيز والانتباه أثناء الشرح الصفي</span>
+                            </label>
+                            <label class="flex items-center gap-2 text-slate-700">
+                                <input type="checkbox" checked class="rounded border-slate-300 text-amber-600">
+                                <span>ضعف في القراءة والكتابة وإنجاز الواجبات المنزلية</span>
+                            </label>
+                            <label class="flex items-center gap-2 text-slate-700">
+                                <input type="checkbox" class="rounded border-slate-300 text-amber-600">
+                                <span>قلة المشاركة الصفية والتفاعل مع المعلم</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Root Causes (Checkboxes) -->
+                    <div class="bg-white border border-amber-200 rounded-xl p-3">
+                        <h4 class="font-bold text-slate-800 mb-2 border-b border-slate-100 pb-1 flex items-center gap-1.5">
+                            <i data-lucide="help-circle" class="w-3.5 h-3.5 text-amber-600"></i>
+                            ثانياً: الأسباب المحتملة لتدني المستوى الدراسي
+                        </h4>
+                        <div class="grid grid-cols-2 gap-x-2 gap-y-1.5 text-[11px]">
+                            <label class="flex items-center gap-1.5 text-slate-700">
+                                <input type="checkbox" checked class="rounded border-slate-300 text-amber-600">
+                                <span>أسباب أكاديمية (تأسيس)</span>
+                            </label>
+                            <label class="flex items-center gap-1.5 text-slate-700">
+                                <input type="checkbox" class="rounded border-slate-300 text-amber-600">
+                                <span>قلة الثقة بالنفس</span>
+                            </label>
+                            <label class="flex items-center gap-1.5 text-slate-700">
+                                <input type="checkbox" checked class="rounded border-slate-300 text-amber-600">
+                                <span>ضعف متابعة ولي الأمر</span>
+                            </label>
+                            <label class="flex items-center gap-1.5 text-slate-700">
+                                <input type="checkbox" class="rounded border-slate-300 text-amber-600">
+                                <span>صعوبات تعلم نوعية</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- In-Class Procedures -->
+                    <div class="bg-white border border-amber-200 rounded-xl p-3">
+                        <h4 class="font-bold text-slate-800 mb-2 border-b border-slate-100 pb-1 flex items-center gap-1.5">
+                            <i data-lucide="book-open" class="w-3.5 h-3.5 text-emerald-600"></i>
+                            ثالثاً: إجراءات المعلم العلاجية (داخل الفصل)
+                        </h4>
+                        <div class="space-y-1.5 text-[11px]">
+                            <label class="flex items-center gap-2 text-slate-700">
+                                <input type="checkbox" checked class="rounded border-slate-300 text-emerald-600">
+                                <span>تخصيص وقت إضافي للطالب وتبسيط الشرح الفردي</span>
+                            </label>
+                            <label class="flex items-center gap-2 text-slate-700">
+                                <input type="checkbox" checked class="rounded border-slate-300 text-emerald-600">
+                                <span>تقديم أنشطة تفاعلية وأوراق عمل علاجية ميسرة</span>
+                            </label>
+                            <label class="flex items-center gap-2 text-slate-700">
+                                <input type="checkbox" checked class="rounded border-slate-300 text-emerald-600">
+                                <span>متابعة إنجاز الطالب ودفتر المادة يومياً</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Out-of-Class & Parental Procedures -->
+                    <div class="bg-white border border-amber-200 rounded-xl p-3">
+                        <h4 class="font-bold text-slate-800 mb-2 border-b border-slate-100 pb-1 flex items-center gap-1.5">
+                            <i data-lucide="home" class="w-3.5 h-3.5 text-blue-600"></i>
+                            رابعاً: متابعة الطالب والأسرة (خارج الفصل)
+                        </h4>
+                        <div class="space-y-1.5 text-[11px]">
+                            <label class="flex items-center gap-2 text-slate-700">
+                                <input type="checkbox" checked class="rounded border-slate-300 text-blue-600">
+                                <span>تواصل الموجه الطلابي المباشر مع ولي الأمر</span>
+                            </label>
+                            <label class="flex items-center gap-2 text-slate-700">
+                                <input type="checkbox" checked class="rounded border-slate-300 text-blue-600">
+                                <span>إشراك الطالب في مجموعات الأقران والتعلم التعاوني</span>
+                            </label>
+                            <label class="flex items-center gap-2 text-slate-700">
+                                <input type="checkbox" class="rounded border-slate-300 text-blue-600">
+                                <span>توجيه الطالب لبرامج المنصة الإلكترونية الإثرائية</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Official Signatures Footer -->
+            <div class="border-t-2 border-slate-300 pt-4 mt-6 break-inside-avoid">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                        <span class="text-[11px] font-bold text-slate-500 block">معلم الفصل / المادة</span>
+                        <span class="text-xs font-black text-slate-800 mt-1 block">أ. معلم المقررات</span>
+                        <div class="mt-2 text-[10px] text-emerald-600 font-bold flex items-center justify-center gap-1">
+                            <i data-lucide="check" class="w-3 h-3"></i> معتمد إلكترونياً
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                        <span class="text-[11px] font-bold text-slate-500 block">الموجه الطلابي</span>
+                        <span class="text-xs font-black text-slate-800 mt-1 block">أ. إبراهيم علي القرني</span>
+                        <div class="mt-2 text-[10px] text-emerald-600 font-bold flex items-center justify-center gap-1">
+                            <i data-lucide="check" class="w-3 h-3"></i> معتمد إلكترونياً
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                        <span class="text-[11px] font-bold text-slate-500 block">مدير المدرسة</span>
+                        <span class="text-xs font-black text-slate-800 mt-1 block">أ. عبد العزيز عبد الله القرني</span>
+                        <div class="mt-2 text-[10px] text-emerald-600 font-bold flex items-center justify-center gap-1">
+                            <i data-lucide="check-circle-2" class="w-3 h-3"></i> الختم والاعتماد الرسمي
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center text-[10px] text-slate-400 mt-4">
+                    منظومة التقرير الأكاديمي والتعليمي السلوكي © مدارس الأندلس الأهلية بمكة المكرمة
+                </div>
+            </div>
+
+        </div>
+    </template>
+
+    <!-- ========================================================================= -->
+    <!-- JAVASCRIPT: DATA & INTERACTION MANAGEMENT -->
+    <!-- ========================================================================= -->
+    <script>
+        // Subjects Definition (6 subjects)
+        const subjects = [
+            { id: 'digital', name: 'المهارات الرقمية' },
+            { id: 'islamic', name: 'الدراسات الإسلامية والقرآن' },
+            { id: 'english', name: 'اللغة الإنجليزية' },
+            { id: 'arabic', name: 'لغتي الجميلة' },
+            { id: 'science', name: 'العلوم' },
+            { id: 'math', name: 'الرياضيات' }
+        ];
+
+        // Criteria Definition (5 criteria)
+        const criteria = [
+            { id: 'exams', name: 'الاختبارات' },
+            { id: 'homework', name: 'الواجبات' },
+            { id: 'participation', name: 'المشاركة الصفية' },
+            { id: 'behavior', name: 'سلوكيات الطالب داخل القاعة الصفية' },
+            { id: 'attendance', name: 'الحضور والغياب والانضباط' }
+        ];
+
+        // Student Database with distinct IDs
+        const studentsDb = {
+            azzam: {
+                id: '1102938475',
+                name: 'عزام خالد بن شعف المالكي',
+                grade: 'الخامس الابتدائي / أ',
+                date: '2026-10-21',
+                period: 'التقرير الأول خلال الفصل الدراسي الأول',
+                notes: 'نشكر أسرة الطالب على الاهتمام والمتابعة، ونوصي بالتركيز الإضافي على مهارات القراءة في لغتي والرياضيات ليلتحق بزملائه المتفوقين بإذن الله.',
+                scores: {
+                    exams:         { digital: 5, islamic: 5, english: 3, arabic: 1, science: 2, math: 1 },
+                    homework:      { digital: 5, islamic: 5, english: 3, arabic: 1, science: 2, math: 1 },
+                    participation: { digital: 5, islamic: 5, english: 3, arabic: 1, science: 2, math: 1 },
+                    behavior:      { digital: 5, islamic: 5, english: 3, arabic: 1, science: 2, math: 1 },
+                    attendance:    { digital: 5, islamic: 5, english: 3, arabic: 1, science: 2, math: 1 }
+                }
+            },
+            faisal: {
+                id: '1188334455',
+                name: 'فيصل عمر بن عبد الله الزهراني',
+                grade: 'الخامس الابتدائي / أ',
+                date: '2026-10-21',
+                period: 'التقرير الأول خلال الفصل الدراسي الأول',
+                notes: 'طالب متميز ومتعاون، مستواه في المهارات الرقمية والعلوم مبهر ومتقدم.',
+                scores: {
+                    exams:         { digital: 5, islamic: 5, english: 5, arabic: 4, science: 5, math: 4 },
+                    homework:      { digital: 5, islamic: 5, english: 5, arabic: 4, science: 5, math: 5 },
+                    participation: { digital: 5, islamic: 5, english: 4, arabic: 4, science: 5, math: 4 },
+                    behavior:      { digital: 5, islamic: 5, english: 5, arabic: 5, science: 5, math: 5 },
+                    attendance:    { digital: 5, islamic: 5, english: 5, arabic: 5, science: 5, math: 5 }
+                }
+            },
+            rayan: {
+                id: '1199445566',
+                name: 'ريان سعيد بن سعد الغامدي',
+                grade: 'الخامس الابتدائي / ب',
+                date: '2026-10-21',
+                period: 'التقرير الأول خلال الفصل الدراسي الأول',
+                notes: 'أداء مستقر في أغلب المقررات، يحتاج تعزيز مهارات التحدث باللغة الإنجليزية.',
+                scores: {
+                    exams:         { digital: 4, islamic: 4, english: 3, arabic: 3, science: 4, math: 3 },
+                    homework:      { digital: 4, islamic: 4, english: 3, arabic: 4, science: 4, math: 3 },
+                    participation: { digital: 4, islamic: 4, english: 3, arabic: 3, science: 3, math: 3 },
+                    behavior:      { digital: 5, islamic: 4, english: 4, arabic: 4, science: 4, math: 4 },
+                    attendance:    { digital: 4, islamic: 4, english: 4, arabic: 4, science: 4, math: 4 }
+                }
+            }
+        };
+
+        let currentActiveKey = 'azzam';
+        let currentChartInstance = null;
+
+        // View Navigation
+        function goToView(viewId) {
+            document.getElementById('viewPortalSelect').classList.add('hidden');
+            document.getElementById('viewTeacherDashboard').classList.add('hidden');
+            document.getElementById('viewParentReport').classList.add('hidden');
+
+            const sessionBadge = document.getElementById('sessionIndicator');
+            const btnExit = document.getElementById('btnExitPortal');
+            const btnPrint = document.getElementById('btnGlobalPrint');
+
+            if (viewId === 'portalSelect') {
+                document.getElementById('viewPortalSelect').classList.remove('hidden');
+                sessionBadge.classList.add('hidden');
+                btnExit.classList.add('hidden');
+                btnPrint.classList.add('hidden');
+            } else if (viewId === 'teacher') {
+                document.getElementById('viewTeacherDashboard').classList.remove('hidden');
+                sessionBadge.classList.remove('hidden');
+                btnExit.classList.remove('hidden');
+                btnPrint.classList.remove('hidden');
+                document.getElementById('sessionRoleText').textContent = 'لوحة رصد المعلم';
+                document.getElementById('sessionRoleBadge').className = 'w-2 h-2 rounded-full bg-amber-400 animate-pulse';
+                renderReportInContainer('teacherReportContainer', 'teacher');
+            } else if (viewId === 'parent') {
+                document.getElementById('viewParentReport').classList.remove('hidden');
+                sessionBadge.classList.remove('hidden');
+                btnExit.classList.remove('hidden');
+                btnPrint.classList.remove('hidden');
+                document.getElementById('sessionRoleText').textContent = 'بوابة ولي الأمر';
+                document.getElementById('sessionRoleBadge').className = 'w-2 h-2 rounded-full bg-emerald-400 animate-pulse';
+                renderReportInContainer('parentReportContainer', 'parent');
+            }
+            lucide.createIcons();
+        }
+
+        // Parent Login Handler
+        function parentLogin() {
+            const idInput = document.getElementById('parentInputId').value.trim();
+            let matchedKey = Object.keys(studentsDb).find(k => studentsDb[k].id === idInput);
+            if (!matchedKey) matchedKey = 'azzam'; // fallback to Azzam demo
+
+            currentActiveKey = matchedKey;
+            document.getElementById('parentStudentGreet').textContent = studentsDb[matchedKey].name;
+            goToView('parent');
+        }
+
+        // Teacher Login Handler
+        function teacherLogin() {
+            const code = document.getElementById('teacherInputCode').value.trim();
+            // Accepts any code or demo 1234
+            goToView('teacher');
+        }
+
+        // Switch Student (Teacher Mode)
+        function switchStudent(key) {
+            currentActiveKey = key;
+            renderReportInContainer('teacherReportContainer', 'teacher');
+        }
+
+        // Update Period Title
+        function updatePeriodTitle(val) {
+            studentsDb[currentActiveKey].period = val;
+            const el = document.querySelector('#teacherReportContainer .tpl-period-badge');
+            if (el) el.textContent = val;
+        }
+
+        // Update Date
+        function updateReportDate(val) {
+            studentsDb[currentActiveKey].date = val;
+            const el = document.querySelector('#teacherReportContainer .tpl-report-date');
+            if (el) el.textContent = `التاريخ: ${val}`;
+        }
+
+        // Render Report Template
+        function renderReportInContainer(containerId, mode) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+
+            const template = document.getElementById('reportTemplate');
+            const clone = template.content.cloneNode(true);
+            const student = studentsDb[currentActiveKey];
+
+            // Fill Metadata
+            clone.querySelector('.tpl-student-name').textContent = student.name;
+            clone.querySelector('.tpl-student-grade').textContent = student.grade;
+            clone.querySelector('.tpl-period-badge').textContent = student.period;
+            clone.querySelector('.tpl-report-date').textContent = `التاريخ: ${student.date}`;
+
+            const notesEl = clone.querySelector('.tpl-notes-editable');
+            if (mode === 'teacher') {
+                notesEl.innerHTML = `
+                    <textarea rows="2" onchange="studentsDb['${currentActiveKey}'].notes = this.value"
+                              class="w-full text-xs text-slate-800 bg-amber-50/50 p-2 border border-amber-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-andalus-blue">${student.notes}</textarea>
+                `;
+            } else {
+                notesEl.textContent = student.notes;
+            }
+
+            // Fill Matrix
+            const tbody = clone.querySelector('.tpl-matrix-body');
+            tbody.innerHTML = '';
+
+            let totalSum = 0;
+            const subjectSums = { digital: 0, islamic: 0, english: 0, arabic: 0, science: 0, math: 0 };
+
+            criteria.forEach(crit => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50 transition border-b border-slate-200';
+
+                let rowHtml = `
+                    <td class="p-2.5 text-right font-bold text-slate-800 bg-slate-50/80 border border-slate-300">
+                        ${crit.name}
+                    </td>
+                `;
+
+                let rowSum = 0;
+
+                subjects.forEach(sub => {
+                    const score = (student.scores[crit.id] && student.scores[crit.id][sub.id]) || 1;
+                    rowSum += score;
+                    subjectSums[sub.id] += score;
+                    totalSum += score;
+
+                    let scoreBadgeColor = 'bg-rose-100 text-rose-800 border-rose-300';
+                    if (score === 5) scoreBadgeColor = 'bg-emerald-100 text-emerald-800 border-emerald-300';
+                    else if (score === 4) scoreBadgeColor = 'bg-blue-100 text-blue-800 border-blue-300';
+                    else if (score === 3) scoreBadgeColor = 'bg-sky-100 text-sky-800 border-sky-300';
+                    else if (score === 2) scoreBadgeColor = 'bg-amber-100 text-amber-800 border-amber-300';
+
+                    if (mode === 'teacher') {
+                        rowHtml += `
+                            <td class="p-1.5 border border-slate-300 text-center">
+                                <select onchange="updateCellScore('${crit.id}', '${sub.id}', this.value)" 
+                                        class="text-xs font-black text-center py-1 px-1.5 rounded-lg border focus:ring-2 focus:ring-andalus-blue focus:outline-none cursor-pointer ${scoreBadgeColor}">
+                                    <option value="5" ${score === 5 ? 'selected' : ''}>5 (متفوق)</option>
+                                    <option value="4" ${score === 4 ? 'selected' : ''}>4 (متقدم)</option>
+                                    <option value="3" ${score === 3 ? 'selected' : ''}>3 (متمكن)</option>
+                                    <option value="2" ${score === 2 ? 'selected' : ''}>2 (مقبول)</option>
+                                    <option value="1" ${score === 1 ? 'selected' : ''}>1 (ضعيف)</option>
+                                </select>
+                            </td>
+                        `;
+                    } else {
+                        rowHtml += `
+                            <td class="p-2 border border-slate-300 text-center">
+                                <span class="inline-block w-7 h-7 leading-7 rounded-lg text-xs font-black border ${scoreBadgeColor}">
+                                    ${score}
+                                </span>
+                            </td>
+                        `;
+                    }
+                });
+
+                rowHtml += `
+                    <td class="p-2 border border-slate-300 text-center font-extrabold text-andalus-darkBlue bg-slate-50">
+                        ${rowSum}
+                    </td>
+                `;
+
+                tr.innerHTML = rowHtml;
+                tbody.appendChild(tr);
+            });
+
+            // Update column sums
+            subjects.forEach(s => {
+                const el = clone.querySelector(`.tpl-col-${s.id}`);
+                if (el) el.textContent = `${subjectSums[s.id]} / 25`;
+            });
+
+            // Update KPIs
+            clone.querySelector('.tpl-total-score').textContent = totalSum;
+            clone.querySelector('.tpl-total-matrix-sum').textContent = `${totalSum} / 150`;
+
+            const gpa = (totalSum / 30).toFixed(1);
+            clone.querySelector('.tpl-gpa').textContent = gpa;
+
+            const percentage = ((totalSum / 150) * 100).toFixed(1);
+            clone.querySelector('.tpl-percentage').textContent = `${percentage}%`;
+            clone.querySelector('.tpl-progress-bar').style.width = `${percentage}%`;
+
+            // Performance Level calculation
+            const statusCard = clone.querySelector('.tpl-status-card');
+            const statusTitle = clone.querySelector('.tpl-status-title');
+            const statusSub = clone.querySelector('.tpl-status-sub');
+            const remedialSec = clone.querySelector('.tpl-remedial-section');
+
+            let lvlTitle = '';
+            let lvlSub = '';
+            let cardClasses = '';
+
+            if (totalSum >= 130) {
+                lvlTitle = 'طالب متفوق';
+                lvlSub = 'أداء أكاديمي وسلوكي متميز';
+                cardClasses = 'bg-emerald-50 border-2 border-emerald-400 text-emerald-900';
+            } else if (totalSum >= 105) {
+                lvlTitle = 'طالب متقدم';
+                lvlSub = 'أداء جيد جداً ومبشر';
+                cardClasses = 'bg-blue-50 border-2 border-blue-400 text-blue-900';
+            } else if (totalSum >= 90) {
+                lvlTitle = 'طالب متمكن';
+                lvlSub = 'حقق المعايير المستهدفة';
+                cardClasses = 'bg-sky-50 border-2 border-sky-400 text-sky-900';
+            } else if (totalSum >= 60) {
+                lvlTitle = 'يحتاج الى دعم ومتابعة';
+                lvlSub = 'مطلوب تفعيل الخطة العلاجية';
+                cardClasses = 'bg-amber-50 border-2 border-amber-400 text-amber-900';
+            } else {
+                lvlTitle = 'المستوى منخفض جداً';
+                lvlSub = 'تدخل علاجي وإشرافي فوري';
+                cardClasses = 'bg-rose-50 border-2 border-rose-400 text-rose-900';
+            }
+
+            statusCard.className = `col-span-2 sm:col-span-1 rounded-2xl p-3 flex flex-col justify-center items-center text-center shadow-sm ${cardClasses}`;
+            statusTitle.textContent = lvlTitle;
+            statusSub.textContent = lvlSub;
+
+            container.appendChild(clone);
+
+            // Initialize Chart on the rendered canvas
+            const canvas = container.querySelector('.tpl-chart-canvas');
+            initChart(canvas, subjectSums);
+            lucide.createIcons();
+        }
+
+        // Update single score
+        function updateCellScore(critId, subId, val) {
+            studentsDb[currentActiveKey].scores[critId][subId] = parseInt(val, 10);
+            renderReportInContainer('teacherReportContainer', 'teacher');
+        }
+
+        // Initialize Chart.js
+        function initChart(canvas, subjectSums) {
+            if (!canvas) return;
+            const labels = subjects.map(s => s.name);
+            const data = subjects.map(s => subjectSums[s.id]);
+
+            new Chart(canvas, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'درجة المقرر (من 25)',
+                        data: data,
+                        backgroundColor: [
+                            '#059669', // Digital
+                            '#059669', // Islamic
+                            '#0284c7', // English
+                            '#dc2626', // Arabic
+                            '#d97706', // Science
+                            '#dc2626'  // Math
+                        ],
+                        borderRadius: 8,
+                        barThickness: 24
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 25,
+                            ticks: { font: { family: 'Cairo' } },
+                            grid: { color: '#e2e8f0' }
+                        },
+                        x: {
+                            ticks: { font: { family: 'Cairo', size: 10 } },
+                            grid: { display: false }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+
+        // Save Evaluation Toast
+        function saveStudentEvaluation() {
+            alert('تم حفظ التقييم واعتماده بنجاح في قاعدة بيانات مدارس الأندلس!');
+        }
+
+        // Share WhatsApp Link
+        function shareWhatsAppLink() {
+            const student = studentsDb[currentActiveKey];
+            const text = encodeURIComponent(`السلام عليكم ورحمة الله، ولي أمر الطالب ${student.name}.. يمكنكم الاطلاع على التقرير الأكاديمي والتعليمي السلوكي المعتمد عبر الرابط: https://andalus-prayer-platform.vercel.app/academic برقم الهوية: ${student.id}`);
+            window.open(`https://wa.me/?text=${text}`, '_blank');
+        }
+
+        // Initial Load
+        window.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
