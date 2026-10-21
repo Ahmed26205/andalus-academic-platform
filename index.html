@@ -357,41 +357,58 @@
                     </div>
                 </div>
 
-                <!-- Step-by-Step Class & Student Navigation Bar -->
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center bg-slate-50 p-3 rounded-xl border border-slate-200">
-                    <!-- Class Selector Tabs (4 cols) -->
-                    <div class="md:col-span-4">
-                        <label class="block text-[11px] font-bold text-slate-600 mb-1.5">1. اختر الفصل الدراسي:</label>
+                <!-- Step-by-Step Class & Student Navigation Bar (Row 2 - Full Width & Spacious) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3.5 items-end bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                    <!-- Class Selector Tabs (3 cols) -->
+                    <div class="lg:col-span-3">
+                        <label class="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                            <i data-lucide="users" class="w-3.5 h-3.5 text-andalus-blue"></i>
+                            <span>1. اختر الفصل الدراسي:</span>
+                        </label>
                         <div class="grid grid-cols-2 gap-2" id="classTabsContainer">
                             <button onclick="selectClassTab('5/أ')" id="btnClass_5A" class="class-tab-btn py-2 px-3 text-xs font-bold rounded-xl border transition flex items-center justify-center gap-1.5 bg-andalus-darkBlue text-white border-andalus-darkBlue shadow-sm">
-                                <i data-lucide="users" class="w-3.5 h-3.5"></i>
                                 <span>فصل 5 / أ</span>
                             </button>
                             <button onclick="selectClassTab('5/ب')" id="btnClass_5B" class="class-tab-btn py-2 px-3 text-xs font-bold rounded-xl border transition flex items-center justify-center gap-1.5 bg-white text-slate-700 border-slate-300 hover:bg-slate-100">
-                                <i data-lucide="users" class="w-3.5 h-3.5"></i>
                                 <span>فصل 5 / ب</span>
                             </button>
                         </div>
                     </div>
 
-                    <!-- Student Selector Dropdown (4 cols) -->
-                    <div class="md:col-span-4">
-                        <label class="block text-[11px] font-bold text-slate-600 mb-1.5">2. اختر الطالب لرصد الدرجات:</label>
+                    <!-- Student Selector Dropdown (4 cols - Very Wide for Full Names!) -->
+                    <div class="lg:col-span-4">
+                        <label class="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                            <i data-lucide="user" class="w-3.5 h-3.5 text-andalus-blue"></i>
+                            <span>2. اسم الطالب الرباعي:</span>
+                        </label>
                         <select id="selectStudent" onchange="switchStudent(this.value)" 
-                                class="w-full text-xs font-bold text-slate-900 border border-slate-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-white shadow-sm">
+                                class="w-full text-xs sm:text-sm font-black text-slate-900 border border-slate-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-white shadow-sm">
                             <!-- Populated dynamically based on selected class -->
                         </select>
                     </div>
 
-                    <!-- Period & Month Selector (4 cols) -->
-                    <div class="md:col-span-4">
-                        <label class="block text-[11px] font-bold text-slate-600 mb-1.5">3. شهر التقرير الأكاديمي:</label>
+                    <!-- Period & Month Selector (3 cols) -->
+                    <div class="lg:col-span-3">
+                        <label class="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                            <i data-lucide="calendar" class="w-3.5 h-3.5 text-andalus-blue"></i>
+                            <span>3. شهر التقرير:</span>
+                        </label>
                         <select id="selectPeriod" onchange="updatePeriodTitle(this.value)"
-                                class="w-full text-xs font-bold text-slate-900 border border-slate-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-white shadow-sm">
-                            <option value="تقرير شهر جمادى الأولى 1447هـ (التقرير الأول)" selected>تقرير شهر جمادى الأولى 1447هـ</option>
-                            <option value="تقرير شهر جمادى الآخرة 1447هـ (التقرير الثاني)">تقرير شهر جمادى الآخرة 1447هـ</option>
-                            <option value="تقرير شهر رجب 1447هـ (التقرير الثالث)">تقرير شهر رجب 1447هـ</option>
+                                class="w-full text-xs sm:text-sm font-bold text-slate-900 border border-slate-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-white shadow-sm">
+                            <option value="تقرير شهر جمادى الأولى 1447هـ" selected>شهر جمادى الأولى 1447هـ</option>
+                            <option value="تقرير شهر جمادى الآخرة 1447هـ">شهر جمادى الآخرة 1447هـ</option>
+                            <option value="تقرير شهر رجب 1447هـ">شهر رجب 1447هـ</option>
                         </select>
+                    </div>
+
+                    <!-- Date Selection (2 cols) -->
+                    <div class="lg:col-span-2">
+                        <label class="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                            <i data-lucide="clock" class="w-3.5 h-3.5 text-andalus-blue"></i>
+                            <span>تاريخ الرصد:</span>
+                        </label>
+                        <input type="date" id="inputDate" value="2026-10-21" onchange="updateReportDate(this.value)"
+                               class="w-full text-xs font-bold text-slate-900 border border-slate-300 rounded-xl px-2.5 py-1.5 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-white shadow-sm">
                     </div>
                 </div>
             </div>
