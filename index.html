@@ -239,13 +239,25 @@
                         </div>
                     </div>
 
-                    <!-- Quick Demo Chips -->
-                    <div class="flex items-center justify-between text-[11px] bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-slate-600">
-                        <span class="font-bold">💡 تجربة سريعة:</span>
-                        <div class="flex gap-2 font-bold">
-                            <button onclick="setParentDemo('1102938475')" class="hover:text-andalus-blue underline">عزام (يحتاج دعم)</button>
-                            <span class="text-slate-300">|</span>
-                            <button onclick="setParentDemo('1188334455')" class="hover:text-andalus-blue underline">فيصل (متفوق)</button>
+                    <!-- Quick Demo Chips & Search by Student Dropdown -->
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between text-[11px] bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-slate-600">
+                            <span class="font-bold">💡 تجربة سريعة:</span>
+                            <div class="flex gap-2 font-bold">
+                                <button onclick="setParentDemo('1102938475')" class="hover:text-andalus-blue underline">عزام (يحتاج دعم)</button>
+                                <span class="text-slate-300">|</span>
+                                <button onclick="setParentDemo('1188334455')" class="hover:text-andalus-blue underline">فيصل (متفوق)</button>
+                                <span class="text-slate-300">|</span>
+                                <button onclick="setParentDemo('1199445566')" class="hover:text-andalus-blue underline">ريان (متقدم)</button>
+                            </div>
+                        </div>
+
+                        <!-- Dropdown of all 340 students in 15 classes -->
+                        <div>
+                            <select id="parentQuickSelect" onchange="if(this.value){setParentDemo(this.value)}"
+                                    class="w-full text-xs font-bold text-slate-700 bg-white border border-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-andalus-blue shadow-sm">
+                                <option value="">🔍 أو اختر أي طالب للتجربة الفورية (340 طالباً بمدارس الأندلس)...</option>
+                            </select>
                         </div>
                     </div>
 
@@ -919,6 +931,7 @@
     <!-- ========================================================================= -->
     <!-- JAVASCRIPT: DATA & INTERACTION MANAGEMENT -->
     <!-- ========================================================================= -->
+    <script src="assets/students-data.js"></script>
     <script>
         // Subjects Definition (6 subjects)
         const subjects = [
@@ -938,106 +951,6 @@
             { id: 'behavior', name: 'سلوكيات الطالب داخل القاعة الصفية' },
             { id: 'attendance', name: 'الحضور والغياب والانضباط' }
         ];
-
-        // Student Database with distinct IDs
-        const studentsDb = {
-            azzam: {
-                id: '1102938475',
-                name: 'عزام خالد بن شعف المالكي',
-                grade: 'الخامس الابتدائي / أ',
-                classCode: '5/أ',
-                date: '2026-10-21',
-                period: 'تقرير شهر جمادى الأولى 1447هـ',
-                notes: 'نشكر أسرة الطالب على الاهتمام والمتابعة، ونوصي بالتركيز الإضافي على مهارات القراءة في لغتي والرياضيات ليلتحق بزملائه المتفوقين بإذن الله.',
-                scores: {
-                    exams:         { digital: 5, islamic: 5, english: 3, arabic: 1, science: 2, math: 1 },
-                    homework:      { digital: 5, islamic: 5, english: 3, arabic: 1, science: 2, math: 1 },
-                    participation: { digital: 5, islamic: 5, english: 3, arabic: 1, science: 2, math: 1 },
-                    behavior:      { digital: 5, islamic: 5, english: 3, arabic: 1, science: 2, math: 1 },
-                    attendance:    { digital: 5, islamic: 5, english: 3, arabic: 1, science: 2, math: 1 }
-                },
-                remedial: {
-                    perf_1: true,
-                    perf_2: true,
-                    perf_3: true,
-                    perf_4: false,
-                    cause_1: true,
-                    cause_2: false,
-                    cause_3: true,
-                    cause_4: false,
-                    proc_1: true,
-                    proc_2: true,
-                    proc_3: true,
-                    out_1: true,
-                    out_2: true,
-                    out_3: false
-                }
-            },
-            faisal: {
-                id: '1188334455',
-                name: 'فيصل عمر بن عبد الله الزهراني',
-                grade: 'الخامس الابتدائي / أ',
-                classCode: '5/أ',
-                date: '2026-10-21',
-                period: 'تقرير شهر جمادى الأولى 1447هـ',
-                notes: 'طالب متميز ومتعاون، مستواه في المهارات الرقمية والعلوم مبهر ومتقدم، نبارك للأسرة الكريمة هذا التميز.',
-                scores: {
-                    exams:         { digital: 5, islamic: 5, english: 5, arabic: 4, science: 5, math: 4 },
-                    homework:      { digital: 5, islamic: 5, english: 5, arabic: 4, science: 5, math: 5 },
-                    participation: { digital: 5, islamic: 5, english: 4, arabic: 4, science: 5, math: 4 },
-                    behavior:      { digital: 5, islamic: 5, english: 5, arabic: 5, science: 5, math: 5 },
-                    attendance:    { digital: 5, islamic: 5, english: 5, arabic: 5, science: 5, math: 5 }
-                },
-                remedial: {
-                    perf_1: false,
-                    perf_2: false,
-                    perf_3: false,
-                    perf_4: false,
-                    cause_1: false,
-                    cause_2: false,
-                    cause_3: false,
-                    cause_4: false,
-                    proc_1: false,
-                    proc_2: false,
-                    proc_3: false,
-                    out_1: false,
-                    out_2: false,
-                    out_3: false
-                }
-            },
-            rayan: {
-                id: '1199445566',
-                name: 'ريان سعيد بن سعد الغامدي',
-                grade: 'الخامس الابتدائي / ب',
-                classCode: '5/ب',
-                date: '2026-10-21',
-                period: 'تقرير شهر جمادى الأولى 1447هـ',
-                notes: 'أداء مستقر في أغلب المقررات، يحتاج تعزيز مهارات التحدث باللغة الإنجليزية وحل التدريبات الإضافية.',
-                scores: {
-                    exams:         { digital: 4, islamic: 4, english: 3, arabic: 3, science: 4, math: 3 },
-                    homework:      { digital: 4, islamic: 4, english: 3, arabic: 4, science: 4, math: 3 },
-                    participation: { digital: 4, islamic: 4, english: 3, arabic: 3, science: 3, math: 3 },
-                    behavior:      { digital: 5, islamic: 4, english: 4, arabic: 4, science: 4, math: 4 },
-                    attendance:    { digital: 4, islamic: 4, english: 4, arabic: 4, science: 4, math: 4 }
-                },
-                remedial: {
-                    perf_1: false,
-                    perf_2: true,
-                    perf_3: false,
-                    perf_4: false,
-                    cause_1: false,
-                    cause_2: true,
-                    cause_3: false,
-                    cause_4: false,
-                    proc_1: true,
-                    proc_2: false,
-                    proc_3: true,
-                    out_1: false,
-                    out_2: true,
-                    out_3: true
-                }
-            }
-        };
 
         // Local Storage Utilities
         function saveDbToStorage() {
@@ -1065,6 +978,8 @@
 
         const studentKeys = Object.keys(studentsDb);
         let currentActiveKey = 'azzam';
+        let currentClassCode = '5/1';
+        let currentClassStudentKeys = [];
 
         // Toggle Auth Cards (Parent default vs Teacher switch)
         function toggleAuthRole(role) {
@@ -1100,10 +1015,13 @@
             lucide.createIcons();
         }
 
-        // Parent Login
+        // Parent Login (Matches by exact 10-digit ID or by Student Name)
         function parentLogin() {
             const idInput = document.getElementById('parentInputId').value.trim();
             let matchedKey = studentKeys.find(k => studentsDb[k].id === idInput);
+            if (!matchedKey && idInput) {
+                matchedKey = studentKeys.find(k => studentsDb[k].name === idInput || studentsDb[k].name.includes(idInput));
+            }
             if (!matchedKey) matchedKey = 'azzam'; // fallback demo
 
             currentActiveKey = matchedKey;
@@ -1138,33 +1056,63 @@
             document.getElementById('sessionRoleBadge').className = 'w-2 h-2 rounded-full bg-amber-400 animate-pulse';
 
             initClassDropdown();
-            selectClassTab('5/أ');
+            selectClassTab(currentClassCode || '5/1');
             lucide.createIcons();
         }
 
-        // Available Classes Definition
-        const availableClasses = {
-            '5/أ': { code: '5/أ', label: 'فصل 5 / أ (المرحلة الابتدائية)' },
-            '5/ب': { code: '5/ب', label: 'فصل 5 / ب (المرحلة الابتدائية)' }
-        };
-
-        let currentClassCode = '5/أ';
-        let currentClassStudentKeys = [];
-
+        // Dropdown Initializer with Optgroups for 4 Grades & 15 Classes
         function initClassDropdown() {
             const selectClassEl = document.getElementById('selectClass');
             if (!selectClassEl) return;
             selectClassEl.innerHTML = '';
+
+            // Group classes by Grade
+            const gradesMap = {};
             for (const cKey in availableClasses) {
-                const opt = document.createElement('option');
-                opt.value = cKey;
-                opt.textContent = availableClasses[cKey].label;
-                selectClassEl.appendChild(opt);
+                const cls = availableClasses[cKey];
+                const gName = cls.grade || 'المرحلة الابتدائية';
+                if (!gradesMap[gName]) gradesMap[gName] = [];
+                gradesMap[gName].push(cls);
+            }
+
+            for (const gName in gradesMap) {
+                const group = document.createElement('optgroup');
+                group.label = `📌 ${gName}`;
+                gradesMap[gName].forEach(cls => {
+                    const opt = document.createElement('option');
+                    opt.value = cls.code;
+                    opt.textContent = `${cls.label} (${cls.studentCount} طالباً)`;
+                    group.appendChild(opt);
+                });
+                selectClassEl.appendChild(group);
             }
             selectClassEl.value = currentClassCode;
         }
 
-        // Navigate Class (Previous / Next - identical to student navigation!)
+        // Initialize Quick Student Dropdown for Parents (all 340 students)
+        function initParentQuickStudentDropdown() {
+            const parentQuickSelect = document.getElementById('parentQuickSelect');
+            if (!parentQuickSelect) return;
+            parentQuickSelect.innerHTML = '<option value="">🔍 أو اختر أي طالب للتجربة الفورية (340 طالباً بمدارس الأندلس)...</option>';
+            
+            for (const cKey in availableClasses) {
+                const cls = availableClasses[cKey];
+                const group = document.createElement('optgroup');
+                group.label = `فصل ${cls.code} - ${cls.label}`;
+                
+                const cStudentKeys = studentKeys.filter(k => studentsDb[k].classCode === cKey);
+                cStudentKeys.forEach(k => {
+                    const st = studentsDb[k];
+                    const opt = document.createElement('option');
+                    opt.value = st.id;
+                    opt.textContent = `${st.name} (هوية: ${st.id})`;
+                    group.appendChild(opt);
+                });
+                parentQuickSelect.appendChild(group);
+            }
+        }
+
+        // Navigate Class (Previous / Next - across all 15 classes!)
         function navigateClass(direction) {
             const classKeys = Object.keys(availableClasses);
             let idx = classKeys.indexOf(currentClassCode);
@@ -1590,6 +1538,7 @@
         // Initial Load
         window.addEventListener('DOMContentLoaded', () => {
             initClassDropdown();
+            initParentQuickStudentDropdown();
             lucide.createIcons();
         });
     </script>
