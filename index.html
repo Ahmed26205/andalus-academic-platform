@@ -375,45 +375,65 @@
 
                 <!-- Step-by-Step Class & Student Navigation Bar (Row 2 - Full Width & Spacious) -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3.5 items-end bg-slate-50 p-4 rounded-2xl border border-slate-200">
-                    <!-- Class Selector Tabs (3 cols) -->
-                    <div class="lg:col-span-3">
-                        <label class="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                            <i data-lucide="users" class="w-3.5 h-3.5 text-andalus-blue"></i>
-                            <span>1. اختر الفصل الدراسي:</span>
+                    <!-- Class Selector with Previous / Next Controls (identical to student!) -->
+                    <div class="lg:col-span-4">
+                        <label class="block text-xs font-bold text-slate-700 mb-1.5 flex items-center justify-between">
+                            <span class="flex items-center gap-1.5">
+                                <i data-lucide="layers" class="w-3.5 h-3.5 text-andalus-blue"></i>
+                                <span>1. الفصل الدراسي:</span>
+                            </span>
+                            <span class="text-[10px] text-slate-400 font-normal">تنقل بالفصول</span>
                         </label>
-                        <div class="grid grid-cols-2 gap-2" id="classTabsContainer">
-                            <button onclick="selectClassTab('5/أ')" id="btnClass_5A" class="class-tab-btn py-2 px-3 text-xs font-bold rounded-xl border transition flex items-center justify-center gap-1.5 bg-andalus-darkBlue text-white border-andalus-darkBlue shadow-sm">
-                                <span>فصل 5 / أ</span>
+                        <div class="flex items-center gap-1.5">
+                            <button onclick="navigateClass(-1)" title="الفصل السابق" 
+                                    class="p-2 bg-white hover:bg-slate-100 text-slate-700 rounded-xl border border-slate-300 transition text-xs font-bold shadow-sm flex items-center justify-center">
+                                <i data-lucide="chevron-right" class="w-4 h-4"></i>
                             </button>
-                            <button onclick="selectClassTab('5/ب')" id="btnClass_5B" class="class-tab-btn py-2 px-3 text-xs font-bold rounded-xl border transition flex items-center justify-center gap-1.5 bg-white text-slate-700 border-slate-300 hover:bg-slate-100">
-                                <span>فصل 5 / ب</span>
+                            <select id="selectClass" onchange="selectClassTab(this.value)" 
+                                    class="w-full text-xs sm:text-sm font-black text-slate-900 border border-slate-300 rounded-xl px-2.5 py-2 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-white shadow-sm">
+                            </select>
+                            <button onclick="navigateClass(1)" title="الفصل التالي" 
+                                    class="p-2 bg-white hover:bg-slate-100 text-slate-700 rounded-xl border border-slate-300 transition text-xs font-bold shadow-sm flex items-center justify-center">
+                                <i data-lucide="chevron-left" class="w-4 h-4"></i>
                             </button>
                         </div>
                     </div>
 
-                    <!-- Student Selector Dropdown (4 cols - Very Wide for Full Names!) -->
+                    <!-- Student Selector Dropdown with Previous / Next Controls -->
                     <div class="lg:col-span-4">
-                        <label class="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                            <i data-lucide="user" class="w-3.5 h-3.5 text-andalus-blue"></i>
-                            <span>2. اسم الطالب الرباعي:</span>
+                        <label class="block text-xs font-bold text-slate-700 mb-1.5 flex items-center justify-between">
+                            <span class="flex items-center gap-1.5">
+                                <i data-lucide="user" class="w-3.5 h-3.5 text-andalus-blue"></i>
+                                <span>2. اسم الطالب الرباعي:</span>
+                            </span>
+                            <span class="text-[10px] text-slate-400 font-normal">تنقل بالطلاب</span>
                         </label>
-                        <select id="selectStudent" onchange="switchStudent(this.value)" 
-                                class="w-full text-xs sm:text-sm font-black text-slate-900 border border-slate-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-white shadow-sm">
-                            <!-- Populated dynamically based on selected class -->
-                        </select>
+                        <div class="flex items-center gap-1.5">
+                            <button onclick="navigateStudent(-1)" title="الطالب السابق" 
+                                    class="p-2 bg-white hover:bg-slate-100 text-slate-700 rounded-xl border border-slate-300 transition text-xs font-bold shadow-sm flex items-center justify-center">
+                                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                            </button>
+                            <select id="selectStudent" onchange="switchStudent(this.value)" 
+                                    class="w-full text-xs sm:text-sm font-black text-slate-900 border border-slate-300 rounded-xl px-2.5 py-2 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-white shadow-sm">
+                            </select>
+                            <button onclick="navigateStudent(1)" title="الطالب التالي" 
+                                    class="p-2 bg-white hover:bg-slate-100 text-slate-700 rounded-xl border border-slate-300 transition text-xs font-bold shadow-sm flex items-center justify-center">
+                                <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                            </button>
+                        </div>
                     </div>
 
-                    <!-- Period & Month Selector (3 cols) -->
-                    <div class="lg:col-span-3">
+                    <!-- Period & Month Selector (2 cols) -->
+                    <div class="lg:col-span-2">
                         <label class="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
                             <i data-lucide="calendar" class="w-3.5 h-3.5 text-andalus-blue"></i>
-                            <span>3. شهر التقرير:</span>
+                            <span>3. الشهر:</span>
                         </label>
                         <select id="selectPeriod" onchange="updatePeriodTitle(this.value)"
-                                class="w-full text-xs sm:text-sm font-bold text-slate-900 border border-slate-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-white shadow-sm">
-                            <option value="تقرير شهر جمادى الأولى 1447هـ" selected>شهر جمادى الأولى 1447هـ</option>
-                            <option value="تقرير شهر جمادى الآخرة 1447هـ">شهر جمادى الآخرة 1447هـ</option>
-                            <option value="تقرير شهر رجب 1447هـ">شهر رجب 1447هـ</option>
+                                class="w-full text-xs font-bold text-slate-900 border border-slate-300 rounded-xl px-2 py-2 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-white shadow-sm">
+                            <option value="تقرير شهر جمادى الأولى 1447هـ" selected>جمادى الأولى 1447هـ</option>
+                            <option value="تقرير شهر جمادى الآخرة 1447هـ">جمادى الآخرة 1447هـ</option>
+                            <option value="تقرير شهر رجب 1447هـ">رجب 1447هـ</option>
                         </select>
                     </div>
 
@@ -424,7 +444,7 @@
                             <span>تاريخ الرصد:</span>
                         </label>
                         <input type="date" id="inputDate" value="2026-10-21" onchange="updateReportDate(this.value)"
-                               class="w-full text-xs font-bold text-slate-900 border border-slate-300 rounded-xl px-2.5 py-1.5 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-white shadow-sm">
+                               class="w-full text-xs font-bold text-slate-900 border border-slate-300 rounded-xl px-2 py-2 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-white shadow-sm">
                     </div>
                 </div>
             </div>
@@ -1117,35 +1137,65 @@
             document.getElementById('sessionRoleText').textContent = 'لوحة رصد المعلم';
             document.getElementById('sessionRoleBadge').className = 'w-2 h-2 rounded-full bg-amber-400 animate-pulse';
 
+            initClassDropdown();
             selectClassTab('5/أ');
             lucide.createIcons();
         }
 
-        // Class Tabs Selector
+        // Available Classes Definition
+        const availableClasses = {
+            '5/أ': { code: '5/أ', label: 'فصل 5 / أ (المرحلة الابتدائية)' },
+            '5/ب': { code: '5/ب', label: 'فصل 5 / ب (المرحلة الابتدائية)' }
+        };
+
+        let currentClassCode = '5/أ';
+        let currentClassStudentKeys = [];
+
+        function initClassDropdown() {
+            const selectClassEl = document.getElementById('selectClass');
+            if (!selectClassEl) return;
+            selectClassEl.innerHTML = '';
+            for (const cKey in availableClasses) {
+                const opt = document.createElement('option');
+                opt.value = cKey;
+                opt.textContent = availableClasses[cKey].label;
+                selectClassEl.appendChild(opt);
+            }
+            selectClassEl.value = currentClassCode;
+        }
+
+        // Navigate Class (Previous / Next - identical to student navigation!)
+        function navigateClass(direction) {
+            const classKeys = Object.keys(availableClasses);
+            let idx = classKeys.indexOf(currentClassCode);
+            idx += direction;
+            if (idx < 0) idx = classKeys.length - 1;
+            if (idx >= classKeys.length) idx = 0;
+            selectClassTab(classKeys[idx]);
+        }
+
+        // Class Selector
         function selectClassTab(classCode) {
-            const btnA = document.getElementById('btnClass_5A');
-            const btnB = document.getElementById('btnClass_5B');
-            if (btnA && btnB) {
-                if (classCode === '5/أ') {
-                    btnA.className = 'class-tab-btn py-2 px-3 text-xs font-bold rounded-xl border transition flex items-center justify-center gap-1.5 bg-andalus-darkBlue text-white border-andalus-darkBlue shadow-sm';
-                    btnB.className = 'class-tab-btn py-2 px-3 text-xs font-bold rounded-xl border transition flex items-center justify-center gap-1.5 bg-white text-slate-700 border-slate-300 hover:bg-slate-100';
-                } else {
-                    btnB.className = 'class-tab-btn py-2 px-3 text-xs font-bold rounded-xl border transition flex items-center justify-center gap-1.5 bg-andalus-darkBlue text-white border-andalus-darkBlue shadow-sm';
-                    btnA.className = 'class-tab-btn py-2 px-3 text-xs font-bold rounded-xl border transition flex items-center justify-center gap-1.5 bg-white text-slate-700 border-slate-300 hover:bg-slate-100';
-                }
+            currentClassCode = classCode;
+            const selectClassEl = document.getElementById('selectClass');
+            if (selectClassEl && selectClassEl.value !== classCode) {
+                selectClassEl.value = classCode;
             }
             filterStudentsByClass(classCode);
+            lucide.createIcons();
         }
 
         // Filter Students by Class in Teacher Mode
         function filterStudentsByClass(classCode) {
             const selectEl = document.getElementById('selectStudent');
+            if (!selectEl) return;
             selectEl.innerHTML = '';
 
             let filteredKeys = studentKeys;
             if (classCode !== 'all') {
                 filteredKeys = studentKeys.filter(k => studentsDb[k].classCode === classCode);
             }
+            currentClassStudentKeys = filteredKeys;
 
             filteredKeys.forEach(k => {
                 const opt = document.createElement('option');
@@ -1162,18 +1212,22 @@
         // Switch Student (Teacher Mode)
         function switchStudent(key) {
             currentActiveKey = key;
-            document.getElementById('selectStudent').value = key;
+            const sel = document.getElementById('selectStudent');
+            if (sel) sel.value = key;
             renderReportInContainer('teacherReportContainer', 'teacher');
         }
 
-        // Next / Prev Student Navigation
+        // Next / Prev Student Navigation (cycles within active class!)
         function navigateStudent(direction) {
-            let idx = studentKeys.indexOf(currentActiveKey);
+            const list = (currentClassStudentKeys && currentClassStudentKeys.length > 0) 
+                         ? currentClassStudentKeys 
+                         : studentKeys;
+            let idx = list.indexOf(currentActiveKey);
             idx += direction;
-            if (idx < 0) idx = studentKeys.length - 1;
-            if (idx >= studentKeys.length) idx = 0;
+            if (idx < 0) idx = list.length - 1;
+            if (idx >= list.length) idx = 0;
 
-            switchStudent(studentKeys[idx]);
+            switchStudent(list[idx]);
         }
 
         // Update Period Title
@@ -1535,6 +1589,7 @@
 
         // Initial Load
         window.addEventListener('DOMContentLoaded', () => {
+            initClassDropdown();
             lucide.createIcons();
         });
     </script>
