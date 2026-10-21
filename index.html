@@ -149,6 +149,47 @@
                 border: 2px solid #f59e0b !important;
                 background-color: #fffbeb !important;
             }
+
+            /* Batch Class Printing Optimization */
+            body.is-batch-printing #viewPortalSelect,
+            body.is-batch-printing #viewTeacherDashboard,
+            body.is-batch-printing #viewParentReport,
+            body.is-batch-printing header,
+            body.is-batch-printing footer,
+            body.is-batch-printing #modalClassPrint {
+                display: none !important;
+            }
+            body.is-batch-printing #batchPrintContainer {
+                display: block !important;
+                position: static !important;
+                left: auto !important;
+                top: auto !important;
+                width: 100% !important;
+            }
+            .batch-page-item {
+                page-break-after: always !important;
+                break-after: page !important;
+                margin-bottom: 0 !important;
+            }
+            .batch-page-item:last-child {
+                page-break-after: auto !important;
+                break-after: auto !important;
+            }
+            .class-summary-page table {
+                font-size: 8.5px !important;
+            }
+            .class-summary-page th,
+            .class-summary-page td {
+                padding: 1.5px 2px !important;
+            }
+        }
+
+        /* Screen state for batch container */
+        #batchPrintContainer {
+            display: none;
+        }
+        body.is-batch-printing #batchPrintContainer {
+            display: block;
         }
     </style>
 </head>
@@ -382,6 +423,11 @@
                             <i data-lucide="share-2" class="w-4 h-4"></i>
                             <span>واتساب</span>
                         </button>
+                        <!-- Batch Print Whole Class -->
+                        <button onclick="openClassPrintModal()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-3 sm:px-3.5 py-2 rounded-xl text-xs font-black flex items-center gap-1.5 transition shadow hover:shadow-md" title="طباعة كشف وتقارير الفصل كاملاً (PDF)">
+                            <i data-lucide="printer" class="w-4 h-4 text-indigo-200"></i>
+                            <span>طباعة الفصل (<span id="btnClassCountBadge">20</span>)</span>
+                        </button>
                     </div>
                 </div>
 
@@ -394,7 +440,10 @@
                                 <i data-lucide="layers" class="w-3.5 h-3.5 text-andalus-blue"></i>
                                 <span>1. الفصل الدراسي:</span>
                             </span>
-                            <span class="text-[10px] text-slate-400 font-normal">تنقل بالفصول</span>
+                            <button onclick="openClassPrintModal()" class="text-[10.5px] text-indigo-600 hover:text-indigo-800 font-bold flex items-center gap-1 underline" title="طباعة تقارير هذا الفصل">
+                                <i data-lucide="printer" class="w-3 h-3"></i>
+                                <span>طباعة تقارير الفصل كاملاً</span>
+                            </button>
                         </label>
                         <div class="flex items-center gap-1.5">
                             <button onclick="navigateClass(-1)" title="الفصل السابق" 
@@ -929,6 +978,123 @@
     </template>
 
     <!-- ========================================================================= -->
+    <!-- BATCH PRINT CONTAINER (OFF-SCREEN / DISPLAYED DURING PRINT) -->
+    <!-- ========================================================================= -->
+    <div id="batchPrintContainer"></div>
+
+    <!-- ========================================================================= -->
+    <!-- MODAL: BATCH PRINT WHOLE CLASS (PDF / A4) -->
+    <!-- ========================================================================= -->
+    <div id="modalClassPrint" class="no-print hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-xl w-full overflow-hidden animate-in fade-in zoom-in duration-200">
+            <!-- Modal Header -->
+            <div class="bg-slate-900 text-white p-5 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-2xl bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 flex items-center justify-center">
+                        <i data-lucide="printer" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-black text-white">طباعة وتصدير تقارير الفصل كاملاً (PDF)</h3>
+                        <p class="text-xs text-slate-300 mt-0.5">
+                            فصل: <span id="modalClassLabel" class="text-andalus-lightGold font-bold">5/1</span> | إجمالي: <span id="modalStudentCount" class="font-bold text-white">20</span> طالباً
+                        </p>
+                    </div>
+                </div>
+                <button onclick="closeClassPrintModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white flex items-center justify-center transition">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-6 space-y-4">
+                <p class="text-xs text-slate-600">
+                    حدد نمط الطباعة أو التصدير المطلوب لطلاب هذا الفصل ليتم توليد الملفات وتنسيقها للطباعة بصيغة A4 متتابعة:
+                </p>
+
+                <!-- 3 Options as Selectable Cards -->
+                <div class="space-y-2.5">
+                    <!-- Option 3 (Recommended Default): All-in-One Dossier -->
+                    <label id="cardOptAll" class="batch-opt-card flex items-start gap-3 p-3.5 rounded-2xl border-2 border-indigo-500 bg-indigo-50/50 cursor-pointer transition">
+                        <input type="radio" name="batchPrintOption" value="all" checked onchange="updateBatchOptionUI(this.value)" class="mt-1 text-indigo-600 focus:ring-indigo-500">
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-black text-slate-900 flex items-center gap-1.5">
+                                    <span>📦 الحزمة الإدارية الكاملة للفصل</span>
+                                    <span class="text-[10px] bg-indigo-100 text-indigo-800 font-bold px-2 py-0.5 rounded-full border border-indigo-200">الأشمل للإدارة</span>
+                                </span>
+                                <span class="text-[11px] font-bold text-indigo-700" id="badgeAllPagesCount">21 صفحة</span>
+                            </div>
+                            <p class="text-[11px] text-slate-600 mt-1 leading-relaxed">
+                                يبدأ بكشف الرصد الإجمالي لدرجات الفصل كصفحة غلاف رسمية، يليه استمارة التقرير الأكاديمي المعتمدة لكل طالب متتابعة في ملف PDF واحد.
+                            </p>
+                        </div>
+                    </label>
+
+                    <!-- Option 1: Summary Roster Sheet Only -->
+                    <label id="cardOptSummary" class="batch-opt-card flex items-start gap-3 p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 cursor-pointer transition hover:bg-slate-50">
+                        <input type="radio" name="batchPrintOption" value="summary" onchange="updateBatchOptionUI(this.value)" class="mt-1 text-indigo-600 focus:ring-indigo-500">
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-black text-slate-900 flex items-center gap-1.5">
+                                    <span>📄 كشف الرصد الإجمالي لدرجات الفصل فقط</span>
+                                </span>
+                                <span class="text-[11px] font-bold text-slate-500">صفحة واحدة</span>
+                            </div>
+                            <p class="text-[11px] text-slate-600 mt-1 leading-relaxed">
+                                جدول رصد موحد للإدارة يضم درجات الـ 6 مقررات لجميع طلاب الفصل مع نسب الإنجاز وإحصائيات التفوق وخانات التوقيع.
+                            </p>
+                        </div>
+                    </label>
+
+                    <!-- Option 2: Individual Reports Only -->
+                    <label id="cardOptReports" class="batch-opt-card flex items-start gap-3 p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 cursor-pointer transition hover:bg-slate-50">
+                        <input type="radio" name="batchPrintOption" value="reports" onchange="updateBatchOptionUI(this.value)" class="mt-1 text-indigo-600 focus:ring-indigo-500">
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-black text-slate-900 flex items-center gap-1.5">
+                                    <span>📑 استمارات التقارير الأكاديمية الفردية فقط</span>
+                                </span>
+                                <span class="text-[11px] font-bold text-slate-500" id="badgeReportsCount">20 تقريراً</span>
+                            </div>
+                            <p class="text-[11px] text-slate-600 mt-1 leading-relaxed">
+                                استمارات التقرير الأكاديمي كاملة لجميع طلاب الفصل (كل طالب بصفحته المستقلة مع الرسم البياني والتوقيعات) لتوزيعها على أولياء الأمور.
+                            </p>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Customization Toggles -->
+                <div class="bg-slate-50 rounded-2xl p-3.5 border border-slate-200 space-y-2 text-xs">
+                    <label class="flex items-center gap-2.5 cursor-pointer font-bold text-slate-700">
+                        <input type="checkbox" id="checkRemedialOnlyLow" checked class="w-4 h-4 text-indigo-600 rounded focus:ring-indigo-500">
+                        <span>طباعة استمارة الخطة العلاجية فقط للطلاب المحتاجين لدعم (لتوفير الورق)</span>
+                    </label>
+                    <p class="text-[10px] text-slate-500 pr-6">
+                        عند تفعيل هذا الخيار، سيتم طباعة صفحة واحدة للطلاب المتفوقين والمتقدمين، وتُلحق صفحة الخطة العلاجية فقط للطلاب الذين يستحقون تدخلاً علاجياً.
+                    </p>
+                </div>
+
+                <!-- Progress / Status indicator -->
+                <div id="batchPrintProgress" class="hidden bg-indigo-50 border border-indigo-200 text-indigo-900 p-3 rounded-2xl text-xs flex items-center gap-2.5">
+                    <div class="w-4 h-4 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
+                    <span class="font-bold">جاري تجهيز تقارير طلاب الفصل وتوليد الرسوم البيانية للطباعة...</span>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="bg-slate-50 px-6 py-4 border-t border-slate-100 flex items-center justify-between">
+                <button onclick="closeClassPrintModal()" class="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 text-xs font-bold transition">
+                    إلغاء
+                </button>
+                <button onclick="executeBatchPrint()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl text-xs font-black flex items-center gap-2 transition shadow-md hover:shadow-lg">
+                    <i data-lucide="printer" class="w-4 h-4"></i>
+                    <span>تأكيد وبدء الطباعة / تصدير PDF</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
     <!-- JAVASCRIPT: DATA & INTERACTION MANAGEMENT -->
     <!-- ========================================================================= -->
     <script src="assets/students-data.js"></script>
@@ -1139,11 +1305,14 @@
             if (!selectEl) return;
             selectEl.innerHTML = '';
 
-            let filteredKeys = studentKeys;
+            let filteredKeys = studentKeys.filter(k => k.startsWith('s_'));
             if (classCode !== 'all') {
-                filteredKeys = studentKeys.filter(k => studentsDb[k].classCode === classCode);
+                filteredKeys = filteredKeys.filter(k => studentsDb[k].classCode === classCode);
             }
             currentClassStudentKeys = filteredKeys;
+
+            const badge = document.getElementById('btnClassCountBadge');
+            if (badge) badge.textContent = filteredKeys.length;
 
             filteredKeys.forEach(k => {
                 const opt = document.createElement('option');
@@ -1202,14 +1371,68 @@
             renderReportInContainer('teacherReportContainer', 'teacher');
         }
 
-        // Render Report Template
-        function renderReportInContainer(containerId, mode) {
-            const container = document.getElementById(containerId);
-            container.innerHTML = '';
+        // Compute Student Academic Stats & KPI Level
+        function computeStudentStats(student) {
+            let total = 0;
+            const subjectSums = { digital: 0, islamic: 0, english: 0, arabic: 0, science: 0, math: 0 };
+            criteria.forEach(c => {
+                subjects.forEach(s => {
+                    const sc = (student.scores && student.scores[c.id] && student.scores[c.id][s.id]) || 1;
+                    subjectSums[s.id] += sc;
+                    total += sc;
+                });
+            });
+            const percentage = ((total / 150) * 100).toFixed(1);
+            const gpa = (total / 30).toFixed(1);
 
+            let level = 'يحتاج الى دعم ومتابعة';
+            let levelBadge = 'bg-amber-100 text-amber-800 border-amber-300';
+            let cardClasses = 'bg-amber-50 border-2 border-amber-400 text-amber-900';
+            let lvlSub = 'مطلوب تفعيل الخطة العلاجية';
+
+            if (total >= 130) {
+                level = 'طالب متفوق';
+                levelBadge = 'bg-emerald-100 text-emerald-800 border-emerald-300';
+                cardClasses = 'bg-emerald-50 border-2 border-emerald-400 text-emerald-900';
+                lvlSub = 'أداء أكاديمي وسلوكي متميز';
+            } else if (total >= 105) {
+                level = 'طالب متقدم';
+                levelBadge = 'bg-blue-100 text-blue-800 border-blue-300';
+                cardClasses = 'bg-blue-50 border-2 border-blue-400 text-blue-900';
+                lvlSub = 'أداء جيد جداً ومبشر';
+            } else if (total >= 90) {
+                level = 'طالب متمكن';
+                levelBadge = 'bg-sky-100 text-sky-800 border-sky-300';
+                cardClasses = 'bg-sky-50 border-2 border-sky-400 text-sky-900';
+                lvlSub = 'حقق المعايير المستهدفة';
+            } else if (total < 60) {
+                level = 'المستوى منخفض جداً';
+                levelBadge = 'bg-rose-100 text-rose-800 border-rose-300';
+                cardClasses = 'bg-rose-50 border-2 border-rose-400 text-rose-900';
+                lvlSub = 'تدخل علاجي وإشرافي فوري';
+            }
+
+            const hasRemedialPlan = (total < 90) || Object.values(subjectSums).some(v => v < 15);
+
+            return {
+                total,
+                subjectSums,
+                percentage,
+                gpa,
+                level,
+                levelBadge,
+                cardClasses,
+                lvlSub,
+                hasRemedialPlan
+            };
+        }
+
+        // Create Individual Student Report DOM Node (Single or Batch Item)
+        function createStudentReportNode(studentKey, mode, options = {}) {
             const template = document.getElementById('reportTemplate');
             const clone = template.content.cloneNode(true);
-            const student = studentsDb[currentActiveKey];
+            const student = studentsDb[studentKey];
+            const stats = computeStudentStats(student);
 
             // Fill Metadata
             clone.querySelector('.tpl-student-name').textContent = student.name;
@@ -1251,7 +1474,7 @@
             // Update Teacher Signatures
             const sigTeacher = clone.querySelector('.tpl-sig-teacher');
             const sigRemedial = clone.querySelector('.tpl-sig-remedial-teacher');
-            if (currentTeacherSubject !== 'all') {
+            if (mode === 'teacher' && currentTeacherSubject !== 'all') {
                 const subObj = subjects.find(s => s.id === currentTeacherSubject);
                 const subName = subObj ? subObj.name : '';
                 if (sigTeacher) sigTeacher.textContent = `أ. معلم ${subName}`;
@@ -1280,10 +1503,11 @@
                 }
             });
 
+            // Notes
             const notesEl = clone.querySelector('.tpl-notes-editable');
             if (mode === 'teacher') {
                 notesEl.innerHTML = `
-                    <textarea rows="2" onchange="studentsDb['${currentActiveKey}'].notes = this.value; saveDbToStorage();"
+                    <textarea rows="2" onchange="studentsDb['${studentKey}'].notes = this.value; saveDbToStorage();"
                               class="w-full text-xs text-slate-800 bg-amber-50/50 p-2 border border-amber-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-andalus-blue">${student.notes}</textarea>
                 `;
             } else {
@@ -1293,9 +1517,6 @@
             // Fill Matrix
             const tbody = clone.querySelector('.tpl-matrix-body');
             tbody.innerHTML = '';
-
-            let totalSum = 0;
-            const subjectSums = { digital: 0, islamic: 0, english: 0, arabic: 0, science: 0, math: 0 };
 
             criteria.forEach(crit => {
                 const tr = document.createElement('tr');
@@ -1312,8 +1533,6 @@
                 subjects.forEach(sub => {
                     const score = (student.scores[crit.id] && student.scores[crit.id][sub.id]) || 1;
                     rowSum += score;
-                    subjectSums[sub.id] += score;
-                    totalSum += score;
 
                     let scoreBadgeColor = 'bg-rose-100 text-rose-800 border-rose-300';
                     if (score === 5) scoreBadgeColor = 'bg-emerald-100 text-emerald-800 border-emerald-300';
@@ -1362,60 +1581,32 @@
             // Update column sums
             subjects.forEach(s => {
                 const el = clone.querySelector(`.tpl-col-${s.id}`);
-                if (el) el.textContent = `${subjectSums[s.id]} / 25`;
+                if (el) el.textContent = `${stats.subjectSums[s.id]} / 25`;
             });
 
             // Update KPIs
-            clone.querySelector('.tpl-total-score').textContent = totalSum;
-            clone.querySelector('.tpl-total-matrix-sum').textContent = `${totalSum} / 150`;
+            clone.querySelector('.tpl-total-score').textContent = stats.total;
+            clone.querySelector('.tpl-total-matrix-sum').textContent = `${stats.total} / 150`;
+            clone.querySelector('.tpl-gpa').textContent = stats.gpa;
+            clone.querySelector('.tpl-percentage').textContent = `${stats.percentage}%`;
+            clone.querySelector('.tpl-progress-bar').style.width = `${stats.percentage}%`;
 
-            const gpa = (totalSum / 30).toFixed(1);
-            clone.querySelector('.tpl-gpa').textContent = gpa;
-
-            const percentage = ((totalSum / 150) * 100).toFixed(1);
-            clone.querySelector('.tpl-percentage').textContent = `${percentage}%`;
-            clone.querySelector('.tpl-progress-bar').style.width = `${percentage}%`;
-
-            // Performance Level calculation
+            // Performance Level
             const statusCard = clone.querySelector('.tpl-status-card');
             const statusTitle = clone.querySelector('.tpl-status-title');
             const statusSub = clone.querySelector('.tpl-status-sub');
+            statusCard.className = `col-span-2 sm:col-span-1 rounded-xl p-2.5 flex flex-col justify-center items-center text-center shadow-sm ${stats.cardClasses}`;
+            statusTitle.textContent = stats.level;
+            statusSub.textContent = stats.lvlSub;
 
-            let lvlTitle = '';
-            let lvlSub = '';
-            let cardClasses = '';
-
-            if (totalSum >= 130) {
-                lvlTitle = 'طالب متفوق';
-                lvlSub = 'أداء أكاديمي وسلوكي متميز';
-                cardClasses = 'bg-emerald-50 border-2 border-emerald-400 text-emerald-900';
-            } else if (totalSum >= 105) {
-                lvlTitle = 'طالب متقدم';
-                lvlSub = 'أداء جيد جداً ومبشر';
-                cardClasses = 'bg-blue-50 border-2 border-blue-400 text-blue-900';
-            } else if (totalSum >= 90) {
-                lvlTitle = 'طالب متمكن';
-                lvlSub = 'حقق المعايير المستهدفة';
-                cardClasses = 'bg-sky-50 border-2 border-sky-400 text-sky-900';
-            } else if (totalSum >= 60) {
-                lvlTitle = 'يحتاج الى دعم ومتابعة';
-                lvlSub = 'مطلوب تفعيل الخطة العلاجية';
-                cardClasses = 'bg-amber-50 border-2 border-amber-400 text-amber-900';
-            } else {
-                lvlTitle = 'المستوى منخفض جداً';
-                lvlSub = 'تدخل علاجي وإشرافي فوري';
-                cardClasses = 'bg-rose-50 border-2 border-rose-400 text-rose-900';
-            }
-
-            statusCard.className = `col-span-2 sm:col-span-1 rounded-xl p-2.5 flex flex-col justify-center items-center text-center shadow-sm ${cardClasses}`;
-            statusTitle.textContent = lvlTitle;
-            statusSub.textContent = lvlSub;
-
-            // Handle Remedial Section (Parent Read-Only vs Teacher Interactive)
+            // Remedial Plan Section
             const remSection = clone.querySelector('.tpl-remedial-section');
             const remBadge = clone.querySelector('.tpl-remedial-badge');
 
-            if (remSection) {
+            // If batch print with remedialOnlyLow=true AND student does NOT need remedial plan:
+            if (options.remedialOnlyLow && !stats.hasRemedialPlan) {
+                if (remSection) remSection.remove();
+            } else if (remSection) {
                 const remData = student.remedial || {};
                 const checkboxes = remSection.querySelectorAll('input[type="checkbox"][data-rem]');
 
@@ -1423,8 +1614,7 @@
                     const remKey = cb.getAttribute('data-rem');
                     cb.checked = !!remData[remKey];
 
-                    if (mode === 'parent') {
-                        // Strict read-only for Parent View: disabled & no pointer events
+                    if (mode === 'parent' || options.isBatchItem) {
                         cb.disabled = true;
                         cb.classList.add('cursor-not-allowed');
                         const lbl = cb.closest('label');
@@ -1432,7 +1622,6 @@
                             lbl.classList.add('cursor-default', 'pointer-events-none', 'select-none');
                         }
                     } else {
-                        // Fully interactive for Teacher View
                         cb.disabled = false;
                         cb.classList.remove('cursor-not-allowed');
                         const lbl = cb.closest('label');
@@ -1440,17 +1629,17 @@
                             lbl.classList.remove('cursor-default', 'pointer-events-none', 'select-none');
                         }
                         cb.onchange = (e) => {
-                            if (!studentsDb[currentActiveKey].remedial) {
-                                studentsDb[currentActiveKey].remedial = {};
+                            if (!studentsDb[studentKey].remedial) {
+                                studentsDb[studentKey].remedial = {};
                             }
-                            studentsDb[currentActiveKey].remedial[remKey] = e.target.checked;
+                            studentsDb[studentKey].remedial[remKey] = e.target.checked;
                             saveDbToStorage();
                         };
                     }
                 });
 
                 if (remBadge) {
-                    if (mode === 'parent') {
+                    if (mode === 'parent' || options.isBatchItem) {
                         remBadge.className = 'tpl-remedial-badge text-xs bg-slate-100 text-slate-700 font-bold px-3 py-1 rounded-full border border-slate-300 flex items-center gap-1.5 shadow-sm';
                         remBadge.innerHTML = '<i data-lucide="lock" class="w-3.5 h-3.5 text-slate-500"></i> معتمد من المعلم (للاطلاع فقط)';
                     } else {
@@ -1460,12 +1649,308 @@
                 }
             }
 
-            container.appendChild(clone);
+            // Wrapper DIV
+            const wrapper = document.createElement('div');
+            wrapper.className = 'report-page-wrapper ' + (options.isBatchItem ? 'batch-page-item mb-6' : '');
+            wrapper.appendChild(clone);
 
-            // Initialize Chart on the rendered canvas
-            const canvas = container.querySelector('.tpl-chart-canvas');
-            initChart(canvas, subjectSums);
+            // Initialize Chart on canvas
+            const canvas = wrapper.querySelector('.tpl-chart-canvas');
+            if (canvas) {
+                initChart(canvas, stats.subjectSums);
+            }
+
+            return wrapper;
+        }
+
+        // Render Report Template
+        function renderReportInContainer(containerId, mode) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            container.innerHTML = '';
+            const node = createStudentReportNode(currentActiveKey, mode);
+            container.appendChild(node);
             lucide.createIcons();
+        }
+
+        // Create Class Summary Sheet Node (Official Class Roster & KPI Stats)
+        function createClassSummarySheetNode(classCode) {
+            const cls = availableClasses[classCode] || { label: classCode, code: classCode, studentCount: 0 };
+            const list = studentKeys.filter(k => k.startsWith('s_') && studentsDb[k].classCode === classCode);
+
+            let classTotalScore = 0;
+            let superiorCount = 0;
+            let advancedCount = 0;
+            let competentCount = 0;
+            let needsSupportCount = 0;
+
+            const rowsHtml = list.map((k, idx) => {
+                const st = studentsDb[k];
+                const stats = computeStudentStats(st);
+                classTotalScore += stats.total;
+
+                if (stats.total >= 130) superiorCount++;
+                else if (stats.total >= 105) advancedCount++;
+                else if (stats.total >= 90) competentCount++;
+                else needsSupportCount++;
+
+                return `
+                    <tr class="border-b border-slate-200 hover:bg-slate-50 text-[10px]">
+                        <td class="p-1 border border-slate-300 text-center font-bold text-slate-500">${idx + 1}</td>
+                        <td class="p-1 border border-slate-300 text-right font-black text-slate-900">${st.name}</td>
+                        <td class="p-1 border border-slate-300 text-center font-mono font-bold text-slate-600">${st.id}</td>
+                        <td class="p-1 border border-slate-300 text-center">${stats.subjectSums.digital}</td>
+                        <td class="p-1 border border-slate-300 text-center">${stats.subjectSums.islamic}</td>
+                        <td class="p-1 border border-slate-300 text-center">${stats.subjectSums.english}</td>
+                        <td class="p-1 border border-slate-300 text-center">${stats.subjectSums.arabic}</td>
+                        <td class="p-1 border border-slate-300 text-center">${stats.subjectSums.science}</td>
+                        <td class="p-1 border border-slate-300 text-center">${stats.subjectSums.math}</td>
+                        <td class="p-1 border border-slate-300 text-center font-black bg-andalus-gold/20 text-andalus-darkBlue">${stats.total}</td>
+                        <td class="p-1 border border-slate-300 text-center font-bold text-andalus-blue">${stats.percentage}%</td>
+                        <td class="p-1 border border-slate-300 text-center">
+                            <span class="inline-block px-1.5 py-0.5 rounded text-[9px] font-bold border ${stats.levelBadge}">
+                                ${stats.level}
+                            </span>
+                        </td>
+                        <td class="p-1 border border-slate-300 text-center">
+                            ${stats.hasRemedialPlan 
+                                ? '<span class="text-amber-800 bg-amber-100 border border-amber-300 px-1 py-0.5 rounded text-[8.5px] font-bold">مطلوبة</span>'
+                                : '<span class="text-emerald-700 text-[8.5px] font-semibold">لا يحتاج</span>'}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            const avgScore = list.length > 0 ? (classTotalScore / list.length).toFixed(1) : '0';
+            const superiorPercent = list.length > 0 ? (((superiorCount + advancedCount) / list.length) * 100).toFixed(0) : '0';
+            const periodTitle = (studentsDb[list[0]] && studentsDb[list[0]].period) || 'تقرير شهر جمادى الأولى 1447هـ';
+            const reportDate = (studentsDb[list[0]] && studentsDb[list[0]].date) || '2026-10-21';
+
+            const sheet = document.createElement('div');
+            sheet.className = 'batch-page-item class-summary-page print-container bg-white border border-slate-300 rounded-2xl p-4 sm:p-6 mb-6 shadow-sm';
+            sheet.innerHTML = `
+                <!-- School Header -->
+                <div class="border-b-2 border-andalus-darkBlue pb-3 mb-3">
+                    <div class="print-header-grid flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div class="flex items-center gap-3">
+                            <img src="assets/images/alandalus-logo.png" alt="مدارس الأندلس الأهلية" class="h-16 sm:h-20 w-auto object-contain" onerror="this.src='assets/images/alandalus-rosette.png'">
+                            <div class="border-r-2 border-slate-300 pr-3 hidden sm:block">
+                                <span class="text-xs font-black text-andalus-darkBlue block">المرحلة الابتدائية (بنين)</span>
+                                <span class="text-[10.5px] font-bold text-slate-500 block">مكة المكرمة</span>
+                            </div>
+                        </div>
+                        
+                        <div class="print-vision-cards grid grid-cols-2 gap-2 text-right max-w-sm w-full">
+                            <div class="bg-slate-50 border border-slate-200 rounded-xl p-2">
+                                <h4 class="text-[10.5px] font-extrabold text-andalus-darkBlue flex items-center gap-1">
+                                    <i data-lucide="compass" class="w-3 h-3 text-andalus-gold"></i>
+                                    رؤيتنا
+                                </h4>
+                                <p class="text-[9.5px] text-slate-600 leading-tight mt-0.5">منظومة تعليمية رائدة تبني جيلاً يمتلك قدرات تعلم عالمية.</p>
+                            </div>
+                            <div class="bg-slate-50 border border-slate-200 rounded-xl p-2">
+                                <h4 class="text-[10.5px] font-extrabold text-andalus-darkBlue flex items-center gap-1">
+                                    <i data-lucide="target" class="w-3 h-3 text-andalus-blue"></i>
+                                    رسالتنا
+                                </h4>
+                                <p class="text-[9.5px] text-slate-600 leading-tight mt-0.5">بناء جيل رائد يحب التعلم يرعاه فريق تربوي مؤهل.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Title Banner -->
+                    <div class="mt-3 bg-andalus-darkBlue text-white py-2 px-4 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-2 shadow-sm">
+                        <span class="text-xs text-andalus-lightGold font-semibold">العام الدراسي: 1446-1447هـ</span>
+                        <h2 class="text-sm sm:text-base font-black tracking-wide text-white">كشف الرصد الإجمالي لدرجات التقرير الأكاديمي والتعليمي السلوكي</h2>
+                        <span class="text-xs bg-andalus-blue text-white px-3 py-0.5 rounded-full font-bold border border-white/20">${periodTitle}</span>
+                    </div>
+                </div>
+
+                <!-- Class KPI Summary Strip -->
+                <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 mb-3">
+                    <div class="bg-blue-50/70 border border-blue-200 rounded-xl p-2 text-center">
+                        <span class="text-[10px] text-slate-600 font-bold block">الفصل المستهدف</span>
+                        <span class="text-xs sm:text-sm font-black text-andalus-darkBlue">${cls.label}</span>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-2 text-center">
+                        <span class="text-[10px] text-slate-600 font-bold block">إجمالي الطلاب</span>
+                        <span class="text-xs sm:text-sm font-black text-slate-900">${list.length} طالباً</span>
+                    </div>
+                    <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-2 text-center">
+                        <span class="text-[10px] text-emerald-800 font-bold block">المتفوقون والمتقدمون</span>
+                        <span class="text-xs sm:text-sm font-black text-emerald-700">${superiorCount + advancedCount} (${superiorPercent}%)</span>
+                    </div>
+                    <div class="bg-amber-50 border border-amber-200 rounded-xl p-2 text-center">
+                        <span class="text-[10px] text-amber-800 font-bold block">يحتاجون إلى دعم</span>
+                        <span class="text-xs sm:text-sm font-black text-amber-700">${needsSupportCount} طلاب</span>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-2 text-center col-span-2 sm:col-span-1">
+                        <span class="text-[10px] text-slate-600 font-bold block">متوسط درجات الفصل</span>
+                        <span class="text-xs sm:text-sm font-black text-andalus-blue">${avgScore} / 150</span>
+                    </div>
+                </div>
+
+                <!-- Full Class Roster Table -->
+                <div class="overflow-x-auto rounded-xl border border-slate-300 shadow-sm mb-4">
+                    <table class="w-full text-xs matrix-table border-collapse">
+                        <thead>
+                            <tr class="bg-andalus-darkBlue text-white font-bold">
+                                <th class="p-1 border border-slate-400 text-center w-7">م</th>
+                                <th class="p-1 border border-slate-400 text-right">اسم الطالب الرباعي</th>
+                                <th class="p-1 border border-slate-400 text-center w-24">رقم الهوية</th>
+                                <th class="p-1 border border-slate-400 text-center text-[9.5px]">الرقمية<br>(25)</th>
+                                <th class="p-1 border border-slate-400 text-center text-[9.5px]">الإسلاميات<br>(25)</th>
+                                <th class="p-1 border border-slate-400 text-center text-[9.5px]">الإنجليزية<br>(25)</th>
+                                <th class="p-1 border border-slate-400 text-center text-[9.5px]">لغتي<br>(25)</th>
+                                <th class="p-1 border border-slate-400 text-center text-[9.5px]">العلوم<br>(25)</th>
+                                <th class="p-1 border border-slate-400 text-center text-[9.5px]">الرياضيات<br>(25)</th>
+                                <th class="p-1 border border-slate-400 text-center bg-andalus-blue text-[10px] font-black w-12">المجموع<br>(150)</th>
+                                <th class="p-1 border border-slate-400 text-center w-11 text-[9.5px]">النسبة</th>
+                                <th class="p-1 border border-slate-400 text-center w-20 text-[9.5px]">المستوى</th>
+                                <th class="p-1 border border-slate-400 text-center w-16 text-[9px]">الخطة العلاجية</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200">
+                            ${rowsHtml}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Official Signatures Footer -->
+                <div class="border-t-2 border-slate-300 pt-3 mt-4 break-inside-avoid">
+                    <div class="grid grid-cols-3 gap-3 text-center">
+                        <div class="bg-slate-50 border border-slate-200 rounded-xl p-2">
+                            <span class="text-[10px] font-bold text-slate-500 block">رائد الفصل</span>
+                            <span class="text-xs font-black text-slate-800 mt-0.5 block">أ. معلم المقررات</span>
+                            <div class="mt-1 text-[9.5px] text-emerald-600 font-bold flex items-center justify-center gap-1">
+                                <i data-lucide="check" class="w-3 h-3"></i> معتمد إلكترونياً
+                            </div>
+                        </div>
+                        <div class="bg-slate-50 border border-slate-200 rounded-xl p-2">
+                            <span class="text-[10px] font-bold text-slate-500 block">الموجه الطلابي</span>
+                            <span class="text-xs font-black text-slate-800 mt-0.5 block">أ. إبراهيم علي القرني</span>
+                            <div class="mt-1 text-[9.5px] text-emerald-600 font-bold flex items-center justify-center gap-1">
+                                <i data-lucide="check" class="w-3 h-3"></i> معتمد إلكترونياً
+                            </div>
+                        </div>
+                        <div class="bg-slate-50 border border-slate-200 rounded-xl p-2">
+                            <span class="text-[10px] font-bold text-slate-500 block">مدير المدرسة</span>
+                            <span class="text-xs font-black text-slate-800 mt-0.5 block">أ. عبد العزيز عبد الله القرني</span>
+                            <div class="mt-1 text-[9.5px] text-emerald-600 font-bold flex items-center justify-center gap-1">
+                                <i data-lucide="check-circle-2" class="w-3 h-3"></i> الختم والاعتماد الرسمي
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between text-[9.5px] text-slate-400 mt-2 px-1">
+                        <span>تاريخ استخراج الكشف: ${reportDate}</span>
+                        <span>منظومة التقرير الأكاديمي والتعليمي السلوكي © مدارس الأندلس الأهلية بمكة المكرمة</span>
+                        <span>صفحة 1 من 1</span>
+                    </div>
+                </div>
+            `;
+            return sheet;
+        }
+
+        // Open Class Print Modal
+        function openClassPrintModal() {
+            const cls = availableClasses[currentClassCode] || { label: currentClassCode, studentCount: 0 };
+            const list = studentKeys.filter(k => k.startsWith('s_') && studentsDb[k].classCode === currentClassCode);
+
+            document.getElementById('modalClassLabel').textContent = cls.label;
+            document.getElementById('modalStudentCount').textContent = list.length;
+            document.getElementById('badgeReportsCount').textContent = `${list.length} تقريراً`;
+            document.getElementById('badgeAllPagesCount').textContent = `${list.length + 1} صفحة`;
+
+            const modal = document.getElementById('modalClassPrint');
+            if (modal) {
+                modal.classList.remove('hidden');
+                document.getElementById('batchPrintProgress').classList.add('hidden');
+                lucide.createIcons();
+            }
+        }
+
+        // Close Class Print Modal
+        function closeClassPrintModal() {
+            const modal = document.getElementById('modalClassPrint');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        // Toggle Visual Active State on Radio Cards in Modal
+        function updateBatchOptionUI(selectedVal) {
+            const cards = [
+                { id: 'cardOptAll', val: 'all' },
+                { id: 'cardOptSummary', val: 'summary' },
+                { id: 'cardOptReports', val: 'reports' }
+            ];
+            cards.forEach(c => {
+                const el = document.getElementById(c.id);
+                if (!el) return;
+                if (c.val === selectedVal) {
+                    el.className = 'batch-opt-card flex items-start gap-3 p-3.5 rounded-2xl border-2 border-indigo-500 bg-indigo-50/50 cursor-pointer transition';
+                } else {
+                    el.className = 'batch-opt-card flex items-start gap-3 p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 cursor-pointer transition hover:bg-slate-50';
+                }
+            });
+        }
+
+        // Execute Batch Print Generation & Open Print Dialog
+        function executeBatchPrint() {
+            const progress = document.getElementById('batchPrintProgress');
+            if (progress) progress.classList.remove('hidden');
+
+            const selectedOptionEl = document.querySelector('input[name="batchPrintOption"]:checked');
+            const printType = selectedOptionEl ? selectedOptionEl.value : 'all';
+            const remedialOnlyLow = document.getElementById('checkRemedialOnlyLow').checked;
+
+            setTimeout(() => {
+                const batchContainer = document.getElementById('batchPrintContainer');
+                batchContainer.innerHTML = '';
+
+                const list = studentKeys.filter(k => k.startsWith('s_') && studentsDb[k].classCode === currentClassCode);
+
+                // 1. If 'all' or 'summary': Append Summary Sheet
+                if (printType === 'all' || printType === 'summary') {
+                    const summaryNode = createClassSummarySheetNode(currentClassCode);
+                    batchContainer.appendChild(summaryNode);
+                }
+
+                // 2. If 'all' or 'reports': Append Individual Student Reports
+                if (printType === 'all' || printType === 'reports') {
+                    list.forEach(k => {
+                        const reportWrapper = createStudentReportNode(k, 'parent', {
+                            isBatchItem: true,
+                            remedialOnlyLow: remedialOnlyLow
+                        });
+                        batchContainer.appendChild(reportWrapper);
+                    });
+                }
+
+                // Initialize Icons
+                lucide.createIcons();
+
+                // Close Modal & Hide Progress
+                closeClassPrintModal();
+                if (progress) progress.classList.add('hidden');
+
+                // Enter Batch Print Mode
+                document.body.classList.add('is-batch-printing');
+
+                // Trigger print after slight pause for DOM/Chart readiness
+                setTimeout(() => {
+                    window.print();
+                }, 300);
+
+                // Auto cleanup when print dialog finishes
+                function cleanupBatch() {
+                    document.body.classList.remove('is-batch-printing');
+                    batchContainer.innerHTML = '';
+                    window.removeEventListener('afterprint', cleanupBatch);
+                }
+                window.addEventListener('afterprint', cleanupBatch, { once: true });
+                // Fallback in case browser doesn't fire afterprint
+                setTimeout(cleanupBatch, 45000);
+
+            }, 120);
         }
 
         // Update single score
@@ -1501,6 +1986,7 @@
                     }]
                 },
                 options: {
+                    animation: false,
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
