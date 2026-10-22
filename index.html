@@ -134,10 +134,15 @@
 
             /* Compact Chart in Print */
             .print-chart-box {
-                height: 130px !important;
+                height: 110px !important;
             }
 
-            /* Page 1: Academic Report fits cleanly */
+            /* Page 1: Academic Report fits cleanly on 1 page A4 */
+            .report-root {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
             .report-page-1 {
                 page-break-after: avoid;
             }
@@ -409,63 +414,66 @@
             <!-- Simplified, Sleek Control Center -->
             <div class="no-print bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-sm space-y-4">
                 
-                <!-- Row 1: Teacher Identity & Action Buttons -->
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3.5 border-b border-slate-100">
+                <!-- Row 1: Teacher Identity & Action Buttons (Locked Layout - Never Drops Down) -->
+                <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-3 pb-3.5 border-b border-slate-100">
                     <!-- Teacher Profile & Role Badge -->
-                    <div class="flex items-center gap-3">
-                        <div class="w-11 h-11 rounded-xl bg-andalus-gold/20 border border-andalus-gold/40 text-andalus-darkBlue flex items-center justify-center font-black text-lg shrink-0">
+                    <div class="flex items-center gap-3 min-w-0">
+                        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-andalus-gold/20 border border-andalus-gold/40 text-andalus-darkBlue flex items-center justify-center font-black text-lg shrink-0">
                             <i data-lucide="graduation-cap" class="w-5 h-5 text-andalus-gold"></i>
                         </div>
-                        <div>
-                            <div class="flex flex-wrap items-center gap-2">
-                                <h2 id="dashTeacherName" class="text-base sm:text-lg font-black text-andalus-darkBlue">
+                        <div class="min-w-0">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <h2 id="dashTeacherName" class="text-base sm:text-lg font-black text-andalus-darkBlue truncate">
                                     لوحة الرصد والتوجيه الطلابي
                                 </h2>
-                                <span id="dashTeacherBadge" class="text-xs bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full font-bold">
+                                <span id="dashTeacherBadge" class="text-[11px] sm:text-xs bg-emerald-100 text-emerald-800 border border-emerald-300 px-2.5 py-0.5 rounded-full font-bold whitespace-nowrap">
                                     صلاحيات كاملة
                                 </span>
                             </div>
-                            <p id="dashTeacherSub" class="text-xs text-slate-500 mt-0.5">
+                            <p id="dashTeacherSub" class="text-xs text-slate-500 mt-0.5 truncate">
                                 المرحلة الابتدائية - مكة المكرمة | الفصل الدراسي الأول 1448هـ
                             </p>
                         </div>
                     </div>
 
-                    <!-- Global Actions & Teacher Switcher -->
-                    <div class="flex flex-wrap items-center gap-2">
-                        <!-- Active Teacher Switcher -->
-                        <div class="flex items-center gap-1.5 bg-amber-50 border border-amber-300 rounded-xl px-2.5 py-1.5 shadow-xs">
+                    <!-- Global Actions & Teacher Switcher (LOCKED IN PLACE - NEVER DROPS DOWN) -->
+                    <div class="flex items-center gap-2 flex-wrap sm:flex-nowrap justify-end shrink-0">
+                        <!-- Active Teacher Switcher (Clean & Compact) -->
+                        <div class="flex items-center gap-1.5 bg-amber-50 border border-amber-300 rounded-xl px-2.5 py-1.5 shadow-xs shrink-0">
                             <span id="activeTeacherAvatar" class="text-sm">👑</span>
-                            <span class="text-xs font-bold text-amber-950">المعلم:</span>
+                            <span class="text-xs font-bold text-amber-950 whitespace-nowrap">المعلم:</span>
                             <select id="selectActiveTeacher" onchange="switchActiveTeacher(this.value)"
-                                    class="text-xs font-bold text-slate-900 bg-white border border-amber-300 rounded-lg px-2 py-1 focus:ring-2 focus:ring-andalus-blue focus:outline-none cursor-pointer">
-                                <option value="counselor">👑 أ. إبراهيم القرني (المرشد الطلابي)</option>
-                                <option value="t_math">📐 أ. عبد الله الغامدي (معلم الرياضيات)</option>
-                                <option value="t_arabic">📖 أ. محمد الشهري (معلم لغتي)</option>
-                                <option value="t_science">🔬 أ. خالد القرني (معلم العلوم)</option>
-                                <option value="t_islamic">🕌 أ. فهد المطيري (معلم الإسلاميات)</option>
-                                <option value="t_digital">💻 أ. أحمد المالكي (معلم الرقمية)</option>
-                                <option value="t_english">🌐 أ. سلطان العتيبي (معلم الإنجليزية)</option>
+                                    class="text-xs font-bold text-slate-900 bg-white border border-amber-300 rounded-lg px-2 py-1 focus:ring-2 focus:ring-andalus-blue focus:outline-none cursor-pointer max-w-[170px] sm:max-w-[185px] truncate">
+                                <option value="counselor">👑 أ. إبراهيم القرني (المرشد)</option>
+                                <option value="t_math">📐 أ. عبد الله الغامدي (رياضيات)</option>
+                                <option value="t_arabic">📖 أ. محمد الشهري (لغتي)</option>
+                                <option value="t_science">🔬 أ. خالد القرني (علوم)</option>
+                                <option value="t_islamic">🕌 أ. فهد المطيري (إسلاميات)</option>
+                                <option value="t_digital">💻 أ. أحمد المالكي (رقمية)</option>
+                                <option value="t_english">🌐 أ. سلطان العتيبي (إنجليزية)</option>
                             </select>
                         </div>
 
-                        <!-- Save Button -->
-                        <button onclick="saveStudentEvaluation()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow-xs cursor-pointer">
-                            <i data-lucide="save" class="w-4 h-4"></i>
-                            <span>حفظ</span>
-                        </button>
+                        <!-- Action Buttons Group (Locked Together: Save + WhatsApp + Print) -->
+                        <div class="flex items-center gap-1.5 shrink-0 flex-nowrap">
+                            <!-- Save Button -->
+                            <button onclick="saveStudentEvaluation()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow-xs cursor-pointer whitespace-nowrap">
+                                <i data-lucide="save" class="w-4 h-4"></i>
+                                <span>حفظ</span>
+                            </button>
 
-                        <!-- WhatsApp Share -->
-                        <button onclick="shareWhatsAppLink()" class="bg-green-600 hover:bg-green-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow-xs cursor-pointer">
-                            <i data-lucide="share-2" class="w-4 h-4"></i>
-                            <span>واتساب</span>
-                        </button>
+                            <!-- WhatsApp Share -->
+                            <button onclick="shareWhatsAppLink()" class="bg-green-600 hover:bg-green-500 text-white px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow-xs cursor-pointer whitespace-nowrap">
+                                <i data-lucide="share-2" class="w-4 h-4"></i>
+                                <span>واتساب</span>
+                            </button>
 
-                        <!-- Batch Print Whole Class -->
-                        <button onclick="openClassPrintModal()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow-xs hover:shadow-md cursor-pointer" title="طباعة كشف وتقارير الفصل كاملاً (PDF)">
-                            <i data-lucide="printer" class="w-4 h-4 text-indigo-200"></i>
-                            <span>طباعة الفصل (<span id="btnClassCountBadge">20</span>)</span>
-                        </button>
+                            <!-- Batch Print Whole Class -->
+                            <button onclick="openClassPrintModal()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow-xs hover:shadow-md cursor-pointer whitespace-nowrap" title="طباعة كشف وتقارير الفصل كاملاً (PDF)">
+                                <i data-lucide="printer" class="w-4 h-4 text-indigo-200"></i>
+                                <span>طباعة الفصل (<span id="btnClassCountBadge">20</span>)</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -2690,10 +2698,10 @@
                 batchContainer.innerHTML = '';
 
                 if (printType === 'single') {
-                    // Print ONLY the student currently active on the page!
+                    // Print ONLY the official 1-page report for active student!
                     const reportWrapper = createStudentReportNode(currentActiveKey, 'parent', {
                         isBatchItem: true,
-                        remedialOnlyLow: false
+                        remedialOnlyLow: true
                     });
                     batchContainer.appendChild(reportWrapper);
                     try {
@@ -2721,7 +2729,7 @@
                         list.forEach(k => {
                             const reportWrapper = createStudentReportNode(k, 'parent', {
                                 isBatchItem: true,
-                                remedialOnlyLow: false
+                                remedialOnlyLow: true
                             });
                             batchContainer.appendChild(reportWrapper);
                             try {
