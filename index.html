@@ -1357,13 +1357,13 @@
         // Local Storage Utilities
         function saveDbToStorage() {
             try {
-                localStorage.setItem('andalus_academic_db_v2', JSON.stringify(studentsDb));
+                localStorage.setItem('andalus_academic_db_v3', JSON.stringify(studentsDb));
             } catch(e) {}
         }
 
         function loadDbFromStorage() {
             try {
-                const saved = localStorage.getItem('andalus_academic_db_v2') || localStorage.getItem('andalus_academic_db_v1');
+                const saved = localStorage.getItem('andalus_academic_db_v3') || localStorage.getItem('andalus_academic_db_v2') || localStorage.getItem('andalus_academic_db_v1');
                 if (saved) {
                     const parsed = JSON.parse(saved);
                     Object.keys(parsed).forEach(k => {
@@ -1371,6 +1371,9 @@
                             studentsDb[k] = Object.assign(studentsDb[k], parsed[k]);
                         } else {
                             studentsDb[k] = parsed[k];
+                        }
+                        if (studentsDb[k].period) {
+                            studentsDb[k].period = studentsDb[k].period.replace(/1447هـ?/g, '1448هـ');
                         }
                     });
                 }
@@ -2503,7 +2506,7 @@
                 return `
                     <tr class="border-b border-slate-200 hover:bg-slate-50 text-[10px]">
                         <td class="p-1 border border-slate-300 text-center font-bold text-slate-500">${idx + 1}</td>
-                        <td onclick="closeClassPrintModal(); switchStudent('${k}');" class="p-1 border border-slate-300 text-right font-black text-slate-900 cursor-pointer hover:bg-amber-100 hover:text-andalus-blue transition" title="انقر لفتح تقرير هذا الطالب">${st.name} <span class="text-[9px] text-slate-400 font-normal">👆</span></td>
+                        <td onclick="closeClassPrintModal(); switchStudent('${k}');" class="p-1 border border-slate-300 text-right font-black text-slate-900 cursor-pointer hover:bg-amber-100 hover:text-andalus-blue transition" title="انقر لفتح تقرير هذا الطالب">${st.name}</td>
                         <td class="p-1 border border-slate-300 text-center font-mono font-bold text-slate-600">${st.id}</td>
                         <td class="p-1 border border-slate-300 text-center">${stats.subjectSums.digital}</td>
                         <td class="p-1 border border-slate-300 text-center">${stats.subjectSums.islamic}</td>
@@ -2529,7 +2532,9 @@
 
             const avgScore = list.length > 0 ? (classTotalScore / list.length).toFixed(1) : '0';
             const superiorPercent = list.length > 0 ? (((superiorCount + advancedCount) / list.length) * 100).toFixed(0) : '0';
-            const periodTitle = (studentsDb[list[0]] && studentsDb[list[0]].period) || 'تقرير شهر جمادى الأولى 1448هـ';
+            const selectPeriodEl = document.getElementById('selectPeriod');
+            let periodTitle = (selectPeriodEl && selectPeriodEl.value) || (studentsDb[list[0]] && studentsDb[list[0]].period) || 'تقرير شهر جمادى الأولى 1448هـ';
+            periodTitle = periodTitle.replace(/1447هـ?/g, '1448هـ');
             const reportDate = (studentsDb[list[0]] && studentsDb[list[0]].date) || '2026-10-21';
 
             const sheet = document.createElement('div');
