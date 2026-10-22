@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة التقرير الأكاديمي والتعليمي السلوكي | مدارس الأندلس الأهلية</title>
+    <title>منصة التقرير الأكاديمي والتعليمي السلوكي</title>
     
     <!-- Meta SEO -->
-    <meta name="description" content="منظومة التقرير الأكاديمي والتعليمي السلوكي لمدارس الأندلس الأهلية - المعلمون وأولياء الأمور">
+    <meta name="description" content="منظومة التقرير الأكاديمي والتعليمي السلوكي - المعلمون وأولياء الأمور">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
 
     <!-- Google Fonts: Cairo -->
@@ -203,12 +203,12 @@
             <!-- Brand -->
             <div class="flex items-center gap-3 cursor-pointer" onclick="goToParentAuth()">
                 <div class="bg-white px-2.5 py-1.5 rounded-xl shadow-sm border border-white/20 flex items-center justify-center">
-                    <img src="assets/images/alandalus-logo.png" alt="مدارس الأندلس الأهلية" class="h-8 sm:h-9 w-auto object-contain" onerror="this.src='assets/images/alandalus-rosette.png'">
+                    <img src="assets/images/alandalus-logo.png" alt="الشعار" class="h-8 sm:h-9 w-auto object-contain" onerror="this.src='assets/images/alandalus-rosette.png'">
                 </div>
                 <div>
                     <h1 class="font-bold text-base sm:text-lg leading-tight text-white flex items-center gap-2">
                         منصة التقرير الأكاديمي والتعليمي السلوكي
-                        <span class="text-xs bg-andalus-gold/20 text-andalus-gold border border-andalus-gold/40 px-2 py-0.5 rounded-full font-normal hidden sm:inline-block">مدارس الأندلس الأهلية</span>
+                        
                     </h1>
                     <p class="text-xs text-slate-300">مكة المكرمة - المرحلة الابتدائية (بنين)</p>
                 </div>
@@ -253,7 +253,7 @@
                     الاستعلام عن التقرير الأكاديمي للطلاب
                 </h2>
                 <p class="text-xs sm:text-sm text-slate-600">
-                    أهلاً بكم في منصة مدارس الأندلس الأهلية. يرجى إدخال رقم هوية الطالب للاطلاع على التقرير الأكاديمي والسلوكي المعتمد.
+                    يرجى إدخال رقم هوية الطالب أو اختياره مباشرة للاطلاع على التقرير الأكاديمي والتعليمي السلوكي المعتمد.
                 </p>
             </div>
 
@@ -281,23 +281,33 @@
                     </div>
 
                     <!-- Quick Demo Chips & Search by Student Dropdown -->
-                    <div class="space-y-2">
-                        <div class="flex items-center justify-between text-[11px] bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-slate-600">
-                            <span class="font-bold">💡 تجربة سريعة:</span>
-                            <div class="flex gap-2 font-bold">
-                                <button onclick="setParentDemo('1102938475')" class="hover:text-andalus-blue underline">عزام (يحتاج دعم)</button>
-                                <span class="text-slate-300">|</span>
-                                <button onclick="setParentDemo('1188334455')" class="hover:text-andalus-blue underline">فيصل (متفوق)</button>
-                                <span class="text-slate-300">|</span>
-                                <button onclick="setParentDemo('1199445566')" class="hover:text-andalus-blue underline">ريان (متقدم)</button>
+                    <div class="space-y-2.5">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs bg-gradient-to-r from-blue-50/80 to-amber-50/60 p-3 rounded-2xl border border-blue-200">
+                            <span class="font-black text-andalus-darkBlue flex items-center gap-1.5">
+                                <i data-lucide="sparkles" class="w-4 h-4 text-andalus-gold"></i>
+                                <span>عرض فوري بضغطة واحدة:</span>
+                            </span>
+                            <div class="flex flex-wrap gap-1.5 font-bold">
+                                <button type="button" onclick="setParentDemo('1102938475')" class="px-3 py-1.5 bg-white hover:bg-amber-100 text-amber-950 border border-amber-300 rounded-xl shadow-xs transition flex items-center gap-1.5 cursor-pointer">
+                                    <span>عزام المالكي</span>
+                                    <span class="text-[9.5px] bg-amber-200 text-amber-900 px-1.5 py-0.5 rounded font-bold">يحتاج دعم</span>
+                                </button>
+                                <button type="button" onclick="setParentDemo('1188334455')" class="px-3 py-1.5 bg-white hover:bg-emerald-100 text-emerald-950 border border-emerald-300 rounded-xl shadow-xs transition flex items-center gap-1.5 cursor-pointer">
+                                    <span>فيصل الزهراني</span>
+                                    <span class="text-[9.5px] bg-emerald-200 text-emerald-900 px-1.5 py-0.5 rounded font-bold">متفوق</span>
+                                </button>
+                                <button type="button" onclick="setParentDemo('1199445566')" class="px-3 py-1.5 bg-white hover:bg-sky-100 text-sky-950 border border-sky-300 rounded-xl shadow-xs transition flex items-center gap-1.5 cursor-pointer">
+                                    <span>أحمد الغامدي</span>
+                                    <span class="text-[9.5px] bg-sky-200 text-sky-900 px-1.5 py-0.5 rounded font-bold">متقدم</span>
+                                </button>
                             </div>
                         </div>
 
                         <!-- Dropdown of all 340 students in 15 classes -->
                         <div>
-                            <select id="parentQuickSelect" onchange="if(this.value){setParentDemo(this.value)}"
-                                    class="w-full text-xs font-bold text-slate-700 bg-white border border-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-andalus-blue shadow-sm">
-                                <option value="">🔍 أو اختر أي طالب للتجربة الفورية (340 طالباً بمدارس الأندلس)...</option>
+                            <select id="parentQuickSelect" onchange="if(this.value){setParentDemo(this.value);}"
+                                    class="w-full text-xs sm:text-sm font-bold text-slate-800 bg-white border border-slate-300 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-andalus-blue shadow-sm cursor-pointer">
+                                <option value="">🔍 أو اختر أي طالب للاطلاع المباشر الفوري (340 طالباً)...</option>
                             </select>
                         </div>
                     </div>
@@ -509,6 +519,8 @@
                                 <i data-lucide="chevron-left" class="w-4 h-4"></i>
                             </button>
                         </div>
+                        <!-- Quick Student Chips for Active Class -->
+                        <div id="teacherQuickStudentChips" class="flex flex-wrap items-center gap-1.5 mt-2"></div>
                     </div>
 
                     <!-- Period & Month Selector (2 cols) -->
@@ -554,6 +566,12 @@
                     <div>
                         <h3 class="text-sm font-bold text-andalus-darkBlue">مرحباً بولي أمر الطالب: <span id="parentStudentGreet" class="text-andalus-blue font-black">عزام خالد المالكي</span></h3>
                         <p class="text-xs text-slate-600">يمكنكم الاطلاع على تقرير الأداء المعتمد، أو طباعته وحفظه كملف PDF رسمي.</p>
+                        <div class="flex items-center gap-1.5 mt-2 flex-wrap">
+                            <span class="text-[11px] font-bold text-slate-500">تبديل الطالب مباشرة:</span>
+                            <button type="button" onclick="setParentDemo('1102938475')" class="px-2 py-0.5 bg-white hover:bg-amber-100 text-amber-950 border border-amber-300 rounded-lg text-xs font-bold transition shadow-2xs">عزام المالكي</button>
+                            <button type="button" onclick="setParentDemo('1188334455')" class="px-2 py-0.5 bg-white hover:bg-emerald-100 text-emerald-950 border border-emerald-300 rounded-lg text-xs font-bold transition shadow-2xs">فيصل الزهراني</button>
+                            <button type="button" onclick="setParentDemo('1199445566')" class="px-2 py-0.5 bg-white hover:bg-sky-100 text-sky-950 border border-sky-300 rounded-lg text-xs font-bold transition shadow-2xs">أحمد الغامدي</button>
+                        </div>
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
@@ -575,7 +593,7 @@
 
     <!-- Bottom Footer (No-Print) -->
     <footer class="no-print bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500">
-        <p>منظومة التقرير الأكاديمي والتعليمي السلوكي © مدارس الأندلس الأهلية بمكة المكرمة - جميع الحقوق محفوظة 2026</p>
+        <p>منظومة التقرير الأكاديمي والتعليمي السلوكي بمكة المكرمة - جميع الحقوق محفوظة 2026</p>
     </footer>
 
     <!-- ========================================================================= -->
@@ -589,7 +607,7 @@
                 <div class="print-header-grid flex flex-col sm:flex-row items-center justify-between gap-4">
                     <!-- Brand & Logo (Logo already has full official school text) -->
                     <div class="flex items-center gap-3">
-                        <img src="assets/images/alandalus-logo.png" alt="مدارس الأندلس الأهلية" class="h-16 sm:h-20 w-auto object-contain" onerror="this.src='assets/images/alandalus-rosette.png'">
+                        <img src="assets/images/alandalus-logo.png" alt="الشعار" class="h-16 sm:h-20 w-auto object-contain" onerror="this.src='assets/images/alandalus-rosette.png'">
                         <div class="border-r-2 border-slate-300 pr-3 hidden sm:block">
                             <span class="text-xs font-black text-andalus-darkBlue block">المرحلة الابتدائية (بنين)</span>
                             <span class="text-[10.5px] font-bold text-slate-500 block">مكة المكرمة</span>
@@ -914,7 +932,7 @@
                 </div>
 
                 <div class="text-center text-[9.5px] text-slate-400 mt-3">
-                    منظومة التقرير الأكاديمي والتعليمي السلوكي © مدارس الأندلس الأهلية بمكة المكرمة
+                    منظومة التقرير الأكاديمي والتعليمي السلوكي بمكة المكرمة
                 </div>
             </div>
 
@@ -1518,10 +1536,11 @@
             lucide.createIcons();
         }
 
-        // Preset Parent Demo Credentials
+        // Preset Parent Demo Credentials (Immediately Opens the Report)
         function setParentDemo(id) {
             const input = document.getElementById('parentStudentId');
             if (input) input.value = id;
+            parentLogin();
         }
 
         // Return to Parent Auth Screen
@@ -1646,7 +1665,7 @@
         function initParentQuickStudentDropdown() {
             const parentQuickSelect = document.getElementById('parentQuickSelect');
             if (!parentQuickSelect) return;
-            parentQuickSelect.innerHTML = '<option value="">🔍 أو اختر أي طالب للتجربة الفورية (340 طالباً بمدارس الأندلس)...</option>';
+            parentQuickSelect.innerHTML = '<option value="">🔍 أو اختر أي طالب للاطلاع المباشر الفوري (340 طالباً)...</option>';
             
             for (const cKey in availableClasses) {
                 const cls = availableClasses[cKey];
@@ -1721,6 +1740,9 @@
                 selectEl.appendChild(opt);
             });
 
+            // Populate Quick Clickable Student Chips for Active Class
+            renderTeacherStudentChips(filteredKeys);
+
             if (filteredKeys.length > 0) {
                 if (!filteredKeys.includes(currentActiveKey)) {
                     switchStudent(filteredKeys[0]);
@@ -1731,11 +1753,40 @@
             }
         }
 
+        // Render Quick Clickable Student Chips in Teacher Dashboard
+        function renderTeacherStudentChips(keysList) {
+            const container = document.getElementById('teacherQuickStudentChips');
+            if (!container) return;
+            container.innerHTML = '';
+            
+            const list = keysList || currentClassStudentKeys || [];
+            // Show up to 6 quick clickable chips
+            const preview = list.slice(0, 6);
+            preview.forEach(k => {
+                const st = studentsDb[k];
+                if (!st) return;
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                const isCurrent = (k === currentActiveKey);
+                btn.className = `px-2.5 py-1 rounded-xl text-xs font-bold border transition flex items-center gap-1 shadow-xs cursor-pointer ${
+                    isCurrent 
+                        ? 'bg-andalus-darkBlue text-white border-andalus-darkBlue ring-2 ring-andalus-gold' 
+                        : 'bg-white hover:bg-slate-100 text-slate-800 border-slate-300'
+                }`;
+                // Short name (First 2 words)
+                const shortName = st.name.split(' ').slice(0, 2).join(' ');
+                btn.innerHTML = `<span>${shortName}</span>`;
+                btn.onclick = () => switchStudent(k);
+                container.appendChild(btn);
+            });
+        }
+
         // Switch Student (Teacher Mode)
         function switchStudent(key) {
             currentActiveKey = key;
             const sel = document.getElementById('selectStudent');
             if (sel) sel.value = key;
+            renderTeacherStudentChips();
             renderReportInContainer('teacherReportContainer', 'teacher');
         }
 
@@ -2321,7 +2372,7 @@
                 return `
                     <tr class="border-b border-slate-200 hover:bg-slate-50 text-[10px]">
                         <td class="p-1 border border-slate-300 text-center font-bold text-slate-500">${idx + 1}</td>
-                        <td class="p-1 border border-slate-300 text-right font-black text-slate-900">${st.name}</td>
+                        <td onclick="closeClassPrintModal(); switchStudent('${k}');" class="p-1 border border-slate-300 text-right font-black text-slate-900 cursor-pointer hover:bg-amber-100 hover:text-andalus-blue transition" title="انقر لفتح تقرير هذا الطالب">${st.name} <span class="text-[9px] text-slate-400 font-normal">👆</span></td>
                         <td class="p-1 border border-slate-300 text-center font-mono font-bold text-slate-600">${st.id}</td>
                         <td class="p-1 border border-slate-300 text-center">${stats.subjectSums.digital}</td>
                         <td class="p-1 border border-slate-300 text-center">${stats.subjectSums.islamic}</td>
@@ -2357,7 +2408,7 @@
                 <div class="border-b-2 border-andalus-darkBlue pb-3 mb-3">
                     <div class="print-header-grid flex flex-col sm:flex-row items-center justify-between gap-4">
                         <div class="flex items-center gap-3">
-                            <img src="assets/images/alandalus-logo.png" alt="مدارس الأندلس الأهلية" class="h-16 sm:h-20 w-auto object-contain" onerror="this.src='assets/images/alandalus-rosette.png'">
+                            <img src="assets/images/alandalus-logo.png" alt="الشعار" class="h-16 sm:h-20 w-auto object-contain" onerror="this.src='assets/images/alandalus-rosette.png'">
                             <div class="border-r-2 border-slate-300 pr-3 hidden sm:block">
                                 <span class="text-xs font-black text-andalus-darkBlue block">المرحلة الابتدائية (بنين)</span>
                                 <span class="text-[10.5px] font-bold text-slate-500 block">مكة المكرمة</span>
@@ -2608,7 +2659,7 @@
         // Save Evaluation Toast
         function saveStudentEvaluation() {
             saveDbToStorage();
-            alert('تم حفظ واعتماد التقييم الأكاديمي والملف الصحي بنجاح في قاعدة بيانات مدارس الأندلس!');
+            alert('تم حفظ واعتماد التقييم الأكاديمي والملف الصحي بنجاح!');
         }
 
         // Share WhatsApp Link
