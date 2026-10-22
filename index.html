@@ -78,78 +78,95 @@
         @media print {
             @page {
                 size: A4 portrait;
-                margin: 6mm 8mm;
+                margin: 5mm 6mm;
             }
             *, *::before, *::after {
                 box-sizing: border-box !important;
             }
-            body {
+            html, body {
                 background: white !important;
                 color: #0f172a !important;
                 padding: 0 !important;
                 margin: 0 !important;
-                font-size: 11px !important;
+                min-height: 0 !important;
+                height: auto !important;
+                display: block !important;
+                font-size: 10px !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-            .no-print {
+            main {
+                padding: 0 !important;
+                margin: 0 !important;
+                max-width: 100% !important;
+                width: 100% !important;
+                display: block !important;
+            }
+            .no-print, header, footer, #viewPortalSelect, #modalClassPrint {
                 display: none !important;
+            }
+            #viewTeacherDashboard, #viewParentReport {
+                display: block !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            #teacherReportContainer, #parentReportContainer {
+                display: block !important;
+                margin: 0 !important;
+                padding: 0 !important;
             }
             .print-container {
                 box-shadow: none !important;
                 border: 1px solid #cbd5e1 !important;
-                border-radius: 8px !important;
-                padding: 8px 12px !important;
+                border-radius: 6px !important;
+                padding: 6px 10px !important;
                 max-width: 100% !important;
                 width: 100% !important;
                 margin: 0 !important;
             }
 
-            /* Exact 2-Column Grid in Header (No Flex Collisions) */
+            /* Compact Clean Header in Print */
             .print-header-grid {
-                display: grid !important;
-                grid-template-columns: auto 1fr !important;
+                display: flex !important;
+                flex-direction: row !important;
                 align-items: center !important;
-                gap: 16px !important;
+                justify-content: space-between !important;
+                gap: 12px !important;
                 direction: rtl !important;
             }
-            .print-vision-cards {
-                display: grid !important;
-                grid-template-columns: 1fr 1fr !important;
-                gap: 6px !important;
+            /* Hide verbose definition strip and cards in printed official certificate */
+            .tpl-objectives-strip, .print-vision-cards {
+                display: none !important;
             }
 
             /* Compact Table Spacing to fit Page 1 */
             .matrix-table {
-                font-size: 9.5px !important;
+                font-size: 9px !important;
             }
             .matrix-table th {
-                padding: 3px 4px !important;
-                font-size: 9.5px !important;
+                padding: 2px 3px !important;
+                font-size: 9px !important;
             }
             .matrix-table td {
-                padding: 2.5px 3px !important;
-                font-size: 9.5px !important;
+                padding: 1.5px 2.5px !important;
+                font-size: 9px !important;
             }
 
             /* Compact Chart in Print */
             .print-chart-box {
-                height: 110px !important;
+                height: 95px !important;
             }
 
-            /* Page 1: Academic Report fits cleanly on 1 page A4 */
-            .report-root {
-                page-break-inside: avoid !important;
-                break-inside: avoid !important;
+            /* Compact Teacher Notes in Print */
+            .tpl-teachers-notes-grid > div {
+                padding: 3px 5px !important;
+                font-size: 8.5px !important;
             }
 
-            .report-page-1 {
-                page-break-after: avoid;
-            }
-
-            /* Page 2: Remedial Plan breaks cleanly onto page 2 if printed */
+            /* Page 2: Remedial Plan breaks cleanly onto page 2 ONLY if present */
             .tpl-remedial-section {
                 page-break-before: always !important;
+                break-before: page !important;
                 margin-top: 15px !important;
                 border: 2px solid #f59e0b !important;
                 background-color: #fffbeb !important;
@@ -181,7 +198,7 @@
                 break-after: auto !important;
             }
             .class-summary-page table {
-                font-size: 8.5px !important;
+                font-size: 8px !important;
             }
             .class-summary-page th,
             .class-summary-page td {
@@ -471,7 +488,8 @@
                             <!-- Batch Print Whole Class -->
                             <button onclick="openClassPrintModal()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow-xs hover:shadow-md cursor-pointer whitespace-nowrap" title="طباعة كشف وتقارير الفصل كاملاً (PDF)">
                                 <i data-lucide="printer" class="w-4 h-4 text-indigo-200"></i>
-                                <span>طباعة الفصل (<span id="btnClassCountBadge">20</span>)</span>
+                                <span>طباعة</span>
+                                <span id="btnClassCountBadge" class="hidden">20</span>
                             </button>
                         </div>
                     </div>
@@ -614,7 +632,7 @@
             </div>
 
             <!-- Objectives & Definition Summary Strip -->
-            <div class="bg-blue-50/60 border border-blue-100 rounded-xl p-2.5 mb-4 grid grid-cols-1 md:grid-cols-3 gap-2.5 text-xs leading-relaxed">
+            <div class="tpl-objectives-strip bg-blue-50/60 border border-blue-100 rounded-xl p-2.5 mb-4 grid grid-cols-1 md:grid-cols-3 gap-2.5 text-xs leading-relaxed">
                 <div class="border-b md:border-b-0 md:border-l border-blue-200/80 pl-2">
                     <span class="font-extrabold text-andalus-darkBlue block mb-0.5 flex items-center gap-1 text-[11px]">
                         <i data-lucide="info" class="w-3 h-3 text-andalus-blue"></i>
