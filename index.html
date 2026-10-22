@@ -1095,18 +1095,19 @@
                     حدد نمط الطباعة أو التصدير المطلوب لطلاب هذا الفصل ليتم توليد الملفات وتنسيقها للطباعة بصيغة A4 متتابعة:
                 </p>
 
-                <!-- 3 Options as Selectable Cards -->
+                <!-- 4 Options as Selectable Cards -->
                 <div class="space-y-2.5">
-                    <!-- Option 3 (Recommended Default): All-in-One Dossier -->
+                    <!-- Option 1 (Recommended Default): All-in-One Dossier -->
                     <label id="cardOptAll" class="batch-opt-card flex items-start gap-3 p-3.5 rounded-2xl border-2 border-indigo-500 bg-indigo-50/50 cursor-pointer transition">
                         <input type="radio" name="batchPrintOption" value="all" checked onchange="updateBatchOptionUI(this.value)" class="mt-1 text-indigo-600 focus:ring-indigo-500">
-                        <div class="flex-1">
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs font-black text-slate-900 flex items-center gap-1.5">
-                                    <span class="flex items-center gap-1.5"><i data-lucide="package" class="w-4 h-4 text-indigo-600"></i> الحزمة الإدارية الكاملة للفصل</span>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center justify-between gap-2">
+                                <div class="flex items-center gap-1.5">
+                                    <i data-lucide="package" class="w-4 h-4 text-indigo-600 shrink-0"></i>
+                                    <span class="text-xs font-black text-slate-900">الحزمة الإدارية الكاملة للفصل</span>
                                     <span class="text-[10px] bg-indigo-100 text-indigo-800 font-bold px-2 py-0.5 rounded-full border border-indigo-200">الأشمل للإدارة</span>
-                                </span>
-                                <span class="text-[11px] font-bold text-indigo-700" id="badgeAllPagesCount">21 صفحة</span>
+                                </div>
+                                <span class="text-[11px] font-bold text-indigo-700 shrink-0" id="badgeAllPagesCount">21 صفحة</span>
                             </div>
                             <p class="text-[11px] text-slate-600 mt-1 leading-relaxed">
                                 يبدأ بكشف الرصد الإجمالي لدرجات الفصل كصفحة غلاف رسمية، يليه استمارة التقرير الأكاديمي المعتمدة لكل طالب متتابعة في ملف PDF واحد.
@@ -1114,15 +1115,16 @@
                         </div>
                     </label>
 
-                    <!-- Option 1: Summary Roster Sheet Only -->
+                    <!-- Option 2: Summary Roster Sheet Only -->
                     <label id="cardOptSummary" class="batch-opt-card flex items-start gap-3 p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 cursor-pointer transition hover:bg-slate-50">
                         <input type="radio" name="batchPrintOption" value="summary" onchange="updateBatchOptionUI(this.value)" class="mt-1 text-indigo-600 focus:ring-indigo-500">
-                        <div class="flex-1">
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs font-black text-slate-900 flex items-center gap-1.5">
-                                    <span class="flex items-center gap-1.5"><i data-lucide="file-spreadsheet" class="w-4 h-4 text-indigo-600"></i> كشف الرصد الإجمالي لدرجات الفصل فقط</span>
-                                </span>
-                                <span class="text-[11px] font-bold text-slate-500">صفحة واحدة</span>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center justify-between gap-2">
+                                <div class="flex items-center gap-1.5">
+                                    <i data-lucide="file-spreadsheet" class="w-4 h-4 text-indigo-600 shrink-0"></i>
+                                    <span class="text-xs font-black text-slate-900">كشف الرصد الإجمالي لدرجات الفصل فقط</span>
+                                </div>
+                                <span class="text-[11px] font-bold text-slate-500 shrink-0">صفحة واحدة</span>
                             </div>
                             <p class="text-[11px] text-slate-600 mt-1 leading-relaxed">
                                 جدول رصد موحد للإدارة يضم درجات الـ 6 مقررات لجميع طلاب الفصل مع نسب الإنجاز وإحصائيات التفوق وخانات التوقيع.
@@ -1133,12 +1135,13 @@
                     <!-- Option 3: Individual Reports Only for Class -->
                     <label id="cardOptReports" class="batch-opt-card flex items-start gap-3 p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 cursor-pointer transition hover:bg-slate-50">
                         <input type="radio" name="batchPrintOption" value="reports" onchange="updateBatchOptionUI(this.value)" class="mt-1 text-indigo-600 focus:ring-indigo-500">
-                        <div class="flex-1">
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs font-black text-slate-900 flex items-center gap-1.5">
-                                    <span class="flex items-center gap-1.5"><i data-lucide="files" class="w-4 h-4 text-indigo-600"></i> استمارات التقارير لجميع طلاب الفصل</span>
-                                </span>
-                                <span class="text-[11px] font-bold text-slate-500" id="badgeReportsCount">20 تقريراً</span>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center justify-between gap-2">
+                                <div class="flex items-center gap-1.5">
+                                    <i data-lucide="files" class="w-4 h-4 text-indigo-600 shrink-0"></i>
+                                    <span class="text-xs font-black text-slate-900">استمارات التقارير لجميع طلاب الفصل</span>
+                                </div>
+                                <span class="text-[11px] font-bold text-slate-500 shrink-0" id="badgeReportsCount">20 تقريراً</span>
                             </div>
                             <p class="text-[11px] text-slate-600 mt-1 leading-relaxed">
                                 استمارات التقرير الأكاديمي كاملة لجميع طلاب الفصل (كل طالب بصفحته المستقلة مع الرسم البياني والتوقيعات).
@@ -1146,19 +1149,28 @@
                         </div>
                     </label>
 
-                    <!-- Option 4: Current Active Student Only (Replaces old remedial toggle!) -->
+                    <!-- Option 4: Current Active Student Only -->
                     <label id="cardOptSingle" class="batch-opt-card flex items-start gap-3 p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 cursor-pointer transition hover:bg-slate-50">
                         <input type="radio" name="batchPrintOption" value="single" onchange="updateBatchOptionUI(this.value)" class="mt-1 text-indigo-600 focus:ring-indigo-500">
-                        <div class="flex-1">
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs font-black text-slate-900 flex items-center gap-1.5">
-                                    <span class="flex items-center gap-1.5"><i data-lucide="user-check" class="w-4 h-4 text-indigo-600"></i> طباعة تقرير الطالب الحالي فقط (<span id="modalCurrentStudentNameSpan" class="text-indigo-700 font-extrabold">عزام خالد المالكي</span>)</span>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center justify-between gap-2">
+                                <div class="flex items-center gap-1.5">
+                                    <i data-lucide="user-check" class="w-4 h-4 text-indigo-600 shrink-0"></i>
+                                    <span class="text-xs font-black text-slate-900">تقرير الطالب المحدد حالياً</span>
                                     <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full border border-emerald-200">طباعة فورية</span>
-                                </span>
-                                <span class="text-[11px] font-bold text-emerald-700">صفحة واحدة A4</span>
+                                </div>
+                                <span class="text-[11px] font-bold text-emerald-700 shrink-0">صفحة واحدة A4</span>
                             </div>
-                            <p class="text-[11px] text-slate-600 mt-1 leading-relaxed">
-                                طباعة استمارة التقرير الأكاديمي المعتمدة للطالب المحدد حالياً بالصفحة فقط (مستقلة للطباعة أو الإرسال لولي الأمر).
+                            <!-- Dedicated Student Tag Box -->
+                            <div class="mt-2 flex items-center gap-2">
+                                <span class="text-[11px] text-slate-500 font-semibold">اسم الطالب:</span>
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg bg-indigo-50 border border-indigo-200 text-indigo-900 text-xs font-black">
+                                    <i data-lucide="user" class="w-3.5 h-3.5 text-indigo-600"></i>
+                                    <span id="modalCurrentStudentNameSpan">عزام خالد بن شعف المالكي</span>
+                                </span>
+                            </div>
+                            <p class="text-[11px] text-slate-600 mt-1.5 leading-relaxed">
+                                طباعة استمارة التقرير الأكاديمي المعتمدة لهذا الطالب فقط لتسليمها لولي الأمر (مستقلة ومعتمدة إلكترونياً).
                             </p>
                         </div>
                     </label>
