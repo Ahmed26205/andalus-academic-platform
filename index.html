@@ -334,7 +334,36 @@
 
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1.5">رمز الدخول أو رقم الجوال:</label>
+                        <label class="block text-xs font-bold text-slate-700 mb-1.5 flex items-center justify-between">
+                            <span>اختر حساب المعلم أو المرشد الطلابي للتجربة:</span>
+                            <span class="text-[10.5px] text-amber-800 font-semibold">نظام الصلاحيات المحمي</span>
+                        </label>
+                        <select id="authSelectTeacher" onchange="updateAuthTeacherDesc(this.value)"
+                                class="w-full text-xs sm:text-sm font-black text-slate-900 bg-amber-50/80 border border-amber-300 rounded-xl px-3 py-2.5 focus:ring-2 focus:ring-andalus-gold focus:outline-none shadow-sm cursor-pointer">
+                            <option value="counselor" selected>👑 أ. إبراهيم علي القرني (الموجه / المرشد الطلابي - كافة الصلاحيات)</option>
+                            <option value="t_math">📐 أ. عبد الله سعد الغامدي (معلم الرياضيات - فصول 5/1، 5/2، 5/3، 6/1)</option>
+                            <option value="t_arabic">📖 أ. محمد ناصر الشهري (معلم لغتي الجميلة - فصول 5/1، 5/2، 4/1، 4/2)</option>
+                            <option value="t_science">🔬 أ. خالد سعيد القرني (معلم العلوم - فصول 5/1، 5/3، 6/2، 6/3)</option>
+                            <option value="t_islamic">🕌 أ. فهد مطلق المطيري (معلم الدراسات الإسلامية - فصول 5/1، 5/2، 3/1، 3/2)</option>
+                            <option value="t_digital">💻 أ. أحمد يحيى المالكي (معلم المهارات الرقمية - فصول 5 و 6)</option>
+                            <option value="t_english">🌐 أ. سلطان عبد العزيز العتيبي (معلم اللغة الإنجليزية - فصول 5/1، 4/1، G5، G6)</option>
+                        </select>
+                        <p id="authTeacherDesc" class="text-[10.5px] text-amber-900 font-semibold mt-1 bg-amber-100/60 p-2 rounded-lg border border-amber-200">
+                            👑 <b>صلاحيات الموجه الطلابي:</b> إشراف وتعديل كامل لكافة المواد الـ 6، مراجعة وتعديل وحذف ملاحظات المعلمين، وإدارة وتوثيق الملف الصحي والرعاية المدرسية.
+                        </p>
+                    </div>
+
+                    <!-- Quick Click Teacher Chips for Instant Testing -->
+                    <div class="flex flex-wrap gap-1.5 text-[10.5px]">
+                        <span class="font-bold text-slate-500 self-center ml-1">تجربة سريعة:</span>
+                        <button type="button" onclick="quickSelectAuthTeacher('counselor')" class="px-2 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-900 font-bold rounded-lg border border-indigo-200 transition">👑 المرشد الطلابي</button>
+                        <button type="button" onclick="quickSelectAuthTeacher('t_math')" class="px-2 py-1 bg-red-50 hover:bg-red-100 text-red-900 font-bold rounded-lg border border-red-200 transition">📐 معلم الرياضيات</button>
+                        <button type="button" onclick="quickSelectAuthTeacher('t_arabic')" class="px-2 py-1 bg-amber-50 hover:bg-amber-100 text-amber-900 font-bold rounded-lg border border-amber-200 transition">📖 معلم لغتي</button>
+                        <button type="button" onclick="quickSelectAuthTeacher('t_science')" class="px-2 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 font-bold rounded-lg border border-emerald-200 transition">🔬 معلم العلوم</button>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1.5">رمز المرور الوظيفي:</label>
                         <div class="relative">
                             <input type="password" id="teacherInputCode" placeholder="أدخل رمز المرور (1234)" 
                                    class="w-full text-sm font-bold text-slate-900 bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 pl-11 focus:ring-2 focus:ring-andalus-gold focus:bg-white focus:outline-none tracking-widest text-center"
@@ -343,14 +372,9 @@
                         </div>
                     </div>
 
-                    <div class="flex items-center justify-between text-[11px] bg-amber-50/60 p-2.5 rounded-xl border border-amber-200 text-amber-900">
-                        <span class="font-bold">المسار: معلم المرحلة الابتدائية / الموجه</span>
-                        <span class="text-emerald-700 font-bold bg-emerald-100 px-2 py-0.5 rounded">كود تجريبي جاهز (1234)</span>
-                    </div>
-
                     <button onclick="teacherLogin()" class="w-full bg-andalus-gold hover:bg-andalus-lightGold text-slate-950 py-3.5 rounded-xl font-black text-sm flex items-center justify-center gap-2 transition shadow-md hover:shadow-lg">
-                        <span>دخول لوحة الرصد والتقييم</span>
-                        <i data-lucide="edit-3" class="w-4 h-4"></i>
+                        <span>دخول لوحة الرصد والإرشاد</span>
+                        <i data-lucide="arrow-left" class="w-4 h-4"></i>
                     </button>
                 </div>
 
@@ -382,28 +406,28 @@
                         </div>
                         <div>
                             <h2 class="text-base sm:text-lg font-black text-andalus-darkBlue flex items-center gap-2">
-                                لوحة المعلم لرصد التقرير الأكاديمي
-                                <span class="text-xs bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full font-bold">مسار محمي</span>
+                                <span id="dashTeacherName">لوحة الرصد والتوجيه الطلابي</span>
+                                <span id="dashTeacherBadge" class="text-xs bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full font-bold">صلاحيات كاملة</span>
                             </h2>
-                            <p class="text-xs text-slate-500">المرحلة الابتدائية - مكة المكرمة | الفصل الدراسي الأول 1447هـ</p>
+                            <p id="dashTeacherSub" class="text-xs text-slate-500">المرحلة الابتدائية - مكة المكرمة | الفصل الدراسي الأول 1447هـ</p>
                         </div>
                     </div>
 
-                    <!-- Quick Action Buttons + Teacher Subject / Role Selector -->
+                    <!-- Quick Action Buttons + Teacher Switcher -->
                     <div class="flex flex-wrap items-center gap-2">
-                        <!-- Subject / Teacher Role Selector -->
+                        <!-- Active Teacher Switcher -->
                         <div class="flex items-center gap-1.5 bg-amber-50/90 border border-amber-300 rounded-xl px-2.5 py-1.5 shadow-sm">
-                            <i data-lucide="award" class="w-4 h-4 text-amber-700"></i>
-                            <span class="text-xs font-black text-amber-950">المادة / الصفة:</span>
-                            <select id="selectTeacherSubject" onchange="setTeacherSubject(this.value)"
+                            <span id="activeTeacherAvatar" class="text-sm">👑</span>
+                            <span class="text-xs font-black text-amber-950">المستخدم:</span>
+                            <select id="selectActiveTeacher" onchange="switchActiveTeacher(this.value)"
                                     class="text-xs font-black text-slate-900 bg-white border border-amber-300 rounded-lg px-2 py-1 focus:ring-2 focus:ring-andalus-blue focus:outline-none cursor-pointer shadow-sm">
-                                <option value="all">👑 رائد الفصل / المشرف (كافة المواد)</option>
-                                <option value="math">📐 معلم الرياضيات</option>
-                                <option value="arabic">📖 معلم لغتي الجميلة</option>
-                                <option value="science">🔬 معلم العلوم</option>
-                                <option value="islamic">🕌 معلم الدراسات الإسلامية والقرآن</option>
-                                <option value="digital">💻 معلم المهارات الرقمية</option>
-                                <option value="english">🌐 معلم اللغة الإنجليزية</option>
+                                <option value="counselor">👑 أ. إبراهيم القرني (المرشد الطلابي)</option>
+                                <option value="t_math">📐 أ. عبد الله الغامدي (معلم الرياضيات)</option>
+                                <option value="t_arabic">📖 أ. محمد الشهري (معلم لغتي)</option>
+                                <option value="t_science">🔬 أ. خالد القرني (معلم العلوم)</option>
+                                <option value="t_islamic">🕌 أ. فهد المطيري (معلم الإسلاميات)</option>
+                                <option value="t_digital">💻 أ. أحمد المالكي (معلم الرقمية)</option>
+                                <option value="t_english">🌐 أ. سلطان العتيبي (معلم الإنجليزية)</option>
                             </select>
                         </div>
 
@@ -621,6 +645,36 @@
                 </div>
             </div>
 
+            <!-- ========================================================================= -->
+            <!-- STUDENT HEALTH & SPECIAL CARE DOSSIER (STUDENT COUNSELOR SUPERVISED) -->
+            <!-- ========================================================================= -->
+            <div class="tpl-health-section bg-gradient-to-r from-teal-50/90 via-emerald-50/60 to-blue-50/70 border border-teal-200 rounded-xl p-3 mb-4 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div class="flex items-start sm:items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-teal-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+                        <i data-lucide="stethoscope" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="text-xs font-black text-teal-950">الملف الصحي والرعاية المدرسية:</span>
+                            <span class="tpl-blood-badge text-[10px] bg-red-100 text-red-800 font-bold px-2 py-0.5 rounded-full border border-red-200">فصيلة: +O</span>
+                            <span class="tpl-health-badge text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full border border-emerald-200">سليم ولله الحمد</span>
+                        </div>
+                        <p class="text-[11px] text-slate-700 font-medium mt-1">
+                            الحالة الصحية والأمراض: <span class="tpl-health-condition font-bold text-slate-900">سليم (لا توجد أمراض مزمنة)</span> | 
+                            توجيه الرعاية المدرسية: <span class="tpl-health-care font-bold text-slate-800">ممارسة الأنشطة كاملة بشكل طبيعي</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Edit Button (Only visible for Student Counselor) -->
+                <div class="tpl-health-actions shrink-0 flex items-center gap-2">
+                    <button type="button" onclick="openHealthModal()" class="tpl-btn-edit-health hidden text-xs bg-teal-700 hover:bg-teal-800 text-white px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 shadow-sm transition">
+                        <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                        <span>تعديل الملف الصحي</span>
+                    </button>
+                </div>
+            </div>
+
             <!-- Student Profile & Score KPI Dashboard -->
             <div class="grid grid-cols-1 md:grid-cols-12 gap-3 mb-4">
                 <!-- Student Info Card (5 cols) -->
@@ -806,6 +860,25 @@
                             «فريق المدرسة جاهز لتقديم الدعم والمساعدة وننتظر زيارتكم لنا قريباً»
                         </p>
                     </div>
+                </div>
+            </div>
+
+            <!-- ========================================================================= -->
+            <!-- SUBJECT TEACHERS' NOTES GRID (EACH TEACHER NOTES THEIR SUBJECT) -->
+            <!-- ========================================================================= -->
+            <div class="mb-4 break-inside-avoid tpl-teachers-notes-container">
+                <div class="flex items-center justify-between mb-2 pb-1 border-b border-slate-200">
+                    <h3 class="text-xs font-black text-andalus-darkBlue flex items-center gap-1.5">
+                        <i data-lucide="messages-square" class="w-4 h-4 text-andalus-gold"></i>
+                        <span>ملاحظات وتقييم معلمي المقررات الدراسية</span>
+                    </h3>
+                    <span class="text-[10px] text-slate-500 font-bold hidden sm:inline">
+                        المعلم يرصد مادته | يحق للموجه الطلابي مراجعة وتعديل وحذف كافة الملاحظات
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5 tpl-subject-notes-grid">
+                    <!-- Populated dynamically with 6 cards for the 6 subjects -->
                 </div>
             </div>
 
@@ -1095,10 +1168,85 @@
     </div>
 
     <!-- ========================================================================= -->
+    <!-- MODAL: EDIT STUDENT HEALTH & PERSONAL PROFILE (COUNSELOR ONLY) -->
+    <!-- ========================================================================= -->
+    <div id="modalHealthEdit" class="no-print hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-lg w-full overflow-hidden animate-in fade-in zoom-in duration-200">
+            <div class="bg-teal-900 text-white p-5 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-2xl bg-teal-500/20 border border-teal-400/30 text-teal-300 flex items-center justify-center">
+                        <i data-lucide="stethoscope" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-black text-white">الملف الصحي والرعاية المدرسية للطالب</h3>
+                        <p class="text-xs text-teal-200 mt-0.5">
+                            الطالب: <span id="healthModalStudentName" class="font-bold text-white">عزام خالد المالكي</span> (صلاحية الموجه الطلابي)
+                        </p>
+                    </div>
+                </div>
+                <button onclick="closeHealthModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white flex items-center justify-center transition">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <div class="p-6 space-y-4 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">فصيلة الدم:</label>
+                    <select id="inputHealthBlood" class="w-full text-xs font-bold text-slate-900 bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 focus:ring-2 focus:ring-teal-600 focus:outline-none cursor-pointer">
+                        <option value="+O">+O (موجب)</option>
+                        <option value="+A">+A (موجب)</option>
+                        <option value="+B">+B (موجب)</option>
+                        <option value="+AB">+AB (موجب)</option>
+                        <option value="-O">-O (سالب)</option>
+                        <option value="-A">-A (سالب)</option>
+                        <option value="-B">-B (سالب)</option>
+                        <option value="-AB">-AB (سالب)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">الحالة الصحية والأمراض المزمنة:</label>
+                    <input type="text" id="inputHealthCondition" 
+                           placeholder="مثال: سليم ولله الحمد / ضعف نظر / حساسية صدرية (ربو)"
+                           class="w-full text-xs font-bold text-slate-900 bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 focus:ring-2 focus:ring-teal-600 focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">توجيهات الرعاية الخاصة داخل القاعة والأنشطة:</label>
+                    <textarea id="inputHealthCare" rows="2"
+                              placeholder="مثال: يُوصى بجلوس الطالب في المقاعد الأمامية ومتابعة ارتدائه للنظارة..."
+                              class="w-full text-xs text-slate-900 bg-slate-50 border border-slate-300 rounded-xl p-2.5 focus:ring-2 focus:ring-teal-600 focus:outline-none"></textarea>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">ملاحظات التوجيه الطلابي الخاصة والسرية:</label>
+                    <textarea id="inputHealthCounselorNotes" rows="2"
+                              placeholder="ملاحظات المتابعة الإرشادية الخاصة بالأسرة والحالة..."
+                              class="w-full text-xs text-slate-900 bg-slate-50 border border-slate-300 rounded-xl p-2.5 focus:ring-2 focus:ring-teal-600 focus:outline-none"></textarea>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 px-6 py-4 border-t border-slate-100 flex items-center justify-between">
+                <button onclick="closeHealthModal()" class="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 text-xs font-bold transition">
+                    إلغاء
+                </button>
+                <button onclick="saveHealthProfile()" class="bg-teal-700 hover:bg-teal-600 text-white px-5 py-2.5 rounded-xl text-xs font-black flex items-center gap-2 transition shadow-md">
+                    <i data-lucide="check" class="w-4 h-4"></i>
+                    <span>حفظ واعتماد الملف الصحي</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
     <!-- JAVASCRIPT: DATA & INTERACTION MANAGEMENT -->
     <!-- ========================================================================= -->
     <script src="assets/students-data.js"></script>
     <script>
+        // =========================================================================
+        // CONFIGURATION & DEFINITIONS
+        // =========================================================================
+
         // Subjects Definition (6 subjects)
         const subjects = [
             { id: 'digital', name: 'المهارات الرقمية' },
@@ -1118,16 +1266,105 @@
             { id: 'attendance', name: 'الحضور والغياب والانضباط' }
         ];
 
+        // Teachers & School Counselor Database (Realistic Staff Roster & Permissions)
+        const teachersDb = {
+            counselor: {
+                id: 'counselor',
+                name: 'أ. إبراهيم علي القرني',
+                title: 'الموجه الطلابي / المرشد الأكاديمي',
+                role: 'counselor',
+                subject: 'all',
+                avatar: '👑',
+                badge: 'الموجه الطلابي (صلاحيات كاملة)',
+                desc: 'صلاحيات كاملة: مراجعة وتعديل وحذف ملاحظات كافة المعلمين، تعديل درجات كافة المواد، وإدارة وتعديل الملف الصحي للطلاب.',
+                classes: ['all']
+            },
+            t_math: {
+                id: 't_math',
+                name: 'أ. عبد الله سعد الغامدي',
+                title: 'معلم الرياضيات',
+                role: 'teacher',
+                subject: 'math',
+                avatar: '📐',
+                badge: 'معلم الرياضيات',
+                desc: 'يرصد درجات وملاحظات مقرر الرياضيات لفصول (5/1، 5/2، 5/3، 6/1) فقط. بقية المواد مقفلة تلقائياً (🔒).',
+                classes: ['5/1', '5/2', '5/3', '6/1']
+            },
+            t_arabic: {
+                id: 't_arabic',
+                name: 'أ. محمد ناصر الشهري',
+                title: 'معلم لغتي الجميلة',
+                role: 'teacher',
+                subject: 'arabic',
+                avatar: '📖',
+                badge: 'معلم لغتي الجميلة',
+                desc: 'يرصد درجات وملاحظات مقرر لغتي الجميلة لفصول (5/1، 5/2، 4/1، 4/2) فقط. بقية المواد مقفلة تلقائياً (🔒).',
+                classes: ['5/1', '5/2', '4/1', '4/2']
+            },
+            t_science: {
+                id: 't_science',
+                name: 'أ. خالد سعيد القرني',
+                title: 'معلم العلوم',
+                role: 'teacher',
+                subject: 'science',
+                avatar: '🔬',
+                badge: 'معلم العلوم',
+                desc: 'يرصد درجات وملاحظات مقرر العلوم لفصول (5/1، 5/3، 6/2، 6/3) فقط. بقية المواد مقفلة تلقائياً (🔒).',
+                classes: ['5/1', '5/3', '6/2', '6/3']
+            },
+            t_islamic: {
+                id: 't_islamic',
+                name: 'أ. فهد مطلق المطيري',
+                title: 'معلم الدراسات الإسلامية',
+                role: 'teacher',
+                subject: 'islamic',
+                avatar: '🕌',
+                badge: 'معلم الدراسات الإسلامية',
+                desc: 'يرصد درجات وملاحظات مقرر الدراسات الإسلامية والقرآن الكريم لفصول (5/1، 5/2، 3/1، 3/2) فقط.',
+                classes: ['5/1', '5/2', '3/1', '3/2']
+            },
+            t_digital: {
+                id: 't_digital',
+                name: 'أ. أحمد يحيى المالكي',
+                title: 'معلم المهارات الرقمية',
+                role: 'teacher',
+                subject: 'digital',
+                avatar: '💻',
+                badge: 'معلم المهارات الرقمية',
+                desc: 'يرصد درجات وملاحظات مقرر المهارات الرقمية لفصول الصف الخامس والسادس.',
+                classes: ['5/1', '5/2', '5/3', '6/1', '6/2', '6/3']
+            },
+            t_english: {
+                id: 't_english',
+                name: 'أ. سلطان عبد العزيز العتيبي',
+                title: 'معلم اللغة الإنجليزية',
+                role: 'teacher',
+                subject: 'english',
+                avatar: '🌐',
+                badge: 'معلم اللغة الإنجليزية',
+                desc: 'يرصد درجات وملاحظات مقرر اللغة الإنجليزية لفصول (5/1، 4/1، 6/1) فقط.',
+                classes: ['5/1', '4/1', '6/1']
+            }
+        };
+
+        // Active State Variables
+        let currentTeacherKey = 'counselor';
+        let currentTeacherSubject = 'all';
+        let currentActiveKey = 'azzam';
+        let currentClassCode = '5/1';
+        let currentClassStudentKeys = [];
+        let currentHealthModalStudentKey = null;
+
         // Local Storage Utilities
         function saveDbToStorage() {
             try {
-                localStorage.setItem('andalus_academic_db_v1', JSON.stringify(studentsDb));
+                localStorage.setItem('andalus_academic_db_v2', JSON.stringify(studentsDb));
             } catch(e) {}
         }
 
         function loadDbFromStorage() {
             try {
-                const saved = localStorage.getItem('andalus_academic_db_v1');
+                const saved = localStorage.getItem('andalus_academic_db_v2') || localStorage.getItem('andalus_academic_db_v1');
                 if (saved) {
                     const parsed = JSON.parse(saved);
                     Object.keys(parsed).forEach(k => {
@@ -1142,10 +1379,72 @@
         }
         loadDbFromStorage();
 
+        // Ensure Health Dossier and Subject Notes are seeded for every student
+        function ensureStudentAdvancedData(st, key) {
+            if (!st) return;
+            if (!st.healthProfile) {
+                if (key === 'azzam') {
+                    st.healthProfile = {
+                        blood: '+A',
+                        condition: 'ضعف نظر (يرتدي نظارة طبية)',
+                        care: 'يُوصى بجلوس الطالب في المقاعد الأمامية ومتابعة ارتدائه للنظارة أثناء شرح السبورة.',
+                        counselorNotes: 'طالب متعاون وذو دافعية عالية، تم التنسيق مع ولي الأمر لمتابعة الفحص الدوري للنظر.'
+                    };
+                } else if (key === 'faisal') {
+                    st.healthProfile = {
+                        blood: '+O',
+                        condition: 'حساسية صدرية خفيفة (ربو عند المجهود البدني العالي)',
+                        care: 'مراعاة الطالب في حصص التربية البدنية وتجنب الغبار، وتوفير بخاخ الربو عند الحاجة.',
+                        counselorNotes: 'تم التنسيق مع المرشد الصحي وولي الأمر وتوثيق الحالة بالسجل الصحي المدرسي.'
+                    };
+                } else {
+                    st.healthProfile = {
+                        blood: '+O',
+                        condition: 'سليم (لا توجد أمراض مزمنة ولله الحمد)',
+                        care: 'ممارسة الأنشطة المدرسية كاملة بشكل طبيعي',
+                        counselorNotes: 'مستوى التكيف الدراسي والاجتماعي سليم.'
+                    };
+                }
+            }
+
+            if (!st.subjectNotes) {
+                if (key === 'azzam') {
+                    st.subjectNotes = {
+                        digital: 'مبدع في التطبيقات العملية والبرمجة وحل المشكلات.',
+                        islamic: 'حفظ متقن للآيات المقررة مع التلاوة والتجويد الحسن.',
+                        english: 'Excellent reading skills and active in class discussions.',
+                        arabic: 'يحتاج تكثيف المتابعة في القواعد الإملائية والقراءة الجهرية.',
+                        science: 'شغوف بالتجارب والاستكشاف العلمي في المختبر.',
+                        math: 'يحتاج تركيزاً أكبر في مهارات القسمة والكسور وحل التمارين اليومية.'
+                    };
+                } else if (key === 'faisal') {
+                    st.subjectNotes = {
+                        digital: 'مستوى ممتاز في المهارات الرقمية وتسليم المهام.',
+                        islamic: 'خلوق ومنضبط ومتميز في حفظ سور القرآن الكريم المقررة.',
+                        english: 'Good overall performance, needs extra vocabulary practice.',
+                        arabic: 'مستواه في تحسن مستمر، يُنصح بالقراءة اليومية لزيادة الطلاقة.',
+                        science: 'مشارك جيد ومهتم بالبيئة والعلوم الطبيعية.',
+                        math: 'يحتاج مراجعة مستمرة لجدول الضرب والمسائل الحسابية.'
+                    };
+                } else {
+                    st.subjectNotes = {
+                        digital: '',
+                        islamic: '',
+                        english: '',
+                        arabic: '',
+                        science: '',
+                        math: ''
+                    };
+                }
+            }
+        }
+
         const studentKeys = Object.keys(studentsDb);
-        let currentActiveKey = 'azzam';
-        let currentClassCode = '5/1';
-        let currentClassStudentKeys = [];
+        studentKeys.forEach(k => ensureStudentAdvancedData(studentsDb[k], k));
+
+        // =========================================================================
+        // AUTHENTICATION & ROLE MANAGEMENT
+        // =========================================================================
 
         // Toggle Auth Cards (Parent default vs Teacher switch)
         function toggleAuthRole(role) {
@@ -1162,36 +1461,99 @@
             lucide.createIcons();
         }
 
-        function setParentDemo(id) {
-            document.getElementById('parentInputId').value = id;
-            parentLogin();
+        // Quick Teacher Chips & Descriptions in Login
+        function updateAuthTeacherDesc(val) {
+            const t = teachersDb[val];
+            const descEl = document.getElementById('authTeacherDesc');
+            if (descEl && t) {
+                descEl.textContent = t.desc;
+            }
         }
 
-        // Return to Parent Auth Landing View
+        function quickSelectAuthTeacher(val) {
+            const authSel = document.getElementById('authSelectTeacher');
+            if (authSel) {
+                authSel.value = val;
+            }
+            updateAuthTeacherDesc(val);
+        }
+
+        // Switch Active Teacher / Counselor in Dashboard
+        function switchActiveTeacher(teacherKey) {
+            if (!teachersDb[teacherKey]) return;
+            currentTeacherKey = teacherKey;
+            const t = teachersDb[teacherKey];
+            currentTeacherSubject = t.subject;
+
+            // Sync dropdowns
+            const authSel = document.getElementById('authSelectTeacher');
+            if (authSel) authSel.value = teacherKey;
+            const headerSel = document.getElementById('selectActiveTeacher');
+            if (headerSel) headerSel.value = teacherKey;
+
+            // Header avatar and text
+            const avatar = document.getElementById('activeTeacherAvatar');
+            if (avatar) avatar.textContent = t.avatar;
+            const nameEl = document.getElementById('headerActiveTeacherName');
+            if (nameEl) nameEl.textContent = t.name;
+            const roleEl = document.getElementById('headerActiveTeacherRole');
+            if (roleEl) roleEl.textContent = t.badge;
+
+            // Check if current class is valid for this teacher
+            if (t.classes && !t.classes.includes('all')) {
+                if (!t.classes.includes(currentClassCode)) {
+                    currentClassCode = t.classes[0];
+                }
+            }
+
+            // Update class dropdown options based on teacher assigned classes
+            initClassDropdown();
+            selectClassTab(currentClassCode);
+
+            // Re-render current student report
+            renderReportInContainer('teacherReportContainer', 'teacher');
+            lucide.createIcons();
+        }
+
+        // Preset Parent Demo Credentials
+        function setParentDemo(id) {
+            const input = document.getElementById('parentStudentId');
+            if (input) input.value = id;
+        }
+
+        // Return to Parent Auth Screen
         function goToParentAuth() {
-            document.getElementById('viewPortalSelect').classList.remove('hidden');
             document.getElementById('viewTeacherDashboard').classList.add('hidden');
             document.getElementById('viewParentReport').classList.add('hidden');
+            document.getElementById('viewPortalSelect').classList.remove('hidden');
 
             document.getElementById('sessionIndicator').classList.add('hidden');
             document.getElementById('btnExitPortal').classList.add('hidden');
             document.getElementById('btnGlobalPrint').classList.add('hidden');
 
             toggleAuthRole('parent');
-            lucide.createIcons();
         }
 
-        // Parent Login (Matches by exact 10-digit ID or by Student Name)
+        // Parent Login Action
         function parentLogin() {
-            const idInput = document.getElementById('parentInputId').value.trim();
-            let matchedKey = studentKeys.find(k => studentsDb[k].id === idInput);
-            if (!matchedKey && idInput) {
-                matchedKey = studentKeys.find(k => studentsDb[k].name === idInput || studentsDb[k].name.includes(idInput));
+            const idInput = document.getElementById('parentStudentId').value.trim();
+            if (!idInput) {
+                alert('يرجى إدخال رقم هوية الطالب أو اختياره من القائمة السريعة.');
+                return;
             }
-            if (!matchedKey) matchedKey = 'azzam'; // fallback demo
 
-            currentActiveKey = matchedKey;
-            document.getElementById('parentStudentGreet').textContent = studentsDb[matchedKey].name;
+            let foundKey = studentKeys.find(k => studentsDb[k].id === idInput);
+            if (!foundKey && studentsDb[idInput]) {
+                foundKey = idInput;
+            }
+
+            if (!foundKey) {
+                alert('لم يتم العثور على طالب برقم الهوية المدخل. يرجى التأكد والمحاولة مرة أخرى.');
+                return;
+            }
+
+            currentActiveKey = foundKey;
+            const student = studentsDb[foundKey];
 
             document.getElementById('viewPortalSelect').classList.add('hidden');
             document.getElementById('viewTeacherDashboard').classList.add('hidden');
@@ -1201,15 +1563,25 @@
             document.getElementById('btnExitPortal').classList.remove('hidden');
             document.getElementById('btnGlobalPrint').classList.remove('hidden');
 
-            document.getElementById('sessionRoleText').textContent = 'حساب ولي الأمر';
+            document.getElementById('sessionRoleText').textContent = 'ولي أمر الطالب';
             document.getElementById('sessionRoleBadge').className = 'w-2 h-2 rounded-full bg-emerald-400 animate-pulse';
+
+            const greet = document.getElementById('parentStudentGreet');
+            if (greet) greet.textContent = student.name;
 
             renderReportInContainer('parentReportContainer', 'parent');
             lucide.createIcons();
         }
 
-        // Teacher Login
+        // Teacher / Counselor Login Action
         function teacherLogin() {
+            const authSel = document.getElementById('authSelectTeacher');
+            if (authSel) {
+                currentTeacherKey = authSel.value;
+            }
+            const t = teachersDb[currentTeacherKey] || teachersDb.counselor;
+            currentTeacherSubject = t.subject;
+
             document.getElementById('viewPortalSelect').classList.add('hidden');
             document.getElementById('viewParentReport').classList.add('hidden');
             document.getElementById('viewTeacherDashboard').classList.remove('hidden');
@@ -1218,23 +1590,31 @@
             document.getElementById('btnExitPortal').classList.remove('hidden');
             document.getElementById('btnGlobalPrint').classList.remove('hidden');
 
-            document.getElementById('sessionRoleText').textContent = 'لوحة رصد المعلم';
+            document.getElementById('sessionRoleText').textContent = t.badge;
             document.getElementById('sessionRoleBadge').className = 'w-2 h-2 rounded-full bg-amber-400 animate-pulse';
 
-            initClassDropdown();
-            selectClassTab(currentClassCode || '5/1');
+            switchActiveTeacher(currentTeacherKey);
             lucide.createIcons();
         }
 
-        // Dropdown Initializer with Optgroups for 4 Grades & 15 Classes
+        // =========================================================================
+        // CLASS & STUDENT NAVIGATION
+        // =========================================================================
+
+        // Dropdown Initializer with Optgroups for 4 Grades & 15 Classes (Filtered by Teacher)
         function initClassDropdown() {
             const selectClassEl = document.getElementById('selectClass');
             if (!selectClassEl) return;
             selectClassEl.innerHTML = '';
 
-            // Group classes by Grade
+            const currentTeacher = teachersDb[currentTeacherKey] || teachersDb.counselor;
+            const allowedClasses = currentTeacher.classes || ['all'];
+
             const gradesMap = {};
             for (const cKey in availableClasses) {
+                if (!allowedClasses.includes('all') && !allowedClasses.includes(cKey)) {
+                    continue;
+                }
                 const cls = availableClasses[cKey];
                 const gName = cls.grade || 'المرحلة الابتدائية';
                 if (!gradesMap[gName]) gradesMap[gName] = [];
@@ -1252,6 +1632,10 @@
                 });
                 selectClassEl.appendChild(group);
             }
+
+            if (!allowedClasses.includes('all') && !allowedClasses.includes(currentClassCode)) {
+                currentClassCode = allowedClasses[0];
+            }
             selectClassEl.value = currentClassCode;
         }
 
@@ -1266,7 +1650,10 @@
                 const group = document.createElement('optgroup');
                 group.label = `فصل ${cls.code} - ${cls.label}`;
                 
-                const cStudentKeys = studentKeys.filter(k => studentsDb[k].classCode === cKey);
+                const cStudentKeys = studentKeys.filter(k => {
+                    const st = studentsDb[k];
+                    return st && st.classCode === cKey;
+                });
                 cStudentKeys.forEach(k => {
                     const st = studentsDb[k];
                     const opt = document.createElement('option');
@@ -1278,9 +1665,16 @@
             }
         }
 
-        // Navigate Class (Previous / Next - across all 15 classes!)
+        // Navigate Class (cycles through allowed classes for active teacher)
         function navigateClass(direction) {
-            const classKeys = Object.keys(availableClasses);
+            const currentTeacher = teachersDb[currentTeacherKey] || teachersDb.counselor;
+            const allowedClasses = currentTeacher.classes || ['all'];
+            let classKeys = Object.keys(availableClasses);
+            if (!allowedClasses.includes('all')) {
+                classKeys = classKeys.filter(k => allowedClasses.includes(k));
+            }
+            if (classKeys.length === 0) return;
+
             let idx = classKeys.indexOf(currentClassCode);
             idx += direction;
             if (idx < 0) idx = classKeys.length - 1;
@@ -1305,10 +1699,13 @@
             if (!selectEl) return;
             selectEl.innerHTML = '';
 
-            let filteredKeys = studentKeys.filter(k => k.startsWith('s_'));
-            if (classCode !== 'all') {
-                filteredKeys = filteredKeys.filter(k => studentsDb[k].classCode === classCode);
-            }
+            let filteredKeys = studentKeys.filter(k => {
+                const st = studentsDb[k];
+                if (!st) return false;
+                if (classCode === 'all') return true;
+                return st.classCode === classCode;
+            });
+
             currentClassStudentKeys = filteredKeys;
 
             const badge = document.getElementById('btnClassCountBadge');
@@ -1322,7 +1719,12 @@
             });
 
             if (filteredKeys.length > 0) {
-                switchStudent(filteredKeys[0]);
+                if (!filteredKeys.includes(currentActiveKey)) {
+                    switchStudent(filteredKeys[0]);
+                } else {
+                    selectEl.value = currentActiveKey;
+                    renderReportInContainer('teacherReportContainer', 'teacher');
+                }
             }
         }
 
@@ -1334,7 +1736,7 @@
             renderReportInContainer('teacherReportContainer', 'teacher');
         }
 
-        // Next / Prev Student Navigation (cycles within active class!)
+        // Next / Prev Student Navigation (cycles within active class)
         function navigateStudent(direction) {
             const list = (currentClassStudentKeys && currentClassStudentKeys.length > 0) 
                          ? currentClassStudentKeys 
@@ -1363,13 +1765,102 @@
             if (el) el.textContent = `التاريخ: ${val}`;
         }
 
-        let currentTeacherSubject = 'all';
-
         // Select Teacher Subject / Role
         function setTeacherSubject(val) {
             currentTeacherSubject = val;
             renderReportInContainer('teacherReportContainer', 'teacher');
         }
+
+        // =========================================================================
+        // COUNSELOR HEALTH DOSSIER & SUBJECT NOTES ACTIONS
+        // =========================================================================
+
+        // Open Health Dossier Modal (Student Counselor feature)
+        function openHealthModal(studentKey) {
+            const stKey = studentKey || currentActiveKey;
+            currentHealthModalStudentKey = stKey;
+            const st = studentsDb[stKey];
+            if (!st) return;
+
+            ensureStudentAdvancedData(st, stKey);
+
+            const nameEl = document.getElementById('healthModalStudentName');
+            if (nameEl) nameEl.textContent = st.name;
+
+            const bloodEl = document.getElementById('inputHealthBlood');
+            if (bloodEl) bloodEl.value = st.healthProfile.blood || '+O';
+
+            const condEl = document.getElementById('inputHealthCondition');
+            if (condEl) condEl.value = st.healthProfile.condition || '';
+
+            const careEl = document.getElementById('inputHealthCare');
+            if (careEl) careEl.value = st.healthProfile.care || '';
+
+            const notesEl = document.getElementById('inputHealthCounselorNotes');
+            if (notesEl) notesEl.value = st.healthProfile.counselorNotes || '';
+
+            const modal = document.getElementById('modalHealthEdit');
+            if (modal) modal.classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        // Close Health Dossier Modal
+        function closeHealthModal() {
+            const modal = document.getElementById('modalHealthEdit');
+            if (modal) modal.classList.add('hidden');
+            currentHealthModalStudentKey = null;
+        }
+
+        // Save Health Dossier (Student Counselor only)
+        function saveHealthProfile() {
+            if (!currentHealthModalStudentKey || !studentsDb[currentHealthModalStudentKey]) return;
+            const st = studentsDb[currentHealthModalStudentKey];
+
+            const blood = document.getElementById('inputHealthBlood').value;
+            const condition = document.getElementById('inputHealthCondition').value.trim() || 'سليم (لا توجد أمراض مزمنة ولله الحمد)';
+            const care = document.getElementById('inputHealthCare').value.trim() || 'ممارسة الأنشطة كاملة بشكل طبيعي';
+            const counselorNotes = document.getElementById('inputHealthCounselorNotes').value.trim();
+
+            st.healthProfile = {
+                blood,
+                condition,
+                care,
+                counselorNotes
+            };
+
+            saveDbToStorage();
+            closeHealthModal();
+
+            renderReportInContainer('teacherReportContainer', 'teacher');
+            lucide.createIcons();
+            alert('تم حفظ واعتماد الملف الصحي للطالب بنجاح بنظام التوجيه الطلابي.');
+        }
+
+        // Update Specific Subject Teacher Note
+        function updateSubjectNote(studentKey, subId, val) {
+            if (!studentsDb[studentKey]) return;
+            ensureStudentAdvancedData(studentsDb[studentKey], studentKey);
+            studentsDb[studentKey].subjectNotes[subId] = val;
+            saveDbToStorage();
+        }
+
+        // Clear / Delete Subject Teacher Note (Exclusive Counselor Privilege)
+        function clearSubjectNote(studentKey, subId) {
+            if (!studentsDb[studentKey]) return;
+            ensureStudentAdvancedData(studentsDb[studentKey], studentKey);
+            const subObj = subjects.find(s => s.id === subId);
+            const subName = subObj ? subObj.name : subId;
+            if (confirm(`هل أنت متأكد من حذف ملاحظة مقرر (${subName}) للطالب؟\n(بصفتك الموجه الطلابي لديك صلاحية مراجعة وتعديل وحذف كافة ملاحظات المعلمين)`)) {
+                studentsDb[studentKey].subjectNotes[subId] = '';
+                saveDbToStorage();
+                renderReportInContainer('teacherReportContainer', 'teacher');
+                lucide.createIcons();
+            }
+        }
+
+        // =========================================================================
+        // STATS COMPUTATION & REPORT GENERATION
+        // =========================================================================
 
         // Compute Student Academic Stats & KPI Level
         function computeStudentStats(student) {
@@ -1404,25 +1895,22 @@
                 level = 'طالب متمكن';
                 levelBadge = 'bg-sky-100 text-sky-800 border-sky-300';
                 cardClasses = 'bg-sky-50 border-2 border-sky-400 text-sky-900';
-                lvlSub = 'حقق المعايير المستهدفة';
-            } else if (total < 60) {
-                level = 'المستوى منخفض جداً';
-                levelBadge = 'bg-rose-100 text-rose-800 border-rose-300';
-                cardClasses = 'bg-rose-50 border-2 border-rose-400 text-rose-900';
-                lvlSub = 'تدخل علاجي وإشرافي فوري';
+                lvlSub = 'أداء دراسي مستقر ومقبول';
             }
 
-            const hasRemedialPlan = (total < 90) || Object.values(subjectSums).some(v => v < 15);
+            const hasRemedialPlan = (total < 105) || (student.scores && Object.values(student.scores).some(crit => 
+                (crit.arabic && crit.arabic <= 2) || (crit.math && crit.math <= 2)
+            ));
 
             return {
                 total,
-                subjectSums,
                 percentage,
                 gpa,
                 level,
                 levelBadge,
                 cardClasses,
                 lvlSub,
+                subjectSums,
                 hasRemedialPlan
             };
         }
@@ -1432,6 +1920,7 @@
             const template = document.getElementById('reportTemplate');
             const clone = template.content.cloneNode(true);
             const student = studentsDb[studentKey];
+            ensureStudentAdvancedData(student, studentKey);
             const stats = computeStudentStats(student);
 
             // Fill Metadata
@@ -1440,30 +1929,33 @@
             clone.querySelector('.tpl-period-badge').textContent = student.period;
             clone.querySelector('.tpl-report-date').textContent = `التاريخ: ${student.date}`;
 
+            const curTeacher = teachersDb[currentTeacherKey] || teachersDb.counselor;
+            const isCounselor = (mode === 'teacher' && curTeacher.role === 'counselor');
+
             // Teacher Active Subject / Role Banner
             const teacherRoleBanner = clone.querySelector('.tpl-teacher-role-banner');
             if (teacherRoleBanner) {
                 if (mode === 'teacher') {
                     teacherRoleBanner.classList.remove('hidden');
-                    if (currentTeacherSubject === 'all') {
-                        teacherRoleBanner.className = 'tpl-teacher-role-banner mb-3 p-2.5 sm:p-3 rounded-xl text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2 border bg-blue-50 border-blue-200 text-blue-950 font-bold';
+                    if (isCounselor) {
+                        teacherRoleBanner.className = 'tpl-teacher-role-banner mb-3 p-2.5 sm:p-3 rounded-xl text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2 border bg-gradient-to-r from-teal-50 via-emerald-50 to-blue-50 border-teal-300 text-teal-950 font-bold';
                         teacherRoleBanner.innerHTML = `
                             <div class="flex items-center gap-2">
                                 <span class="text-base">👑</span>
-                                <span>صلاحية الرصد الحالية: <b>رائد الفصل / المشرف العام</b> — متاح لك مراجعة وتعديل درجات كافة المواد الـ 6 لإصدار التقرير الشامل.</span>
+                                <span>مرحباً <b>${curTeacher.name}</b> (${curTeacher.title}) — متاح لك مراجعة وتعديل درجات كافة المواد، إدارة الملف الصحي، وحذف وتعديل ملاحظات كافة المعلمين.</span>
                             </div>
-                            <span class="text-[11px] bg-blue-100 text-blue-800 px-2.5 py-0.5 rounded-full border border-blue-300 font-bold self-start sm:self-center">تقرير شامل</span>
+                            <span class="text-[11px] bg-teal-200 text-teal-900 px-2.5 py-0.5 rounded-full border border-teal-400 font-extrabold self-start sm:self-center shrink-0">صلاحيات الموجه الطلابي الكاملة</span>
                         `;
                     } else {
-                        const curSubObj = subjects.find(s => s.id === currentTeacherSubject);
+                        const curSubObj = subjects.find(s => s.id === curTeacher.subject);
                         const curSubName = curSubObj ? curSubObj.name : '';
                         teacherRoleBanner.className = 'tpl-teacher-role-banner mb-3 p-2.5 sm:p-3 rounded-xl text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2 border bg-amber-50 border-amber-300 text-amber-950 font-bold';
                         teacherRoleBanner.innerHTML = `
                             <div class="flex items-center gap-2">
-                                <span class="text-base">✏️</span>
-                                <span>صلاحية الرصد الحالية: <b>معلم ${curSubName}</b> — متاح لك رصد عمود [${curSubName}] فقط، وبقية المواد مقفلة تلقائياً (🔒) لحمايتها من التعديل.</span>
+                                <span class="text-base">${curTeacher.avatar}</span>
+                                <span>مرحباً <b>${curTeacher.name}</b> (${curTeacher.title}) — متاح لك رصد درجات وملاحظات مقرر [${curSubName}] فقط، وبقية المواد مقفلة تلقائياً (🔒) لحمايتها من التعديل.</span>
                             </div>
-                            <span class="text-[11px] bg-amber-200 text-amber-900 px-2.5 py-0.5 rounded-full border border-amber-300 font-bold self-start sm:self-center">رصد مادة مفردة</span>
+                            <span class="text-[11px] bg-amber-200 text-amber-900 px-2.5 py-0.5 rounded-full border border-amber-300 font-bold self-start sm:self-center shrink-0">رصد مادة مفردة</span>
                         `;
                     }
                 } else {
@@ -1474,22 +1966,20 @@
             // Update Teacher Signatures
             const sigTeacher = clone.querySelector('.tpl-sig-teacher');
             const sigRemedial = clone.querySelector('.tpl-sig-remedial-teacher');
-            if (mode === 'teacher' && currentTeacherSubject !== 'all') {
-                const subObj = subjects.find(s => s.id === currentTeacherSubject);
-                const subName = subObj ? subObj.name : '';
-                if (sigTeacher) sigTeacher.textContent = `أ. معلم ${subName}`;
-                if (sigRemedial) sigRemedial.textContent = `أ. معلم ${subName} (معتمد إلكترونياً)`;
+            if (mode === 'teacher' && !isCounselor) {
+                if (sigTeacher) sigTeacher.textContent = `${curTeacher.name} (${curTeacher.title})`;
+                if (sigRemedial) sigRemedial.textContent = `${curTeacher.name} (معتمد إلكترونياً)`;
             } else {
-                if (sigTeacher) sigTeacher.textContent = `أ. رائد الفصل / معلم المقررات`;
-                if (sigRemedial) sigRemedial.textContent = `أ. رائد الفصل / الموجه الطلابي`;
+                if (sigTeacher) sigTeacher.textContent = `أ. معلمو المقررات الدراسية`;
+                if (sigRemedial) sigRemedial.textContent = `أ. إبراهيم القرني (الموجه الطلابي)`;
             }
 
             // Update Table Column Headers based on teacher role
             subjects.forEach(s => {
                 const th = clone.querySelector(`.tpl-th-${s.id}`);
                 if (th) {
-                    if (mode === 'teacher' && currentTeacherSubject !== 'all') {
-                        if (currentTeacherSubject === s.id) {
+                    if (mode === 'teacher' && !isCounselor) {
+                        if (curTeacher.subject === s.id) {
                             th.className = 'p-1.5 border border-amber-300 bg-amber-600 text-white font-black text-center shadow-inner';
                             th.innerHTML = `${s.name}<span class="block text-[9px] bg-amber-800 text-amber-100 rounded px-1 py-0.5 mt-0.5 font-bold">مادتك النشطة ✏️</span>`;
                         } else {
@@ -1505,13 +1995,142 @@
 
             // Notes
             const notesEl = clone.querySelector('.tpl-notes-editable');
-            if (mode === 'teacher') {
+            if (mode === 'teacher' && isCounselor) {
                 notesEl.innerHTML = `
                     <textarea rows="2" onchange="studentsDb['${studentKey}'].notes = this.value; saveDbToStorage();"
-                              class="w-full text-xs text-slate-800 bg-amber-50/50 p-2 border border-amber-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-andalus-blue">${student.notes}</textarea>
+                              placeholder="التوجيه والملاحظات العامة حول الطالب..."
+                              class="w-full text-xs text-slate-800 bg-amber-50/50 p-2 border border-amber-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-andalus-blue">${student.notes || ''}</textarea>
                 `;
             } else {
-                notesEl.textContent = student.notes;
+                notesEl.textContent = student.notes || 'لا توجد ملاحظات عامة مسجلة.';
+            }
+
+            // Student Health Dossier Section
+            const healthSection = clone.querySelector('.tpl-health-section');
+            if (healthSection) {
+                const hp = student.healthProfile || {};
+                const bloodBadge = healthSection.querySelector('.tpl-blood-badge');
+                if (bloodBadge) bloodBadge.textContent = `فصيلة: ${hp.blood || '+O'}`;
+
+                const healthBadge = healthSection.querySelector('.tpl-health-badge');
+                const isHealthy = !hp.condition || hp.condition.includes('سليم');
+                if (healthBadge) {
+                    if (isHealthy) {
+                        healthBadge.className = 'tpl-health-badge text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full border border-emerald-200';
+                        healthBadge.textContent = 'سليم ولله الحمد';
+                    } else {
+                        healthBadge.className = 'tpl-health-badge text-[10px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full border border-amber-300';
+                        healthBadge.textContent = 'رعاية وتوجيه خاص 🩺';
+                    }
+                }
+
+                const condEl = healthSection.querySelector('.tpl-health-condition');
+                if (condEl) condEl.textContent = hp.condition || 'سليم (لا توجد أمراض مزمنة ولله الحمد)';
+
+                const careEl = healthSection.querySelector('.tpl-health-care');
+                if (careEl) careEl.textContent = hp.care || 'ممارسة الأنشطة كاملة بشكل طبيعي';
+
+                const btnEditHealth = healthSection.querySelector('.tpl-btn-edit-health');
+                if (btnEditHealth) {
+                    if (mode === 'teacher' && isCounselor && !options.isBatchItem) {
+                        btnEditHealth.classList.remove('hidden');
+                        btnEditHealth.setAttribute('onclick', `openHealthModal('${studentKey}')`);
+                    } else {
+                        btnEditHealth.classList.add('hidden');
+                    }
+                }
+            }
+
+            // Subject Teachers' Notes Grid (6 Subjects)
+            const notesGrid = clone.querySelector('.tpl-subject-notes-grid');
+            if (notesGrid) {
+                notesGrid.innerHTML = '';
+
+                subjects.forEach(sub => {
+                    const noteText = (student.subjectNotes && student.subjectNotes[sub.id]) || '';
+                    const teacherForSub = Object.values(teachersDb).find(t => t.subject === sub.id) || {
+                        name: `أ. معلم ${sub.name}`,
+                        title: `معلم ${sub.name}`
+                    };
+
+                    const isOwnSubjectTeacher = (mode === 'teacher' && !isCounselor && curTeacher.subject === sub.id);
+                    const canEdit = (isCounselor || isOwnSubjectTeacher) && !options.isBatchItem;
+
+                    const card = document.createElement('div');
+                    if (canEdit) {
+                        card.className = 'bg-white rounded-xl p-2.5 border-2 ' + 
+                                         (isCounselor ? 'border-teal-300 shadow-sm bg-teal-50/20' : 'border-amber-400 shadow-sm bg-amber-50/20') + 
+                                         ' flex flex-col justify-between';
+                    } else {
+                        card.className = 'bg-slate-50/90 rounded-xl p-2.5 border border-slate-200 flex flex-col justify-between';
+                    }
+
+                    let headerBadgeHtml = '';
+                    if (isCounselor && !options.isBatchItem) {
+                        headerBadgeHtml = `<span class="text-[9.5px] bg-teal-100 text-teal-900 border border-teal-300 px-1.5 py-0.5 rounded-md font-bold">صلاحية الموجه 👑</span>`;
+                    } else if (isOwnSubjectTeacher && !options.isBatchItem) {
+                        headerBadgeHtml = `<span class="text-[9.5px] bg-amber-200 text-amber-900 border border-amber-300 px-1.5 py-0.5 rounded-md font-bold">مادتك النشطة ✏️</span>`;
+                    } else {
+                        headerBadgeHtml = `<span class="text-[9.5px] bg-slate-200 text-slate-700 px-1.5 py-0.5 rounded-md font-medium">🔒 للقراءة</span>`;
+                    }
+
+                    let bodyContentHtml = '';
+                    if (canEdit) {
+                        bodyContentHtml = `
+                            <div class="mt-2">
+                                <textarea rows="2" 
+                                          placeholder="اكتب ملاحظة وتقييم الطالب في مقرر ${sub.name}..."
+                                          onchange="updateSubjectNote('${studentKey}', '${sub.id}', this.value)"
+                                          class="w-full text-xs text-slate-900 bg-white p-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-andalus-blue shadow-inner">${noteText}</textarea>
+                            </div>
+                        `;
+                    } else {
+                        if (noteText) {
+                            bodyContentHtml = `
+                                <div class="mt-2 p-2 bg-white rounded-lg border border-slate-200 text-xs text-slate-800 font-medium leading-relaxed italic">
+                                    "${noteText}"
+                                </div>
+                            `;
+                        } else {
+                            bodyContentHtml = `
+                                <div class="mt-2 p-2 bg-slate-100/70 rounded-lg border border-dashed border-slate-300 text-[11px] text-slate-400 text-center">
+                                    لا توجد ملاحظة مدونة حتى الآن
+                                </div>
+                            `;
+                        }
+                    }
+
+                    let footerHtml = `
+                        <div class="mt-2 pt-1.5 border-t border-slate-200 flex items-center justify-between text-[10.5px]">
+                            <span class="font-bold text-slate-600">${teacherForSub.name}</span>
+                    `;
+                    
+                    if (isCounselor && noteText && !options.isBatchItem) {
+                        footerHtml += `
+                            <button type="button" 
+                                    onclick="clearSubjectNote('${studentKey}', '${sub.id}')"
+                                    title="حذف الملاحظة (صلاحية الموجه الطلابي)"
+                                    class="text-rose-600 hover:text-rose-800 hover:bg-rose-50 px-1.5 py-0.5 rounded transition flex items-center gap-1 font-bold">
+                                <i data-lucide="trash-2" class="w-3 h-3"></i>
+                                <span>حذف</span>
+                            </button>
+                        `;
+                    }
+                    footerHtml += `</div>`;
+
+                    card.innerHTML = `
+                        <div>
+                            <div class="flex items-center justify-between">
+                                <span class="font-black text-xs text-andalus-darkBlue">${sub.name}</span>
+                                ${headerBadgeHtml}
+                            </div>
+                            ${bodyContentHtml}
+                        </div>
+                        ${footerHtml}
+                    `;
+
+                    notesGrid.appendChild(card);
+                });
             }
 
             // Fill Matrix
@@ -1540,11 +2159,11 @@
                     else if (score === 3) scoreBadgeColor = 'bg-sky-100 text-sky-800 border-sky-300';
                     else if (score === 2) scoreBadgeColor = 'bg-amber-100 text-amber-800 border-amber-300';
 
-                    const isSubjectEditable = (mode === 'teacher') && (currentTeacherSubject === 'all' || currentTeacherSubject === sub.id);
+                    const isSubjectEditable = (mode === 'teacher') && (isCounselor || curTeacher.subject === sub.id) && !options.isBatchItem;
 
                     if (isSubjectEditable) {
                         rowHtml += `
-                            <td class="p-1 border border-slate-300 text-center ${currentTeacherSubject === sub.id ? 'bg-amber-50/70 ring-2 ring-inset ring-amber-400' : ''}">
+                            <td class="p-1 border border-slate-300 text-center ${(!isCounselor && curTeacher.subject === sub.id) ? 'bg-amber-50/70 ring-2 ring-inset ring-amber-400' : ''}">
                                 <select onchange="updateCellScore('${crit.id}', '${sub.id}', this.value)" 
                                         class="text-xs font-black text-center py-1 px-1 rounded-lg border focus:ring-2 focus:ring-andalus-blue focus:outline-none cursor-pointer ${scoreBadgeColor}">
                                     <option value="5" ${score === 5 ? 'selected' : ''}>5 (متفوق)</option>
@@ -1556,7 +2175,7 @@
                             </td>
                         `;
                     } else {
-                        const isLockedForOther = (mode === 'teacher' && currentTeacherSubject !== 'all');
+                        const isLockedForOther = (mode === 'teacher' && !isCounselor && curTeacher.subject !== sub.id);
                         rowHtml += `
                             <td class="p-1.5 border border-slate-300 text-center ${isLockedForOther ? 'bg-slate-50/70' : ''}" title="${isLockedForOther ? 'خاصة بمعلم ' + sub.name : ''}">
                                 <span class="inline-flex items-center justify-center gap-1 px-1.5 py-0.5 rounded-md text-xs font-black border ${scoreBadgeColor}">
@@ -1603,7 +2222,6 @@
             const remSection = clone.querySelector('.tpl-remedial-section');
             const remBadge = clone.querySelector('.tpl-remedial-badge');
 
-            // If batch print with remedialOnlyLow=true AND student does NOT need remedial plan:
             if (options.remedialOnlyLow && !stats.hasRemedialPlan) {
                 if (remSection) remSection.remove();
             } else if (remSection) {
@@ -1676,7 +2294,10 @@
         // Create Class Summary Sheet Node (Official Class Roster & KPI Stats)
         function createClassSummarySheetNode(classCode) {
             const cls = availableClasses[classCode] || { label: classCode, code: classCode, studentCount: 0 };
-            const list = studentKeys.filter(k => k.startsWith('s_') && studentsDb[k].classCode === classCode);
+            const list = studentKeys.filter(k => {
+                const st = studentsDb[k];
+                return st && st.classCode === classCode;
+            });
 
             let classTotalScore = 0;
             let superiorCount = 0;
@@ -1758,163 +2379,143 @@
                         </div>
                     </div>
 
-                    <!-- Title Banner -->
-                    <div class="mt-3 bg-andalus-darkBlue text-white py-2 px-4 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-2 shadow-sm">
-                        <span class="text-xs text-andalus-lightGold font-semibold">العام الدراسي: 1446-1447هـ</span>
-                        <h2 class="text-sm sm:text-base font-black tracking-wide text-white">كشف الرصد الإجمالي لدرجات التقرير الأكاديمي والتعليمي السلوكي</h2>
-                        <span class="text-xs bg-andalus-blue text-white px-3 py-0.5 rounded-full font-bold border border-white/20">${periodTitle}</span>
+                    <div class="mt-3 pt-2 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2 text-xs">
+                        <div class="flex items-center gap-2">
+                            <span class="bg-andalus-gold text-andalus-darkBlue px-3 py-1 rounded-full font-black text-xs shadow-sm">
+                                كشف رصد درجات الفصل كاملاً (${cls.label})
+                            </span>
+                            <span class="text-slate-600 font-bold">${periodTitle}</span>
+                        </div>
+                        <span class="text-slate-500 text-[11px] font-medium">التاريخ: ${reportDate}</span>
                     </div>
                 </div>
 
-                <!-- Class KPI Summary Strip -->
-                <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 mb-3">
-                    <div class="bg-blue-50/70 border border-blue-200 rounded-xl p-2 text-center">
-                        <span class="text-[10px] text-slate-600 font-bold block">الفصل المستهدف</span>
-                        <span class="text-xs sm:text-sm font-black text-andalus-darkBlue">${cls.label}</span>
+                <!-- Class KPI Cards -->
+                <div class="grid grid-cols-4 gap-2 mb-3 text-center">
+                    <div class="bg-blue-50 border border-blue-200 rounded-xl p-2">
+                        <span class="text-[10px] text-blue-800 font-bold block">إجمالي طلاب الفصل</span>
+                        <span class="text-base font-black text-blue-950">${list.length} طالباً</span>
                     </div>
-                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-2 text-center">
-                        <span class="text-[10px] text-slate-600 font-bold block">إجمالي الطلاب</span>
-                        <span class="text-xs sm:text-sm font-black text-slate-900">${list.length} طالباً</span>
+                    <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-2">
+                        <span class="text-[10px] text-emerald-800 font-bold block">متوسط درجات الفصل</span>
+                        <span class="text-base font-black text-emerald-950">${avgScore} / 150</span>
                     </div>
-                    <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-2 text-center">
-                        <span class="text-[10px] text-emerald-800 font-bold block">المتفوقون والمتقدمون</span>
-                        <span class="text-xs sm:text-sm font-black text-emerald-700">${superiorCount + advancedCount} (${superiorPercent}%)</span>
+                    <div class="bg-amber-50 border border-amber-200 rounded-xl p-2">
+                        <span class="text-[10px] text-amber-800 font-bold block">نسبة التفوق والتقدم</span>
+                        <span class="text-base font-black text-amber-950">${superiorPercent}%</span>
                     </div>
-                    <div class="bg-amber-50 border border-amber-200 rounded-xl p-2 text-center">
-                        <span class="text-[10px] text-amber-800 font-bold block">يحتاجون إلى دعم</span>
-                        <span class="text-xs sm:text-sm font-black text-amber-700">${needsSupportCount} طلاب</span>
-                    </div>
-                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-2 text-center col-span-2 sm:col-span-1">
-                        <span class="text-[10px] text-slate-600 font-bold block">متوسط درجات الفصل</span>
-                        <span class="text-xs sm:text-sm font-black text-andalus-blue">${avgScore} / 150</span>
+                    <div class="bg-purple-50 border border-purple-200 rounded-xl p-2">
+                        <span class="text-[10px] text-purple-800 font-bold block">المشمولين بالخطة العلاجية</span>
+                        <span class="text-base font-black text-purple-950">${needsSupportCount} طلاب</span>
                     </div>
                 </div>
 
-                <!-- Full Class Roster Table -->
-                <div class="overflow-x-auto rounded-xl border border-slate-300 shadow-sm mb-4">
-                    <table class="w-full text-xs matrix-table border-collapse">
+                <!-- Full Roster Table -->
+                <div class="overflow-x-auto mb-4 border border-slate-300 rounded-xl">
+                    <table class="w-full text-center border-collapse">
                         <thead>
-                            <tr class="bg-andalus-darkBlue text-white font-bold">
-                                <th class="p-1 border border-slate-400 text-center w-7">م</th>
-                                <th class="p-1 border border-slate-400 text-right">اسم الطالب الرباعي</th>
-                                <th class="p-1 border border-slate-400 text-center w-24">رقم الهوية</th>
-                                <th class="p-1 border border-slate-400 text-center text-[9.5px]">الرقمية<br>(25)</th>
-                                <th class="p-1 border border-slate-400 text-center text-[9.5px]">الإسلاميات<br>(25)</th>
-                                <th class="p-1 border border-slate-400 text-center text-[9.5px]">الإنجليزية<br>(25)</th>
-                                <th class="p-1 border border-slate-400 text-center text-[9.5px]">لغتي<br>(25)</th>
-                                <th class="p-1 border border-slate-400 text-center text-[9.5px]">العلوم<br>(25)</th>
-                                <th class="p-1 border border-slate-400 text-center text-[9.5px]">الرياضيات<br>(25)</th>
-                                <th class="p-1 border border-slate-400 text-center bg-andalus-blue text-[10px] font-black w-12">المجموع<br>(150)</th>
-                                <th class="p-1 border border-slate-400 text-center w-11 text-[9.5px]">النسبة</th>
-                                <th class="p-1 border border-slate-400 text-center w-20 text-[9.5px]">المستوى</th>
-                                <th class="p-1 border border-slate-400 text-center w-16 text-[9px]">الخطة العلاجية</th>
+                            <tr class="bg-andalus-darkBlue text-white text-[10px]">
+                                <th class="p-1 border border-slate-400">م</th>
+                                <th class="p-1 border border-slate-400 text-right">اسم الطالب</th>
+                                <th class="p-1 border border-slate-400">رقم الهوية</th>
+                                <th class="p-1 border border-slate-400">رقمية</th>
+                                <th class="p-1 border border-slate-400">إسلاميات</th>
+                                <th class="p-1 border border-slate-400">إنجليزية</th>
+                                <th class="p-1 border border-slate-400">لغتي</th>
+                                <th class="p-1 border border-slate-400">علوم</th>
+                                <th class="p-1 border border-slate-400">رياضيات</th>
+                                <th class="p-1 border border-slate-400 bg-andalus-gold text-andalus-darkBlue font-black">المجموع</th>
+                                <th class="p-1 border border-slate-400">النسبة</th>
+                                <th class="p-1 border border-slate-400">التقدير</th>
+                                <th class="p-1 border border-slate-400">الخطة العلاجية</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-slate-200">
+                        <tbody>
                             ${rowsHtml}
                         </tbody>
                     </table>
                 </div>
 
-                <!-- Official Signatures Footer -->
-                <div class="border-t-2 border-slate-300 pt-3 mt-4 break-inside-avoid">
-                    <div class="grid grid-cols-3 gap-3 text-center">
+                <!-- Signatures Footer -->
+                <div class="border-t-2 border-slate-300 pt-3 mt-4 text-center">
+                    <div class="grid grid-cols-3 gap-3">
                         <div class="bg-slate-50 border border-slate-200 rounded-xl p-2">
                             <span class="text-[10px] font-bold text-slate-500 block">رائد الفصل</span>
-                            <span class="text-xs font-black text-slate-800 mt-0.5 block">أ. معلم المقررات</span>
-                            <div class="mt-1 text-[9.5px] text-emerald-600 font-bold flex items-center justify-center gap-1">
-                                <i data-lucide="check" class="w-3 h-3"></i> معتمد إلكترونياً
-                            </div>
+                            <span class="text-xs font-black text-slate-800 mt-0.5 block">أ. معلم الصف</span>
+                            <span class="text-[9.5px] text-emerald-600 font-bold block mt-0.5">✓ معتمد إلكترونياً</span>
                         </div>
                         <div class="bg-slate-50 border border-slate-200 rounded-xl p-2">
                             <span class="text-[10px] font-bold text-slate-500 block">الموجه الطلابي</span>
-                            <span class="text-xs font-black text-slate-800 mt-0.5 block">أ. إبراهيم علي القرني</span>
-                            <div class="mt-1 text-[9.5px] text-emerald-600 font-bold flex items-center justify-center gap-1">
-                                <i data-lucide="check" class="w-3 h-3"></i> معتمد إلكترونياً
-                            </div>
+                            <span class="text-xs font-black text-slate-800 mt-0.5 block">أ. إبراهيم القرني</span>
+                            <span class="text-[9.5px] text-emerald-600 font-bold block mt-0.5">✓ معتمد إلكترونياً</span>
                         </div>
                         <div class="bg-slate-50 border border-slate-200 rounded-xl p-2">
                             <span class="text-[10px] font-bold text-slate-500 block">مدير المدرسة</span>
-                            <span class="text-xs font-black text-slate-800 mt-0.5 block">أ. عبد العزيز عبد الله القرني</span>
-                            <div class="mt-1 text-[9.5px] text-emerald-600 font-bold flex items-center justify-center gap-1">
-                                <i data-lucide="check-circle-2" class="w-3 h-3"></i> الختم والاعتماد الرسمي
-                            </div>
+                            <span class="text-xs font-black text-slate-800 mt-0.5 block">أ. فهد بن عبد الله المحمود</span>
+                            <span class="text-[9.5px] text-emerald-600 font-bold block mt-0.5">✓ معتمد إلكترونياً</span>
                         </div>
-                    </div>
-                    <div class="flex items-center justify-between text-[9.5px] text-slate-400 mt-2 px-1">
-                        <span>تاريخ استخراج الكشف: ${reportDate}</span>
-                        <span>منظومة التقرير الأكاديمي والتعليمي السلوكي © مدارس الأندلس الأهلية بمكة المكرمة</span>
-                        <span>صفحة 1 من 1</span>
                     </div>
                 </div>
             `;
             return sheet;
         }
 
-        // Open Class Print Modal
+        // =========================================================================
+        // BATCH PRINTING ENGINE
+        // =========================================================================
+
         function openClassPrintModal() {
-            const cls = availableClasses[currentClassCode] || { label: currentClassCode, studentCount: 0 };
-            const list = studentKeys.filter(k => k.startsWith('s_') && studentsDb[k].classCode === currentClassCode);
-
-            document.getElementById('modalClassLabel').textContent = cls.label;
-            document.getElementById('modalStudentCount').textContent = list.length;
-            document.getElementById('badgeReportsCount').textContent = `${list.length} تقريراً`;
-            document.getElementById('badgeAllPagesCount').textContent = `${list.length + 1} صفحة`;
-
             const modal = document.getElementById('modalClassPrint');
-            if (modal) {
-                modal.classList.remove('hidden');
-                document.getElementById('batchPrintProgress').classList.add('hidden');
-                lucide.createIcons();
+            const cls = availableClasses[currentClassCode] || { label: currentClassCode, studentCount: 0 };
+            const titleEl = document.getElementById('modalClassPrintTitle');
+            if (titleEl) {
+                titleEl.textContent = `${cls.label} (${cls.studentCount} طالباً)`;
             }
+            if (modal) modal.classList.remove('hidden');
+            lucide.createIcons();
         }
 
-        // Close Class Print Modal
         function closeClassPrintModal() {
             const modal = document.getElementById('modalClassPrint');
             if (modal) modal.classList.add('hidden');
         }
 
-        // Toggle Visual Active State on Radio Cards in Modal
         function updateBatchOptionUI(selectedVal) {
-            const cards = [
-                { id: 'cardOptAll', val: 'all' },
-                { id: 'cardOptSummary', val: 'summary' },
-                { id: 'cardOptReports', val: 'reports' }
-            ];
-            cards.forEach(c => {
-                const el = document.getElementById(c.id);
+            const opts = ['optBatchAll', 'optBatchSummary', 'optBatchReports'];
+            opts.forEach(id => {
+                const el = document.getElementById(id);
                 if (!el) return;
-                if (c.val === selectedVal) {
-                    el.className = 'batch-opt-card flex items-start gap-3 p-3.5 rounded-2xl border-2 border-indigo-500 bg-indigo-50/50 cursor-pointer transition';
+                const radio = el.querySelector('input[type="radio"]');
+                if (radio && radio.value === selectedVal) {
+                    el.className = 'border-2 border-andalus-gold bg-amber-50/50 rounded-2xl p-3 cursor-pointer flex items-center justify-between transition';
                 } else {
-                    el.className = 'batch-opt-card flex items-start gap-3 p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 cursor-pointer transition hover:bg-slate-50';
+                    el.className = 'border border-slate-200 hover:border-slate-300 rounded-2xl p-3 cursor-pointer flex items-center justify-between transition';
                 }
             });
         }
 
-        // Execute Batch Print Generation & Open Print Dialog
         function executeBatchPrint() {
+            const printTypeRadio = document.querySelector('input[name="batchPrintType"]:checked');
+            const printType = printTypeRadio ? printTypeRadio.value : 'all';
+            const remedialOnlyLow = document.getElementById('cbRemedialOnlyLow').checked;
+
             const progress = document.getElementById('batchPrintProgress');
             if (progress) progress.classList.remove('hidden');
-
-            const selectedOptionEl = document.querySelector('input[name="batchPrintOption"]:checked');
-            const printType = selectedOptionEl ? selectedOptionEl.value : 'all';
-            const remedialOnlyLow = document.getElementById('checkRemedialOnlyLow').checked;
 
             setTimeout(() => {
                 const batchContainer = document.getElementById('batchPrintContainer');
                 batchContainer.innerHTML = '';
 
-                const list = studentKeys.filter(k => k.startsWith('s_') && studentsDb[k].classCode === currentClassCode);
+                const list = studentKeys.filter(k => {
+                    const st = studentsDb[k];
+                    return st && st.classCode === currentClassCode;
+                });
 
-                // 1. If 'all' or 'summary': Append Summary Sheet
                 if (printType === 'all' || printType === 'summary') {
                     const summaryNode = createClassSummarySheetNode(currentClassCode);
                     batchContainer.appendChild(summaryNode);
                 }
 
-                // 2. If 'all' or 'reports': Append Individual Student Reports
                 if (printType === 'all' || printType === 'reports') {
                     list.forEach(k => {
                         const reportWrapper = createStudentReportNode(k, 'parent', {
@@ -1925,29 +2526,22 @@
                     });
                 }
 
-                // Initialize Icons
                 lucide.createIcons();
-
-                // Close Modal & Hide Progress
                 closeClassPrintModal();
                 if (progress) progress.classList.add('hidden');
 
-                // Enter Batch Print Mode
                 document.body.classList.add('is-batch-printing');
 
-                // Trigger print after slight pause for DOM/Chart readiness
                 setTimeout(() => {
                     window.print();
                 }, 300);
 
-                // Auto cleanup when print dialog finishes
                 function cleanupBatch() {
                     document.body.classList.remove('is-batch-printing');
                     batchContainer.innerHTML = '';
                     window.removeEventListener('afterprint', cleanupBatch);
                 }
                 window.addEventListener('afterprint', cleanupBatch, { once: true });
-                // Fallback in case browser doesn't fire afterprint
                 setTimeout(cleanupBatch, 45000);
 
             }, 120);
@@ -2011,7 +2605,7 @@
         // Save Evaluation Toast
         function saveStudentEvaluation() {
             saveDbToStorage();
-            alert('تم حفظ واعتماد التقييم الأكاديمي والخطة العلاجية بنجاح في قاعدة بيانات مدارس الأندلس!');
+            alert('تم حفظ واعتماد التقييم الأكاديمي والملف الصحي بنجاح في قاعدة بيانات مدارس الأندلس!');
         }
 
         // Share WhatsApp Link
