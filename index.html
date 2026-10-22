@@ -473,86 +473,46 @@
                     </div>
                 </div>
 
-                <!-- Row 2: Unified 4-Column Navigation Bar (Balanced, Clean, Equal Heights) -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 items-end bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
+                <!-- Row 2: Unified Clean Navigation Bar (No arrows, No extra chips, No date) -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-3.5 items-end bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
                     
-                    <!-- 1. Class Selector (4 cols) -->
-                    <div class="lg:col-span-4">
+                    <!-- 1. Class Selector (5 cols) -->
+                    <div class="md:col-span-5">
                         <label class="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
                             <i data-lucide="layers" class="w-3.5 h-3.5 text-andalus-blue"></i>
                             <span>1. الفصل الدراسي:</span>
                         </label>
-                        <div class="flex items-center gap-1">
-                            <button onclick="navigateClass(-1)" title="الفصل السابق" 
-                                    class="p-2 bg-white hover:bg-slate-100 text-slate-700 rounded-xl border border-slate-300 transition text-xs font-bold shadow-xs flex items-center justify-center shrink-0 cursor-pointer">
-                                <i data-lucide="chevron-right" class="w-4 h-4"></i>
-                            </button>
-                            <select id="selectClass" onchange="selectClassTab(this.value)" 
-                                    class="w-full text-xs sm:text-sm font-black text-slate-900 border border-slate-300 rounded-xl px-2.5 py-2 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-white shadow-xs">
-                            </select>
-                            <button onclick="navigateClass(1)" title="الفصل التالي" 
-                                    class="p-2 bg-white hover:bg-slate-100 text-slate-700 rounded-xl border border-slate-300 transition text-xs font-bold shadow-xs flex items-center justify-center shrink-0 cursor-pointer">
-                                <i data-lucide="chevron-left" class="w-4 h-4"></i>
-                            </button>
-                        </div>
+                        <select id="selectClass" onchange="selectClassTab(this.value)" 
+                                class="w-full text-xs sm:text-sm font-black text-slate-900 border border-slate-300 rounded-xl px-3 py-2.5 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-white shadow-xs cursor-pointer">
+                        </select>
                     </div>
 
-                    <!-- 2. Student Selector (4 cols) -->
-                    <div class="lg:col-span-4">
-                        <label class="block text-xs font-bold text-slate-700 mb-1.5 flex items-center justify-between">
-                            <span class="flex items-center gap-1.5">
-                                <i data-lucide="user" class="w-3.5 h-3.5 text-andalus-blue"></i>
-                                <span>2. اسم الطالب:</span>
-                            </span>
-                            <span class="text-[10px] text-slate-400 font-normal">تنقل فوري بالسابق والتالي</span>
+                    <!-- 2. Student Selector (5 cols) -->
+                    <div class="md:col-span-5">
+                        <label class="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                            <i data-lucide="user" class="w-3.5 h-3.5 text-andalus-blue"></i>
+                            <span>2. اسم الطالب:</span>
                         </label>
-                        <div class="flex items-center gap-1">
-                            <button onclick="navigateStudent(-1)" title="الطالب السابق" 
-                                    class="p-2 bg-white hover:bg-slate-100 text-slate-700 rounded-xl border border-slate-300 transition text-xs font-bold shadow-xs flex items-center justify-center shrink-0 cursor-pointer">
-                                <i data-lucide="chevron-right" class="w-4 h-4"></i>
-                            </button>
-                            <select id="selectStudent" onchange="switchStudent(this.value)" 
-                                    class="w-full text-xs sm:text-sm font-black text-slate-900 border border-slate-300 rounded-xl px-2.5 py-2 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-white shadow-xs">
-                            </select>
-                            <button onclick="navigateStudent(1)" title="الطالب التالي" 
-                                    class="p-2 bg-white hover:bg-slate-100 text-slate-700 rounded-xl border border-slate-300 transition text-xs font-bold shadow-xs flex items-center justify-center shrink-0 cursor-pointer">
-                                <i data-lucide="chevron-left" class="w-4 h-4"></i>
-                            </button>
-                        </div>
+                        <select id="selectStudent" onchange="switchStudent(this.value)" 
+                                class="w-full text-xs sm:text-sm font-black text-slate-900 border border-slate-300 rounded-xl px-3 py-2.5 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-white shadow-xs cursor-pointer">
+                        </select>
                     </div>
 
                     <!-- 3. Period (2 cols) -->
-                    <div class="lg:col-span-2">
+                    <div class="md:col-span-2">
                         <label class="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
                             <i data-lucide="calendar" class="w-3.5 h-3.5 text-andalus-blue"></i>
                             <span>3. الفترة:</span>
                         </label>
                         <select id="selectPeriod" onchange="updatePeriodTitle(this.value)"
-                                class="w-full text-xs font-bold text-slate-900 border border-slate-300 rounded-xl px-2.5 py-2 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-white shadow-xs">
+                                class="w-full text-xs sm:text-sm font-bold text-slate-900 border border-slate-300 rounded-xl px-3 py-2.5 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-white shadow-xs cursor-pointer">
                             <option value="تقرير شهر جمادى الأولى 1447هـ" selected>جمادى الأولى 1447هـ</option>
                             <option value="تقرير شهر جمادى الآخرة 1447هـ">جمادى الآخرة 1447هـ</option>
                             <option value="تقرير شهر رجب 1447هـ">رجب 1447هـ</option>
                         </select>
                     </div>
 
-                    <!-- 4. Date (2 cols) -->
-                    <div class="lg:col-span-2">
-                        <label class="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                            <i data-lucide="clock" class="w-3.5 h-3.5 text-andalus-blue"></i>
-                            <span>تاريخ الرصد:</span>
-                        </label>
-                        <input type="date" id="inputDate" value="2026-10-21" onchange="updateReportDate(this.value)"
-                               class="w-full text-xs font-bold text-slate-900 border border-slate-300 rounded-xl px-2.5 py-2 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-white shadow-xs">
-                    </div>
-                </div>
-
-                <!-- Row 3: Horizontal Scrollable Student Strip (Quick 1-Click Access) -->
-                <div class="pt-2 border-t border-slate-100 flex items-center gap-2">
-                    <span class="text-xs font-bold text-slate-500 shrink-0 flex items-center gap-1">
-                        <i data-lucide="users" class="w-3.5 h-3.5 text-andalus-blue"></i>
-                        <span>طلاب الفصل (<span id="stripStudentCount">22</span>):</span>
-                    </span>
-                    <div id="teacherQuickStudentChips" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1"></div>
+                    <input type="hidden" id="inputDate" value="2026-10-21">
                 </div>
 
             </div>
@@ -1764,30 +1724,7 @@
         // Render Quick Clickable Student Chips in Teacher Dashboard
         function renderTeacherStudentChips(keysList) {
             const container = document.getElementById('teacherQuickStudentChips');
-            if (!container) return;
-            container.innerHTML = '';
-            
-            const list = keysList || currentClassStudentKeys || [];
-            const countEl = document.getElementById('stripStudentCount');
-            if (countEl) countEl.textContent = list.length;
-
-            list.forEach(k => {
-                const st = studentsDb[k];
-                if (!st) return;
-                const btn = document.createElement('button');
-                btn.type = 'button';
-                const isCurrent = (k === currentActiveKey);
-                btn.className = `shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold border transition flex items-center gap-1 cursor-pointer whitespace-nowrap shadow-xs ${
-                    isCurrent 
-                        ? 'bg-andalus-darkBlue text-white border-andalus-darkBlue ring-2 ring-andalus-gold font-black' 
-                        : 'bg-white hover:bg-slate-100 text-slate-700 border-slate-300'
-                }`;
-                // Short name (First 2 words)
-                const shortName = st.name.split(' ').slice(0, 2).join(' ');
-                btn.innerHTML = `<span>${shortName}</span>`;
-                btn.onclick = () => switchStudent(k);
-                container.appendChild(btn);
-            });
+            if (container) container.innerHTML = '';
         }
 
         // Switch Student (Teacher Mode)
@@ -1998,33 +1935,10 @@
             const curSubObj = isSubjectTeacher ? subjects.find(s => s.id === curTeacher.subject) : null;
             const curSubName = curSubObj ? curSubObj.name : '';
 
-            // 1. Teacher Active Subject / Role Banner
+            // 1. Teacher Role Banner (Hidden - No explanations needed)
             const teacherRoleBanner = clone.querySelector('.tpl-teacher-role-banner');
             if (teacherRoleBanner) {
-                if (mode === 'teacher') {
-                    teacherRoleBanner.classList.remove('hidden');
-                    if (isCounselor) {
-                        teacherRoleBanner.className = 'tpl-teacher-role-banner mb-3 p-2.5 sm:p-3 rounded-xl text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2 border bg-gradient-to-r from-teal-50 via-emerald-50 to-blue-50 border-teal-300 text-teal-950 font-bold';
-                        teacherRoleBanner.innerHTML = `
-                            <div class="flex items-center gap-2">
-                                <span class="text-base">👑</span>
-                                <span>مرحباً <b>${curTeacher.name}</b> (${curTeacher.title}) — إشراف ومراجعة وتعديل درجات كافة المواد، مراجعة وتعديل وحذف ملاحظات المعلمين، وإدارة وتوثيق الملف الصحي.</span>
-                            </div>
-                            <span class="text-[11px] bg-teal-200 text-teal-900 px-2.5 py-0.5 rounded-full border border-teal-400 font-extrabold self-start sm:self-center shrink-0">صلاحيات الموجه الكاملة</span>
-                        `;
-                    } else {
-                        teacherRoleBanner.className = 'tpl-teacher-role-banner mb-3 p-2.5 sm:p-3 rounded-xl text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2 border bg-amber-50 border-amber-300 text-amber-950 font-bold';
-                        teacherRoleBanner.innerHTML = `
-                            <div class="flex items-center gap-2">
-                                <span class="text-base">${curTeacher.avatar}</span>
-                                <span>مرحباً <b>${curTeacher.name}</b> (${curTeacher.title}) — صفحة رصد وتعديل مقرر [${curSubName}] الخاص بك فقط.</span>
-                            </div>
-                            <span class="text-[11px] bg-amber-200 text-amber-900 px-2.5 py-0.5 rounded-full border border-amber-300 font-bold self-start sm:self-center shrink-0">رصد حصتك ومقررك فقط</span>
-                        `;
-                    }
-                } else {
-                    teacherRoleBanner.classList.add('hidden');
-                }
+                teacherRoleBanner.remove();
             }
 
             // 2. Student Health Dossier Section (STRICT PRIVACY: HIDDEN FOR SUBJECT TEACHER!)
@@ -2082,24 +1996,18 @@
                     if (titleSpan) titleSpan.textContent = `ملاحظة وتوصيات معلم مقرر ${sub.name}`;
 
                     const card = document.createElement('div');
-                    card.className = 'bg-white rounded-2xl p-4 border-2 border-amber-400 shadow-sm bg-amber-50/20 col-span-full';
+                    card.className = 'bg-white rounded-xl p-3 border border-slate-200 shadow-sm col-span-full';
                     card.innerHTML = `
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="font-black text-sm text-andalus-darkBlue flex items-center gap-1.5">
-                                <span class="text-base">${curTeacher.avatar}</span>
-                                <span>مقرر ${sub.name} — ${curTeacher.name}</span>
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-bold text-xs text-andalus-darkBlue">
+                                ملاحظات وتوجيهات مقرر ${sub.name}
                             </span>
-                            <span class="text-[10px] bg-amber-200 text-amber-900 border border-amber-300 px-2 py-0.5 rounded-md font-bold">مادتك النشطة ✏️</span>
                         </div>
                         <div>
-                            <textarea rows="3" 
+                            <textarea rows="2" 
                                       placeholder="اكتب ملاحظاتك وتوجيهاتك للطالب في مقرر ${sub.name}..."
                                       onchange="updateSubjectNote('${studentKey}', '${sub.id}', this.value)"
                                       class="w-full text-xs text-slate-900 bg-white p-2.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-andalus-blue shadow-inner font-medium">${noteText}</textarea>
-                        </div>
-                        <div class="mt-2 text-[11px] text-slate-500 font-semibold flex items-center justify-between">
-                            <span>يتم الحفظ تلقائياً في تقرير الطالب</span>
-                            <span class="text-emerald-700 font-bold">✓ رصد مباشر</span>
                         </div>
                     `;
                     notesGrid.appendChild(card);
@@ -2196,12 +2104,12 @@
             tbody.innerHTML = '';
 
             if (isSubjectTeacher) {
-                // Adjust Table Header to ONLY show Criterion + Subject + Score
+                // Natural Standard Table Header
                 if (theadTr) {
                     theadTr.innerHTML = `
                         <th class="p-2.5 text-right w-1/2 border border-slate-400">عناصر ومعايير التقييم</th>
-                        <th class="p-2 border border-amber-300 bg-amber-600 text-white font-black text-center shadow-inner">
-                            ${curSubName} (حصتك ومادتك النشطة ✏️)
+                        <th class="p-2 border border-slate-400 bg-andalus-darkBlue text-white font-bold text-center">
+                            ${curSubName}
                         </th>
                         <th class="p-2 border border-slate-400 bg-andalus-darkBlue text-center w-28">الدرجة المكتسبة (من 5)</th>
                     `;
@@ -2224,7 +2132,7 @@
                         <td class="p-2.5 text-right font-bold text-slate-800 bg-slate-50 border border-slate-300">
                             ${crit.name}
                         </td>
-                        <td class="p-1.5 border border-slate-300 text-center bg-amber-50/70 ring-2 ring-inset ring-amber-400">
+                        <td class="p-1.5 border border-slate-300 text-center">
                             <select onchange="updateCellScore('${crit.id}', '${curTeacher.subject}', this.value)" 
                                     class="w-full text-xs font-black text-center py-1.5 px-2 rounded-lg border focus:ring-2 focus:ring-andalus-blue focus:outline-none cursor-pointer ${scoreBadgeColor}">
                                 <option value="5" ${score === 5 ? 'selected' : ''}>5 (متفوق)</option>
@@ -2249,7 +2157,7 @@
                         <td class="p-2.5 text-right font-black border border-slate-300 text-slate-900 bg-slate-100">
                             إجمالي درجات مقرر ${curSubName} (من 25)
                         </td>
-                        <td class="p-2 border border-slate-300 text-center font-black bg-amber-100 text-amber-950 text-sm">
+                        <td class="p-2 border border-slate-300 text-center font-black bg-slate-100 text-andalus-darkBlue text-sm">
                             ${subTotal} / 25
                         </td>
                         <td class="p-2 border border-slate-300 text-center font-black bg-slate-100 text-andalus-blue text-xs">
@@ -2416,11 +2324,14 @@
                 // 6-subject Chart is initialized after mounting in live DOM
             }
 
-            // 5. Remedial Plan Section
+            // 5. Remedial Plan Section (ONLY FOR COUNSELOR / SUPERVISOR)
             const remSection = clone.querySelector('.tpl-remedial-section');
             const remBadge = clone.querySelector('.tpl-remedial-badge');
 
-            if (options.remedialOnlyLow && !stats.hasRemedialPlan) {
+            if (isSubjectTeacher) {
+                // Completely removed for subject teachers
+                if (remSection) remSection.remove();
+            } else if (options.remedialOnlyLow && !stats.hasRemedialPlan) {
                 if (remSection) remSection.remove();
             } else if (remSection) {
                 const remData = student.remedial || {};
