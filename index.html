@@ -226,11 +226,7 @@
                     <span>تسجيل خروج</span>
                 </button>
 
-                <!-- Print Button (Shown when viewing report) -->
-                <button id="btnGlobalPrint" onclick="window.print()" class="hidden bg-emerald-600 hover:bg-emerald-500 text-white px-3 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition shadow">
-                    <i data-lucide="printer" class="w-4 h-4"></i>
-                    <span>طباعة التقرير (PDF)</span>
-                </button>
+
             </div>
         </div>
     </header>
@@ -430,7 +426,7 @@
                                 </span>
                             </div>
                             <p id="dashTeacherSub" class="text-xs text-slate-500 mt-0.5">
-                                المرحلة الابتدائية - مكة المكرمة | الفصل الدراسي الأول 1447هـ
+                                المرحلة الابتدائية - مكة المكرمة | الفصل الدراسي الأول 1448هـ
                             </p>
                         </div>
                     </div>
@@ -473,11 +469,11 @@
                     </div>
                 </div>
 
-                <!-- Row 2: Unified Clean Navigation Bar (No arrows, No extra chips, No date) -->
+                <!-- Row 2: Unified Clean Navigation Bar (Balanced 4-4-4: Shortened Student, Lengthened Period to 1448) -->
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-3.5 items-end bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
                     
-                    <!-- 1. Class Selector (5 cols) -->
-                    <div class="md:col-span-5">
+                    <!-- 1. Class Selector (4 cols) -->
+                    <div class="md:col-span-4">
                         <label class="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
                             <i data-lucide="layers" class="w-3.5 h-3.5 text-andalus-blue"></i>
                             <span>1. الفصل الدراسي:</span>
@@ -487,8 +483,8 @@
                         </select>
                     </div>
 
-                    <!-- 2. Student Selector (5 cols) -->
-                    <div class="md:col-span-5">
+                    <!-- 2. Student Selector (4 cols - Shortened) -->
+                    <div class="md:col-span-4">
                         <label class="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
                             <i data-lucide="user" class="w-3.5 h-3.5 text-andalus-blue"></i>
                             <span>2. اسم الطالب:</span>
@@ -498,17 +494,17 @@
                         </select>
                     </div>
 
-                    <!-- 3. Period (2 cols) -->
-                    <div class="md:col-span-2">
+                    <!-- 3. Period (4 cols - Lengthened to fit comfortably without cut-off) -->
+                    <div class="md:col-span-4">
                         <label class="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
                             <i data-lucide="calendar" class="w-3.5 h-3.5 text-andalus-blue"></i>
                             <span>3. الفترة:</span>
                         </label>
                         <select id="selectPeriod" onchange="updatePeriodTitle(this.value)"
                                 class="w-full text-xs sm:text-sm font-bold text-slate-900 border border-slate-300 rounded-xl px-3 py-2.5 focus:ring-2 focus:ring-andalus-blue focus:outline-none bg-white shadow-xs cursor-pointer">
-                            <option value="تقرير شهر جمادى الأولى 1447هـ" selected>جمادى الأولى 1447هـ</option>
-                            <option value="تقرير شهر جمادى الآخرة 1447هـ">جمادى الآخرة 1447هـ</option>
-                            <option value="تقرير شهر رجب 1447هـ">رجب 1447هـ</option>
+                            <option value="تقرير شهر جمادى الأولى 1448هـ" selected>جمادى الأولى 1448هـ</option>
+                            <option value="تقرير شهر جمادى الآخرة 1448هـ">جمادى الآخرة 1448هـ</option>
+                            <option value="تقرير شهر رجب 1448هـ">رجب 1448هـ</option>
                         </select>
                     </div>
 
@@ -603,9 +599,9 @@
 
                 <!-- Main Report Title Banner -->
                 <div class="mt-4 bg-andalus-darkBlue text-white text-center py-2 px-4 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-2 shadow-sm">
-                    <span class="text-xs text-andalus-lightGold font-semibold">العام الدراسي: 1446-1447هـ</span>
+                    <span class="text-xs text-andalus-lightGold font-semibold">العام الدراسي: 1447-1448هـ</span>
                     <h2 class="text-sm sm:text-base font-black tracking-wide text-white">التقرير الأكاديمي ( تعليمي / سلوكي )</h2>
-                    <span class="tpl-period-badge text-xs bg-andalus-blue text-white px-3 py-0.5 rounded-full font-bold border border-white/20">تقرير شهر جمادى الأولى 1447هـ</span>
+                    <span class="tpl-period-badge text-xs bg-andalus-blue text-white px-3 py-0.5 rounded-full font-bold border border-white/20">تقرير شهر جمادى الأولى 1448هـ</span>
                 </div>
             </div>
 
@@ -830,15 +826,15 @@
                         
                         <div class="space-y-2 text-xs">
                             <div class="bg-white border border-slate-200 rounded-lg p-2">
-                                <span class="font-bold text-andalus-darkBlue block text-[10.5px] mb-0.5">تقرير شهر جمادى الأولى 1447هـ (الحالي):</span>
+                                <span class="font-bold text-andalus-darkBlue block text-[10.5px] mb-0.5">تقرير شهر جمادى الأولى 1448هـ (الحالي):</span>
                                 <div class="tpl-notes-editable text-slate-700 text-[11px] leading-relaxed">نشكر أسرة الطالب على الاهتمام والمتابعة، ونوصي بالتركيز الإضافي على مهارات القراءة في لغتي والرياضيات ليلتحق بزملائه المتفوقين بإذن الله.</div>
                             </div>
                             <div class="bg-white/60 border border-slate-200/60 rounded-lg p-1.5">
-                                <span class="font-bold text-slate-500 block text-[10px] mb-0.5">تقرير شهر جمادى الآخرة 1447هـ (الشهر القادم):</span>
+                                <span class="font-bold text-slate-500 block text-[10px] mb-0.5">تقرير شهر جمادى الآخرة 1448هـ (الشهر القادم):</span>
                                 <p class="text-[10px] text-slate-400 italic">يُسجل تقييم الشهر الثاني بعد تنفيذ الخطة العلاجية المقترحة.</p>
                             </div>
                             <div class="bg-white/60 border border-slate-200/60 rounded-lg p-1.5">
-                                <span class="font-bold text-slate-500 block text-[10px] mb-0.5">تقرير شهر رجب 1447هـ (نهاية الفصل):</span>
+                                <span class="font-bold text-slate-500 block text-[10px] mb-0.5">تقرير شهر رجب 1448هـ (نهاية الفصل):</span>
                                 <p class="text-[10px] text-slate-400 italic">التقييم الختامي والتقرير الشامل للتحصيل الأكاديمي والسلوكي.</p>
                             </div>
                         </div>
@@ -1108,32 +1104,38 @@
                         </div>
                     </label>
 
-                    <!-- Option 2: Individual Reports Only -->
+                    <!-- Option 3: Individual Reports Only for Class -->
                     <label id="cardOptReports" class="batch-opt-card flex items-start gap-3 p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 cursor-pointer transition hover:bg-slate-50">
                         <input type="radio" name="batchPrintOption" value="reports" onchange="updateBatchOptionUI(this.value)" class="mt-1 text-indigo-600 focus:ring-indigo-500">
                         <div class="flex-1">
                             <div class="flex items-center justify-between">
                                 <span class="text-xs font-black text-slate-900 flex items-center gap-1.5">
-                                    <span>📑 استمارات التقارير الأكاديمية الفردية فقط</span>
+                                    <span>📑 استمارات التقارير لجميع طلاب الفصل</span>
                                 </span>
                                 <span class="text-[11px] font-bold text-slate-500" id="badgeReportsCount">20 تقريراً</span>
                             </div>
                             <p class="text-[11px] text-slate-600 mt-1 leading-relaxed">
-                                استمارات التقرير الأكاديمي كاملة لجميع طلاب الفصل (كل طالب بصفحته المستقلة مع الرسم البياني والتوقيعات) لتوزيعها على أولياء الأمور.
+                                استمارات التقرير الأكاديمي كاملة لجميع طلاب الفصل (كل طالب بصفحته المستقلة مع الرسم البياني والتوقيعات).
                             </p>
                         </div>
                     </label>
-                </div>
 
-                <!-- Customization Toggles -->
-                <div class="bg-slate-50 rounded-2xl p-3.5 border border-slate-200 space-y-2 text-xs">
-                    <label class="flex items-center gap-2.5 cursor-pointer font-bold text-slate-700">
-                        <input type="checkbox" id="checkRemedialOnlyLow" checked class="w-4 h-4 text-indigo-600 rounded focus:ring-indigo-500">
-                        <span>طباعة استمارة الخطة العلاجية فقط للطلاب المحتاجين لدعم (لتوفير الورق)</span>
+                    <!-- Option 4: Current Active Student Only (Replaces old remedial toggle!) -->
+                    <label id="cardOptSingle" class="batch-opt-card flex items-start gap-3 p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 cursor-pointer transition hover:bg-slate-50">
+                        <input type="radio" name="batchPrintOption" value="single" onchange="updateBatchOptionUI(this.value)" class="mt-1 text-indigo-600 focus:ring-indigo-500">
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-black text-slate-900 flex items-center gap-1.5">
+                                    <span>👤 طباعة تقرير الطالب الحالي فقط (<span id="modalCurrentStudentNameSpan" class="text-indigo-700 font-extrabold">عزام خالد المالكي</span>)</span>
+                                    <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full border border-emerald-200">طباعة فورية</span>
+                                </span>
+                                <span class="text-[11px] font-bold text-emerald-700">صفحة واحدة A4</span>
+                            </div>
+                            <p class="text-[11px] text-slate-600 mt-1 leading-relaxed">
+                                طباعة استمارة التقرير الأكاديمي المعتمدة للطالب المحدد حالياً بالصفحة فقط (مستقلة للطباعة أو الإرسال لولي الأمر).
+                            </p>
+                        </div>
                     </label>
-                    <p class="text-[10px] text-slate-500 pr-6">
-                        عند تفعيل هذا الخيار، سيتم طباعة صفحة واحدة للطلاب المتفوقين والمتقدمين، وتُلحق صفحة الخطة العلاجية فقط للطلاب الذين يستحقون تدخلاً علاجياً.
-                    </p>
                 </div>
 
                 <!-- Progress / Status indicator -->
@@ -1519,7 +1521,8 @@
 
             document.getElementById('sessionIndicator').classList.add('hidden');
             document.getElementById('btnExitPortal').classList.add('hidden');
-            document.getElementById('btnGlobalPrint').classList.add('hidden');
+            const btnGP = document.getElementById('btnGlobalPrint');
+            if (btnGP) btnGP.classList.add('hidden');
 
             toggleAuthRole('parent');
         }
@@ -1551,7 +1554,8 @@
 
             document.getElementById('sessionIndicator').classList.remove('hidden');
             document.getElementById('btnExitPortal').classList.remove('hidden');
-            document.getElementById('btnGlobalPrint').classList.remove('hidden');
+            const btnGP = document.getElementById('btnGlobalPrint');
+            if (btnGP) btnGP.classList.remove('hidden');
 
             document.getElementById('sessionRoleText').textContent = 'ولي أمر الطالب';
             document.getElementById('sessionRoleBadge').className = 'w-2 h-2 rounded-full bg-emerald-400 animate-pulse';
@@ -1578,7 +1582,8 @@
 
             document.getElementById('sessionIndicator').classList.remove('hidden');
             document.getElementById('btnExitPortal').classList.remove('hidden');
-            document.getElementById('btnGlobalPrint').classList.remove('hidden');
+            const btnGP = document.getElementById('btnGlobalPrint');
+            if (btnGP) btnGP.classList.remove('hidden');
 
             document.getElementById('sessionRoleText').textContent = t.badge;
             document.getElementById('sessionRoleBadge').className = 'w-2 h-2 rounded-full bg-amber-400 animate-pulse';
@@ -2516,7 +2521,7 @@
 
             const avgScore = list.length > 0 ? (classTotalScore / list.length).toFixed(1) : '0';
             const superiorPercent = list.length > 0 ? (((superiorCount + advancedCount) / list.length) * 100).toFixed(0) : '0';
-            const periodTitle = (studentsDb[list[0]] && studentsDb[list[0]].period) || 'تقرير شهر جمادى الأولى 1447هـ';
+            const periodTitle = (studentsDb[list[0]] && studentsDb[list[0]].period) || 'تقرير شهر جمادى الأولى 1448هـ';
             const reportDate = (studentsDb[list[0]] && studentsDb[list[0]].date) || '2026-10-21';
 
             const sheet = document.createElement('div');
@@ -2643,6 +2648,13 @@
             if (labelEl) labelEl.textContent = cls.code;
             const countEl = document.getElementById('modalStudentCount');
             if (countEl) countEl.textContent = cls.studentCount;
+
+            const st = studentsDb[currentActiveKey];
+            const spanEl = document.getElementById('modalCurrentStudentNameSpan');
+            if (spanEl && st) {
+                spanEl.textContent = st.name;
+            }
+
             if (modal) modal.classList.remove('hidden');
             lucide.createIcons();
         }
@@ -2653,23 +2665,22 @@
         }
 
         function updateBatchOptionUI(selectedVal) {
-            const opts = ['optBatchAll', 'optBatchSummary', 'optBatchReports'];
+            const opts = ['cardOptAll', 'cardOptSummary', 'cardOptReports', 'cardOptSingle'];
             opts.forEach(id => {
                 const el = document.getElementById(id);
                 if (!el) return;
                 const radio = el.querySelector('input[type="radio"]');
                 if (radio && radio.value === selectedVal) {
-                    el.className = 'border-2 border-andalus-gold bg-amber-50/50 rounded-2xl p-3 cursor-pointer flex items-center justify-between transition';
+                    el.className = 'batch-opt-card flex items-start gap-3 p-3.5 rounded-2xl border-2 border-indigo-500 bg-indigo-50/50 cursor-pointer transition';
                 } else {
-                    el.className = 'border border-slate-200 hover:border-slate-300 rounded-2xl p-3 cursor-pointer flex items-center justify-between transition';
+                    el.className = 'batch-opt-card flex items-start gap-3 p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 cursor-pointer transition hover:bg-slate-50';
                 }
             });
         }
 
         function executeBatchPrint() {
-            const printTypeRadio = document.querySelector('input[name="batchPrintType"]:checked');
+            const printTypeRadio = document.querySelector('input[name="batchPrintOption"]:checked') || document.querySelector('input[name="batchPrintType"]:checked');
             const printType = printTypeRadio ? printTypeRadio.value : 'all';
-            const remedialOnlyLow = document.getElementById('checkRemedialOnlyLow').checked;
 
             const progress = document.getElementById('batchPrintProgress');
             if (progress) progress.classList.remove('hidden');
@@ -2678,34 +2689,53 @@
                 const batchContainer = document.getElementById('batchPrintContainer');
                 batchContainer.innerHTML = '';
 
-                const list = studentKeys.filter(k => {
-                    const st = studentsDb[k];
-                    return st && st.classCode === currentClassCode;
-                });
-
-                if (printType === 'all' || printType === 'summary') {
-                    const summaryNode = createClassSummarySheetNode(currentClassCode);
-                    batchContainer.appendChild(summaryNode);
-                }
-
-                if (printType === 'all' || printType === 'reports') {
-                    list.forEach(k => {
-                        const reportWrapper = createStudentReportNode(k, 'parent', {
-                            isBatchItem: true,
-                            remedialOnlyLow: remedialOnlyLow
-                        });
-                        batchContainer.appendChild(reportWrapper);
-                        try {
-                            const canvas = reportWrapper.querySelector('.tpl-chart-canvas');
-                            if (canvas && typeof Chart !== 'undefined') {
-                                const st = studentsDb[k];
-                                const stats = computeStudentStats(st);
-                                initChart(canvas, stats.subjectSums);
-                            }
-                        } catch (e) {
-                            console.warn('Batch chart error:', e);
-                        }
+                if (printType === 'single') {
+                    // Print ONLY the student currently active on the page!
+                    const reportWrapper = createStudentReportNode(currentActiveKey, 'parent', {
+                        isBatchItem: true,
+                        remedialOnlyLow: false
                     });
+                    batchContainer.appendChild(reportWrapper);
+                    try {
+                        const canvas = reportWrapper.querySelector('.tpl-chart-canvas');
+                        if (canvas && typeof Chart !== 'undefined') {
+                            const st = studentsDb[currentActiveKey];
+                            const stats = computeStudentStats(st);
+                            initChart(canvas, stats.subjectSums);
+                        }
+                    } catch (e) {
+                        console.warn('Batch chart error:', e);
+                    }
+                } else {
+                    const list = studentKeys.filter(k => {
+                        const st = studentsDb[k];
+                        return st && st.classCode === currentClassCode;
+                    });
+
+                    if (printType === 'all' || printType === 'summary') {
+                        const summaryNode = createClassSummarySheetNode(currentClassCode);
+                        batchContainer.appendChild(summaryNode);
+                    }
+
+                    if (printType === 'all' || printType === 'reports') {
+                        list.forEach(k => {
+                            const reportWrapper = createStudentReportNode(k, 'parent', {
+                                isBatchItem: true,
+                                remedialOnlyLow: false
+                            });
+                            batchContainer.appendChild(reportWrapper);
+                            try {
+                                const canvas = reportWrapper.querySelector('.tpl-chart-canvas');
+                                if (canvas && typeof Chart !== 'undefined') {
+                                    const st = studentsDb[k];
+                                    const stats = computeStudentStats(st);
+                                    initChart(canvas, stats.subjectSums);
+                                }
+                            } catch (e) {
+                                console.warn('Batch chart error:', e);
+                            }
+                        });
+                    }
                 }
 
                 lucide.createIcons();
@@ -2816,6 +2846,13 @@
             initClassDropdown();
             initParentQuickStudentDropdown();
             lucide.createIcons();
+
+            if (window.location.hash === '#teacher') {
+                teacherLogin();
+            } else if (window.location.hash === '#modal') {
+                teacherLogin();
+                openClassPrintModal();
+            }
         });
     </script>
 </body>
