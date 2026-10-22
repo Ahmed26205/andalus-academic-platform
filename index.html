@@ -308,7 +308,7 @@
                         <div>
                             <select id="parentQuickSelect" onchange="if(this.value){setParentDemo(this.value);}"
                                     class="w-full text-xs sm:text-sm font-bold text-slate-800 bg-white border border-slate-300 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-andalus-blue shadow-sm cursor-pointer">
-                                <option value="">🔍 أو اختر أي طالب للاطلاع المباشر الفوري (340 طالباً)...</option>
+                                <option value="">أو اختر أي طالب للاطلاع المباشر الفوري (340 طالباً)...</option>
                             </select>
                         </div>
                     </div>
@@ -351,29 +351,29 @@
                         </label>
                         <select id="authSelectTeacher" onchange="updateAuthTeacherDesc(this.value)"
                                 class="w-full text-xs sm:text-sm font-black text-slate-900 bg-amber-50/80 border border-amber-300 rounded-xl px-3 py-2.5 focus:ring-2 focus:ring-andalus-gold focus:outline-none shadow-sm cursor-pointer">
-                            <option value="counselor" selected>👑 أ. إبراهيم علي القرني (الموجه / المرشد الطلابي - كافة الصلاحيات)</option>
-                            <option value="t_math">📐 أ. عبد الله سعد الغامدي (معلم الرياضيات - فصول 5/1، 5/2، 5/3، 6/1)</option>
-                            <option value="t_arabic">📖 أ. محمد ناصر الشهري (معلم لغتي الجميلة - فصول 5/1، 5/2، 4/1، 4/2)</option>
-                            <option value="t_science">🔬 أ. خالد سعيد القرني (معلم العلوم - فصول 5/1، 5/3، 6/2، 6/3)</option>
-                            <option value="t_islamic">🕌 أ. فهد مطلق المطيري (معلم الدراسات الإسلامية - فصول 5/1، 5/2، 3/1، 3/2)</option>
-                            <option value="t_digital">💻 أ. أحمد يحيى المالكي (معلم المهارات الرقمية - فصول 5 و 6)</option>
-                            <option value="t_english">🌐 أ. سلطان عبد العزيز العتيبي (معلم اللغة الإنجليزية - فصول 5/1، 4/1، G5، G6)</option>
+                            <option value="counselor" selected>أ. إبراهيم علي القرني (الموجه / المرشد الطلابي - كافة الصلاحيات)</option>
+                            <option value="t_math">أ. عبد الله سعد الغامدي (معلم الرياضيات - فصول 5/1، 5/2، 5/3، 6/1)</option>
+                            <option value="t_arabic">أ. محمد ناصر الشهري (معلم لغتي الجميلة - فصول 5/1، 5/2، 4/1، 4/2)</option>
+                            <option value="t_science">أ. خالد سعيد القرني (معلم العلوم - فصول 5/1، 5/3، 6/2، 6/3)</option>
+                            <option value="t_islamic">أ. فهد مطلق المطيري (معلم الدراسات الإسلامية - فصول 5/1، 5/2، 3/1، 3/2)</option>
+                            <option value="t_digital">أ. أحمد يحيى المالكي (معلم المهارات الرقمية - فصول 5 و 6)</option>
+                            <option value="t_english">أ. سلطان عبد العزيز العتيبي (معلم اللغة الإنجليزية - فصول 5/1، 4/1، G5، G6)</option>
                         </select>
                         <p id="authTeacherDesc" class="text-[10.5px] text-amber-900 font-semibold mt-1 bg-amber-100/60 p-2 rounded-lg border border-amber-200">
-                            👑 <b>صلاحيات الموجه الطلابي:</b> إشراف وتعديل كامل لكافة المواد الـ 6، مراجعة وتعديل وحذف ملاحظات المعلمين، وإدارة وتوثيق الملف الصحي والرعاية المدرسية.
+                            <b>صلاحيات الموجه الطلابي:</b> إشراف وتعديل كامل لكافة المواد الـ 6، مراجعة وتعديل وحذف ملاحظات المعلمين، وإدارة وتوثيق الملف الصحي والرعاية المدرسية.
                         </p>
                     </div>
 
                     <!-- Quick Click Teacher Chips for Instant Testing -->
                     <div class="flex flex-wrap items-center gap-1.5 text-[10.5px]">
                         <span class="font-bold text-slate-500 self-center ml-1">تجربة سريعة:</span>
-                        <button type="button" onclick="quickSelectAuthTeacher('counselor')" class="px-2 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-900 font-bold rounded-lg border border-indigo-200 transition">👑 المرشد الطلابي</button>
-                        <button type="button" onclick="quickSelectAuthTeacher('t_math')" class="px-2 py-1 bg-red-50 hover:bg-red-100 text-red-900 font-bold rounded-lg border border-red-200 transition">📐 معلم الرياضيات</button>
-                        <button type="button" onclick="quickSelectAuthTeacher('t_arabic')" class="px-2 py-1 bg-amber-50 hover:bg-amber-100 text-amber-900 font-bold rounded-lg border border-amber-200 transition">📖 معلم لغتي</button>
-                        <button type="button" onclick="quickSelectAuthTeacher('t_science')" class="px-2 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 font-bold rounded-lg border border-emerald-200 transition">🔬 معلم العلوم</button>
-                        <button type="button" onclick="quickSelectAuthTeacher('t_islamic')" class="px-2 py-1 bg-teal-50 hover:bg-teal-100 text-teal-900 font-bold rounded-lg border border-teal-200 transition">🕌 معلم الإسلاميات</button>
-                        <button type="button" onclick="quickSelectAuthTeacher('t_digital')" class="px-2 py-1 bg-purple-50 hover:bg-purple-100 text-purple-900 font-bold rounded-lg border border-purple-200 transition">💻 معلم الرقمية</button>
-                        <button type="button" onclick="quickSelectAuthTeacher('t_english')" class="px-2 py-1 bg-sky-50 hover:bg-sky-100 text-sky-900 font-bold rounded-lg border border-sky-200 transition">🌐 معلم الإنجليزية</button>
+                        <button type="button" onclick="quickSelectAuthTeacher('counselor')" class="px-2 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-900 font-bold rounded-lg border border-indigo-200 transition">المرشد الطلابي</button>
+                        <button type="button" onclick="quickSelectAuthTeacher('t_math')" class="px-2 py-1 bg-red-50 hover:bg-red-100 text-red-900 font-bold rounded-lg border border-red-200 transition">معلم الرياضيات</button>
+                        <button type="button" onclick="quickSelectAuthTeacher('t_arabic')" class="px-2 py-1 bg-amber-50 hover:bg-amber-100 text-amber-900 font-bold rounded-lg border border-amber-200 transition">معلم لغتي</button>
+                        <button type="button" onclick="quickSelectAuthTeacher('t_science')" class="px-2 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 font-bold rounded-lg border border-emerald-200 transition">معلم العلوم</button>
+                        <button type="button" onclick="quickSelectAuthTeacher('t_islamic')" class="px-2 py-1 bg-teal-50 hover:bg-teal-100 text-teal-900 font-bold rounded-lg border border-teal-200 transition">معلم الإسلاميات</button>
+                        <button type="button" onclick="quickSelectAuthTeacher('t_digital')" class="px-2 py-1 bg-purple-50 hover:bg-purple-100 text-purple-900 font-bold rounded-lg border border-purple-200 transition">معلم الرقمية</button>
+                        <button type="button" onclick="quickSelectAuthTeacher('t_english')" class="px-2 py-1 bg-sky-50 hover:bg-sky-100 text-sky-900 font-bold rounded-lg border border-sky-200 transition">معلم الإنجليزية</button>
                     </div>
 
                     <div>
@@ -440,17 +440,17 @@
                     <div class="flex items-center gap-2 flex-wrap sm:flex-nowrap justify-end shrink-0">
                         <!-- Active Teacher Switcher (Clean & Compact) -->
                         <div class="flex items-center gap-1.5 bg-amber-50 border border-amber-300 rounded-xl px-2.5 py-1.5 shadow-xs shrink-0">
-                            <span id="activeTeacherAvatar" class="text-sm">👑</span>
+                            <i data-lucide="user-cog" class="w-4 h-4 text-amber-700 shrink-0"></i>
                             <span class="text-xs font-bold text-amber-950 whitespace-nowrap">المعلم:</span>
                             <select id="selectActiveTeacher" onchange="switchActiveTeacher(this.value)"
                                     class="text-xs font-bold text-slate-900 bg-white border border-amber-300 rounded-lg px-2 py-1 focus:ring-2 focus:ring-andalus-blue focus:outline-none cursor-pointer max-w-[170px] sm:max-w-[185px] truncate">
-                                <option value="counselor">👑 أ. إبراهيم القرني (المرشد)</option>
-                                <option value="t_math">📐 أ. عبد الله الغامدي (رياضيات)</option>
-                                <option value="t_arabic">📖 أ. محمد الشهري (لغتي)</option>
-                                <option value="t_science">🔬 أ. خالد القرني (علوم)</option>
-                                <option value="t_islamic">🕌 أ. فهد المطيري (إسلاميات)</option>
-                                <option value="t_digital">💻 أ. أحمد المالكي (رقمية)</option>
-                                <option value="t_english">🌐 أ. سلطان العتيبي (إنجليزية)</option>
+                                <option value="counselor">أ. إبراهيم القرني (المرشد)</option>
+                                <option value="t_math">أ. عبد الله الغامدي (رياضيات)</option>
+                                <option value="t_arabic">أ. محمد الشهري (لغتي)</option>
+                                <option value="t_science">أ. خالد القرني (علوم)</option>
+                                <option value="t_islamic">أ. فهد المطيري (إسلاميات)</option>
+                                <option value="t_digital">أ. أحمد المالكي (رقمية)</option>
+                                <option value="t_english">أ. سلطان العتيبي (إنجليزية)</option>
                             </select>
                         </div>
 
@@ -1085,7 +1085,7 @@
                         <div class="flex-1">
                             <div class="flex items-center justify-between">
                                 <span class="text-xs font-black text-slate-900 flex items-center gap-1.5">
-                                    <span>📦 الحزمة الإدارية الكاملة للفصل</span>
+                                    <span class="flex items-center gap-1.5"><i data-lucide="package" class="w-4 h-4 text-indigo-600"></i> الحزمة الإدارية الكاملة للفصل</span>
                                     <span class="text-[10px] bg-indigo-100 text-indigo-800 font-bold px-2 py-0.5 rounded-full border border-indigo-200">الأشمل للإدارة</span>
                                 </span>
                                 <span class="text-[11px] font-bold text-indigo-700" id="badgeAllPagesCount">21 صفحة</span>
@@ -1102,7 +1102,7 @@
                         <div class="flex-1">
                             <div class="flex items-center justify-between">
                                 <span class="text-xs font-black text-slate-900 flex items-center gap-1.5">
-                                    <span>📄 كشف الرصد الإجمالي لدرجات الفصل فقط</span>
+                                    <span class="flex items-center gap-1.5"><i data-lucide="file-spreadsheet" class="w-4 h-4 text-indigo-600"></i> كشف الرصد الإجمالي لدرجات الفصل فقط</span>
                                 </span>
                                 <span class="text-[11px] font-bold text-slate-500">صفحة واحدة</span>
                             </div>
@@ -1118,7 +1118,7 @@
                         <div class="flex-1">
                             <div class="flex items-center justify-between">
                                 <span class="text-xs font-black text-slate-900 flex items-center gap-1.5">
-                                    <span>📑 استمارات التقارير لجميع طلاب الفصل</span>
+                                    <span class="flex items-center gap-1.5"><i data-lucide="files" class="w-4 h-4 text-indigo-600"></i> استمارات التقارير لجميع طلاب الفصل</span>
                                 </span>
                                 <span class="text-[11px] font-bold text-slate-500" id="badgeReportsCount">20 تقريراً</span>
                             </div>
@@ -1134,7 +1134,7 @@
                         <div class="flex-1">
                             <div class="flex items-center justify-between">
                                 <span class="text-xs font-black text-slate-900 flex items-center gap-1.5">
-                                    <span>👤 طباعة تقرير الطالب الحالي فقط (<span id="modalCurrentStudentNameSpan" class="text-indigo-700 font-extrabold">عزام خالد المالكي</span>)</span>
+                                    <span class="flex items-center gap-1.5"><i data-lucide="user-check" class="w-4 h-4 text-indigo-600"></i> طباعة تقرير الطالب الحالي فقط (<span id="modalCurrentStudentNameSpan" class="text-indigo-700 font-extrabold">عزام خالد المالكي</span>)</span>
                                     <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full border border-emerald-200">طباعة فورية</span>
                                 </span>
                                 <span class="text-[11px] font-bold text-emerald-700">صفحة واحدة A4</span>
@@ -1273,7 +1273,7 @@
                 title: 'الموجه الطلابي / المرشد الأكاديمي',
                 role: 'counselor',
                 subject: 'all',
-                avatar: '👑',
+                avatar: '',
                 badge: 'الموجه الطلابي (صلاحيات كاملة)',
                 desc: 'صلاحيات كاملة: مراجعة وتعديل وحذف ملاحظات كافة المعلمين، تعديل درجات كافة المواد، وإدارة وتعديل الملف الصحي للطلاب.',
                 classes: ['all']
@@ -1284,9 +1284,9 @@
                 title: 'معلم الرياضيات',
                 role: 'teacher',
                 subject: 'math',
-                avatar: '📐',
+                avatar: '',
                 badge: 'معلم الرياضيات',
-                desc: 'يرصد درجات وملاحظات مقرر الرياضيات لفصول (5/1، 5/2، 5/3، 6/1) فقط. بقية المواد مقفلة تلقائياً (🔒).',
+                desc: 'يرصد درجات وملاحظات مقرر الرياضيات لفصول (5/1، 5/2، 5/3، 6/1) فقط. بقية المواد مقفلة تلقائياً مقفلة تلقائياً.',
                 classes: ['5/1', '5/2', '5/3', '6/1']
             },
             t_arabic: {
@@ -1295,9 +1295,9 @@
                 title: 'معلم لغتي الجميلة',
                 role: 'teacher',
                 subject: 'arabic',
-                avatar: '📖',
+                avatar: '',
                 badge: 'معلم لغتي الجميلة',
-                desc: 'يرصد درجات وملاحظات مقرر لغتي الجميلة لفصول (5/1، 5/2، 4/1، 4/2) فقط. بقية المواد مقفلة تلقائياً (🔒).',
+                desc: 'يرصد درجات وملاحظات مقرر لغتي الجميلة لفصول (5/1، 5/2، 4/1، 4/2) فقط. بقية المواد مقفلة تلقائياً مقفلة تلقائياً.',
                 classes: ['5/1', '5/2', '4/1', '4/2']
             },
             t_science: {
@@ -1306,9 +1306,9 @@
                 title: 'معلم العلوم',
                 role: 'teacher',
                 subject: 'science',
-                avatar: '🔬',
+                avatar: '',
                 badge: 'معلم العلوم',
-                desc: 'يرصد درجات وملاحظات مقرر العلوم لفصول (5/1، 5/3، 6/2، 6/3) فقط. بقية المواد مقفلة تلقائياً (🔒).',
+                desc: 'يرصد درجات وملاحظات مقرر العلوم لفصول (5/1، 5/3، 6/2، 6/3) فقط. بقية المواد مقفلة تلقائياً مقفلة تلقائياً.',
                 classes: ['5/1', '5/3', '6/2', '6/3']
             },
             t_islamic: {
@@ -1317,7 +1317,7 @@
                 title: 'معلم الدراسات الإسلامية',
                 role: 'teacher',
                 subject: 'islamic',
-                avatar: '🕌',
+                avatar: '',
                 badge: 'معلم الدراسات الإسلامية',
                 desc: 'يرصد درجات وملاحظات مقرر الدراسات الإسلامية والقرآن الكريم لفصول (5/1، 5/2، 3/1، 3/2) فقط.',
                 classes: ['5/1', '5/2', '3/1', '3/2']
@@ -1328,7 +1328,7 @@
                 title: 'معلم المهارات الرقمية',
                 role: 'teacher',
                 subject: 'digital',
-                avatar: '💻',
+                avatar: '',
                 badge: 'معلم المهارات الرقمية',
                 desc: 'يرصد درجات وملاحظات مقرر المهارات الرقمية لفصول الصف الخامس والسادس.',
                 classes: ['5/1', '5/2', '5/3', '6/1', '6/2', '6/3']
@@ -1339,7 +1339,7 @@
                 title: 'معلم اللغة الإنجليزية',
                 role: 'teacher',
                 subject: 'english',
-                avatar: '🌐',
+                avatar: '',
                 badge: 'معلم اللغة الإنجليزية',
                 desc: 'يرصد درجات وملاحظات مقرر اللغة الإنجليزية لفصول (5/1، 4/1، 6/1) فقط.',
                 classes: ['5/1', '4/1', '6/1']
@@ -1629,7 +1629,7 @@
 
             for (const gName in gradesMap) {
                 const group = document.createElement('optgroup');
-                group.label = `📌 ${gName}`;
+                group.label = `${gName}`;
                 gradesMap[gName].forEach(cls => {
                     const opt = document.createElement('option');
                     opt.value = cls.code;
@@ -1649,7 +1649,7 @@
         function initParentQuickStudentDropdown() {
             const parentQuickSelect = document.getElementById('parentQuickSelect');
             if (!parentQuickSelect) return;
-            parentQuickSelect.innerHTML = '<option value="">🔍 أو اختر أي طالب للاطلاع المباشر الفوري (340 طالباً)...</option>';
+            parentQuickSelect.innerHTML = '<option value="">أو اختر أي طالب للاطلاع المباشر الفوري (340 طالباً)...</option>';
             
             for (const cKey in availableClasses) {
                 const cls = availableClasses[cKey];
@@ -1976,7 +1976,7 @@
                             healthBadge.textContent = 'سليم ولله الحمد';
                         } else {
                             healthBadge.className = 'tpl-health-badge text-[10px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full border border-amber-300';
-                            healthBadge.textContent = 'رعاية وتوجيه خاص 🩺';
+                            healthBadge.textContent = 'رعاية وتوجيه خاص';
                         }
                     }
 
@@ -2048,9 +2048,9 @@
 
                         let headerBadgeHtml = '';
                         if (isCounselor && !options.isBatchItem) {
-                            headerBadgeHtml = `<span class="text-[9.5px] bg-teal-100 text-teal-900 border border-teal-300 px-1.5 py-0.5 rounded-md font-bold">صلاحية الموجه 👑</span>`;
+                            headerBadgeHtml = `<span class="text-[9.5px] bg-teal-100 text-teal-900 border border-teal-300 px-1.5 py-0.5 rounded-md font-bold">صلاحية الموجه الطلابي</span>`;
                         } else {
-                            headerBadgeHtml = `<span class="text-[9.5px] bg-slate-200 text-slate-700 px-1.5 py-0.5 rounded-md font-medium">🔒 معتمد</span>`;
+                            headerBadgeHtml = `<span class="text-[9.5px] bg-slate-200 text-slate-700 px-1.5 py-0.5 rounded-md font-medium">معتمد</span>`;
                         }
 
                         let bodyContentHtml = '';
