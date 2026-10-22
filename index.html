@@ -1515,9 +1515,9 @@
             // Header avatar and text
             const avatar = document.getElementById('activeTeacherAvatar');
             if (avatar) avatar.textContent = t.avatar;
-            const nameEl = document.getElementById('headerActiveTeacherName');
+            const nameEl = document.getElementById('dashTeacherName');
             if (nameEl) nameEl.textContent = t.name;
-            const roleEl = document.getElementById('headerActiveTeacherRole');
+            const roleEl = document.getElementById('dashTeacherBadge');
             if (roleEl) roleEl.textContent = t.badge;
 
             // Check if current class is valid for this teacher
@@ -1538,7 +1538,7 @@
 
         // Preset Parent Demo Credentials (Immediately Opens the Report)
         function setParentDemo(id) {
-            const input = document.getElementById('parentStudentId');
+            const input = document.getElementById('parentInputId');
             if (input) input.value = id;
             parentLogin();
         }
@@ -1558,7 +1558,7 @@
 
         // Parent Login Action
         function parentLogin() {
-            const idInput = document.getElementById('parentStudentId').value.trim();
+            const idInput = document.getElementById('parentInputId').value.trim();
             if (!idInput) {
                 alert('يرجى إدخال رقم هوية الطالب أو اختياره من القائمة السريعة.');
                 return;
@@ -1985,8 +1985,11 @@
 
             const curTeacher = teachersDb[currentTeacherKey] || teachersDb.counselor;
             const isCounselor = (mode === 'teacher' && curTeacher.role === 'counselor');
+            const isSubjectTeacher = (mode === 'teacher' && !isCounselor);
+            const curSubObj = isSubjectTeacher ? subjects.find(s => s.id === curTeacher.subject) : null;
+            const curSubName = curSubObj ? curSubObj.name : '';
 
-            // Teacher Active Subject / Role Banner
+            // 1. Teacher Active Subject / Role Banner
             const teacherRoleBanner = clone.querySelector('.tpl-teacher-role-banner');
             if (teacherRoleBanner) {
                 if (mode === 'teacher') {
@@ -1996,20 +1999,18 @@
                         teacherRoleBanner.innerHTML = `
                             <div class="flex items-center gap-2">
                                 <span class="text-base">👑</span>
-                                <span>مرحباً <b>${curTeacher.name}</b> (${curTeacher.title}) — متاح لك مراجعة وتعديل درجات كافة المواد، إدارة الملف الصحي، وحذف وتعديل ملاحظات كافة المعلمين.</span>
+                                <span>مرحباً <b>${curTeacher.name}</b> (${curTeacher.title}) — إشراف ومراجعة وتعديل درجات كافة المواد، مراجعة وتعديل وحذف ملاحظات المعلمين، وإدارة وتوثيق الملف الصحي.</span>
                             </div>
-                            <span class="text-[11px] bg-teal-200 text-teal-900 px-2.5 py-0.5 rounded-full border border-teal-400 font-extrabold self-start sm:self-center shrink-0">صلاحيات الموجه الطلابي الكاملة</span>
+                            <span class="text-[11px] bg-teal-200 text-teal-900 px-2.5 py-0.5 rounded-full border border-teal-400 font-extrabold self-start sm:self-center shrink-0">صلاحيات الموجه الكاملة</span>
                         `;
                     } else {
-                        const curSubObj = subjects.find(s => s.id === curTeacher.subject);
-                        const curSubName = curSubObj ? curSubObj.name : '';
                         teacherRoleBanner.className = 'tpl-teacher-role-banner mb-3 p-2.5 sm:p-3 rounded-xl text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2 border bg-amber-50 border-amber-300 text-amber-950 font-bold';
                         teacherRoleBanner.innerHTML = `
                             <div class="flex items-center gap-2">
                                 <span class="text-base">${curTeacher.avatar}</span>
-                                <span>مرحباً <b>${curTeacher.name}</b> (${curTeacher.title}) — متاح لك رصد درجات وملاحظات مقرر [${curSubName}] فقط، وبقية المواد مقفلة تلقائياً (🔒) لحمايتها من التعديل.</span>
+                                <span>مرحباً <b>${curTeacher.name}</b> (${curTeacher.title}) — صفحة رصد وتعديل مقرر [${curSubName}] الخاص بك فقط.</span>
                             </div>
-                            <span class="text-[11px] bg-amber-200 text-amber-900 px-2.5 py-0.5 rounded-full border border-amber-300 font-bold self-start sm:self-center shrink-0">رصد مادة مفردة</span>
+                            <span class="text-[11px] bg-amber-200 text-amber-900 px-2.5 py-0.5 rounded-full border border-amber-300 font-bold self-start sm:self-center shrink-0">رصد حصتك ومقررك فقط</span>
                         `;
                     }
                 } else {
@@ -2017,195 +2018,190 @@
                 }
             }
 
-            // Update Teacher Signatures
-            const sigTeacher = clone.querySelector('.tpl-sig-teacher');
-            const sigRemedial = clone.querySelector('.tpl-sig-remedial-teacher');
-            if (mode === 'teacher' && !isCounselor) {
-                if (sigTeacher) sigTeacher.textContent = `${curTeacher.name} (${curTeacher.title})`;
-                if (sigRemedial) sigRemedial.textContent = `${curTeacher.name} (معتمد إلكترونياً)`;
-            } else {
-                if (sigTeacher) sigTeacher.textContent = `أ. معلمو المقررات الدراسية`;
-                if (sigRemedial) sigRemedial.textContent = `أ. إبراهيم القرني (الموجه الطلابي)`;
-            }
-
-            // Update Table Column Headers based on teacher role
-            subjects.forEach(s => {
-                const th = clone.querySelector(`.tpl-th-${s.id}`);
-                if (th) {
-                    if (mode === 'teacher' && !isCounselor) {
-                        if (curTeacher.subject === s.id) {
-                            th.className = 'p-1.5 border border-amber-300 bg-amber-600 text-white font-black text-center shadow-inner';
-                            th.innerHTML = `${s.name}<span class="block text-[9px] bg-amber-800 text-amber-100 rounded px-1 py-0.5 mt-0.5 font-bold">مادتك النشطة ✏️</span>`;
-                        } else {
-                            th.className = 'p-1.5 border border-slate-400 bg-slate-800/85 text-slate-300 font-medium text-center';
-                            th.innerHTML = `${s.name}<span class="block text-[9px] text-slate-400 mt-0.5 font-normal">🔒 مقفلة</span>`;
-                        }
-                    } else {
-                        th.className = 'p-1.5 border border-slate-400 bg-andalus-darkBlue text-white font-bold text-center';
-                        th.textContent = s.name;
-                    }
-                }
-            });
-
-            // Notes
-            const notesEl = clone.querySelector('.tpl-notes-editable');
-            if (mode === 'teacher' && isCounselor) {
-                notesEl.innerHTML = `
-                    <textarea rows="2" onchange="studentsDb['${studentKey}'].notes = this.value; saveDbToStorage();"
-                              placeholder="التوجيه والملاحظات العامة حول الطالب..."
-                              class="w-full text-xs text-slate-800 bg-amber-50/50 p-2 border border-amber-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-andalus-blue">${student.notes || ''}</textarea>
-                `;
-            } else {
-                notesEl.textContent = student.notes || 'لا توجد ملاحظات عامة مسجلة.';
-            }
-
-            // Student Health Dossier Section
+            // 2. Student Health Dossier Section (STRICT PRIVACY: HIDDEN FOR SUBJECT TEACHER!)
             const healthSection = clone.querySelector('.tpl-health-section');
             if (healthSection) {
-                const hp = student.healthProfile || {};
-                const bloodBadge = healthSection.querySelector('.tpl-blood-badge');
-                if (bloodBadge) bloodBadge.textContent = `فصيلة: ${hp.blood || '+O'}`;
+                if (isSubjectTeacher) {
+                    healthSection.classList.add('hidden');
+                } else {
+                    healthSection.classList.remove('hidden');
+                    const hp = student.healthProfile || {};
+                    const bloodBadge = healthSection.querySelector('.tpl-blood-badge');
+                    if (bloodBadge) bloodBadge.textContent = `فصيلة: ${hp.blood || '+O'}`;
 
-                const healthBadge = healthSection.querySelector('.tpl-health-badge');
-                const isHealthy = !hp.condition || hp.condition.includes('سليم');
-                if (healthBadge) {
-                    if (isHealthy) {
-                        healthBadge.className = 'tpl-health-badge text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full border border-emerald-200';
-                        healthBadge.textContent = 'سليم ولله الحمد';
-                    } else {
-                        healthBadge.className = 'tpl-health-badge text-[10px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full border border-amber-300';
-                        healthBadge.textContent = 'رعاية وتوجيه خاص 🩺';
+                    const healthBadge = healthSection.querySelector('.tpl-health-badge');
+                    const isHealthy = !hp.condition || hp.condition.includes('سليم');
+                    if (healthBadge) {
+                        if (isHealthy) {
+                            healthBadge.className = 'tpl-health-badge text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full border border-emerald-200';
+                            healthBadge.textContent = 'سليم ولله الحمد';
+                        } else {
+                            healthBadge.className = 'tpl-health-badge text-[10px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full border border-amber-300';
+                            healthBadge.textContent = 'رعاية وتوجيه خاص 🩺';
+                        }
                     }
-                }
 
-                const condEl = healthSection.querySelector('.tpl-health-condition');
-                if (condEl) condEl.textContent = hp.condition || 'سليم (لا توجد أمراض مزمنة ولله الحمد)';
+                    const condEl = healthSection.querySelector('.tpl-health-condition');
+                    if (condEl) condEl.textContent = hp.condition || 'سليم (لا توجد أمراض مزمنة ولله الحمد)';
 
-                const careEl = healthSection.querySelector('.tpl-health-care');
-                if (careEl) careEl.textContent = hp.care || 'ممارسة الأنشطة كاملة بشكل طبيعي';
+                    const careEl = healthSection.querySelector('.tpl-health-care');
+                    if (careEl) careEl.textContent = hp.care || 'ممارسة الأنشطة كاملة بشكل طبيعي';
 
-                const btnEditHealth = healthSection.querySelector('.tpl-btn-edit-health');
-                if (btnEditHealth) {
-                    if (mode === 'teacher' && isCounselor && !options.isBatchItem) {
-                        btnEditHealth.classList.remove('hidden');
-                        btnEditHealth.setAttribute('onclick', `openHealthModal('${studentKey}')`);
-                    } else {
-                        btnEditHealth.classList.add('hidden');
+                    const btnEditHealth = healthSection.querySelector('.tpl-btn-edit-health');
+                    if (btnEditHealth) {
+                        if (isCounselor && !options.isBatchItem) {
+                            btnEditHealth.classList.remove('hidden');
+                            btnEditHealth.setAttribute('onclick', `openHealthModal('${studentKey}')`);
+                        } else {
+                            btnEditHealth.classList.add('hidden');
+                        }
                     }
                 }
             }
 
-            // Subject Teachers' Notes Grid (6 Subjects)
+            // 3. Subject Teachers' Notes (STRICT PRIVACY: TEACHER ONLY SEES THEIR OWN NOTE!)
+            const notesContainer = clone.querySelector('.tpl-teachers-notes-container');
             const notesGrid = clone.querySelector('.tpl-subject-notes-grid');
             if (notesGrid) {
                 notesGrid.innerHTML = '';
 
-                subjects.forEach(sub => {
+                if (isSubjectTeacher) {
+                    const sub = curSubObj;
                     const noteText = (student.subjectNotes && student.subjectNotes[sub.id]) || '';
-                    const teacherForSub = Object.values(teachersDb).find(t => t.subject === sub.id) || {
-                        name: `أ. معلم ${sub.name}`,
-                        title: `معلم ${sub.name}`
-                    };
 
-                    const isOwnSubjectTeacher = (mode === 'teacher' && !isCounselor && curTeacher.subject === sub.id);
-                    const canEdit = (isCounselor || isOwnSubjectTeacher) && !options.isBatchItem;
+                    const titleSpan = notesContainer.querySelector('h3 span');
+                    if (titleSpan) titleSpan.textContent = `ملاحظة وتوصيات معلم مقرر ${sub.name}`;
 
                     const card = document.createElement('div');
-                    if (canEdit) {
-                        card.className = 'bg-white rounded-xl p-2.5 border-2 ' + 
-                                         (isCounselor ? 'border-teal-300 shadow-sm bg-teal-50/20' : 'border-amber-400 shadow-sm bg-amber-50/20') + 
-                                         ' flex flex-col justify-between';
-                    } else {
-                        card.className = 'bg-slate-50/90 rounded-xl p-2.5 border border-slate-200 flex flex-col justify-between';
-                    }
+                    card.className = 'bg-white rounded-2xl p-4 border-2 border-amber-400 shadow-sm bg-amber-50/20 col-span-full';
+                    card.innerHTML = `
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-black text-sm text-andalus-darkBlue flex items-center gap-1.5">
+                                <span class="text-base">${curTeacher.avatar}</span>
+                                <span>مقرر ${sub.name} — ${curTeacher.name}</span>
+                            </span>
+                            <span class="text-[10px] bg-amber-200 text-amber-900 border border-amber-300 px-2 py-0.5 rounded-md font-bold">مادتك النشطة ✏️</span>
+                        </div>
+                        <div>
+                            <textarea rows="3" 
+                                      placeholder="اكتب ملاحظاتك وتوجيهاتك للطالب في مقرر ${sub.name}..."
+                                      onchange="updateSubjectNote('${studentKey}', '${sub.id}', this.value)"
+                                      class="w-full text-xs text-slate-900 bg-white p-2.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-andalus-blue shadow-inner font-medium">${noteText}</textarea>
+                        </div>
+                        <div class="mt-2 text-[11px] text-slate-500 font-semibold flex items-center justify-between">
+                            <span>يتم الحفظ تلقائياً في تقرير الطالب</span>
+                            <span class="text-emerald-700 font-bold">✓ رصد مباشر</span>
+                        </div>
+                    `;
+                    notesGrid.appendChild(card);
+                } else {
+                    const titleSpan = notesContainer.querySelector('h3 span');
+                    if (titleSpan) titleSpan.textContent = 'ملاحظات وتقييم معلمي المقررات الدراسية';
 
-                    let headerBadgeHtml = '';
-                    if (isCounselor && !options.isBatchItem) {
-                        headerBadgeHtml = `<span class="text-[9.5px] bg-teal-100 text-teal-900 border border-teal-300 px-1.5 py-0.5 rounded-md font-bold">صلاحية الموجه 👑</span>`;
-                    } else if (isOwnSubjectTeacher && !options.isBatchItem) {
-                        headerBadgeHtml = `<span class="text-[9.5px] bg-amber-200 text-amber-900 border border-amber-300 px-1.5 py-0.5 rounded-md font-bold">مادتك النشطة ✏️</span>`;
-                    } else {
-                        headerBadgeHtml = `<span class="text-[9.5px] bg-slate-200 text-slate-700 px-1.5 py-0.5 rounded-md font-medium">🔒 للقراءة</span>`;
-                    }
+                    subjects.forEach(sub => {
+                        const noteText = (student.subjectNotes && student.subjectNotes[sub.id]) || '';
+                        const teacherForSub = Object.values(teachersDb).find(t => t.subject === sub.id) || {
+                            name: `أ. معلم ${sub.name}`,
+                            title: `معلم ${sub.name}`
+                        };
 
-                    let bodyContentHtml = '';
-                    if (canEdit) {
-                        bodyContentHtml = `
-                            <div class="mt-2">
-                                <textarea rows="2" 
-                                          placeholder="اكتب ملاحظة وتقييم الطالب في مقرر ${sub.name}..."
-                                          onchange="updateSubjectNote('${studentKey}', '${sub.id}', this.value)"
-                                          class="w-full text-xs text-slate-900 bg-white p-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-andalus-blue shadow-inner">${noteText}</textarea>
-                            </div>
-                        `;
-                    } else {
-                        if (noteText) {
+                        const canEdit = isCounselor && !options.isBatchItem;
+                        const card = document.createElement('div');
+                        if (canEdit) {
+                            card.className = 'bg-white rounded-xl p-2.5 border-2 border-teal-300 shadow-sm bg-teal-50/20 flex flex-col justify-between';
+                        } else {
+                            card.className = 'bg-slate-50/90 rounded-xl p-2.5 border border-slate-200 flex flex-col justify-between';
+                        }
+
+                        let headerBadgeHtml = '';
+                        if (isCounselor && !options.isBatchItem) {
+                            headerBadgeHtml = `<span class="text-[9.5px] bg-teal-100 text-teal-900 border border-teal-300 px-1.5 py-0.5 rounded-md font-bold">صلاحية الموجه 👑</span>`;
+                        } else {
+                            headerBadgeHtml = `<span class="text-[9.5px] bg-slate-200 text-slate-700 px-1.5 py-0.5 rounded-md font-medium">🔒 معتمد</span>`;
+                        }
+
+                        let bodyContentHtml = '';
+                        if (canEdit) {
                             bodyContentHtml = `
-                                <div class="mt-2 p-2 bg-white rounded-lg border border-slate-200 text-xs text-slate-800 font-medium leading-relaxed italic">
-                                    "${noteText}"
+                                <div class="mt-2">
+                                    <textarea rows="2" 
+                                              placeholder="اكتب ملاحظة وتقييم الطالب في مقرر ${sub.name}..."
+                                              onchange="updateSubjectNote('${studentKey}', '${sub.id}', this.value)"
+                                              class="w-full text-xs text-slate-900 bg-white p-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-andalus-blue shadow-inner">${noteText}</textarea>
                                 </div>
                             `;
                         } else {
-                            bodyContentHtml = `
-                                <div class="mt-2 p-2 bg-slate-100/70 rounded-lg border border-dashed border-slate-300 text-[11px] text-slate-400 text-center">
-                                    لا توجد ملاحظة مدونة حتى الآن
-                                </div>
+                            if (noteText) {
+                                bodyContentHtml = `
+                                    <div class="mt-2 p-2 bg-white rounded-lg border border-slate-200 text-xs text-slate-800 font-medium leading-relaxed italic">
+                                        "${noteText}"
+                                    </div>
+                                `;
+                            } else {
+                                bodyContentHtml = `
+                                    <div class="mt-2 p-2 bg-slate-100/70 rounded-lg border border-dashed border-slate-300 text-[11px] text-slate-400 text-center">
+                                        لا توجد ملاحظة مدونة حتى الآن
+                                    </div>
+                                `;
+                            }
+                        }
+
+                        let footerHtml = `
+                            <div class="mt-2 pt-1.5 border-t border-slate-200 flex items-center justify-between text-[10.5px]">
+                                <span class="font-bold text-slate-600">${teacherForSub.name}</span>
+                        `;
+                        
+                        if (isCounselor && noteText && !options.isBatchItem) {
+                            footerHtml += `
+                                <button type="button" 
+                                        onclick="clearSubjectNote('${studentKey}', '${sub.id}')"
+                                        title="حذف الملاحظة (صلاحية الموجه الطلابي)"
+                                        class="text-rose-600 hover:text-rose-800 hover:bg-rose-50 px-1.5 py-0.5 rounded transition flex items-center gap-1 font-bold">
+                                    <i data-lucide="trash-2" class="w-3 h-3"></i>
+                                    <span>حذف</span>
+                                </button>
                             `;
                         }
-                    }
+                        footerHtml += `</div>`;
 
-                    let footerHtml = `
-                        <div class="mt-2 pt-1.5 border-t border-slate-200 flex items-center justify-between text-[10.5px]">
-                            <span class="font-bold text-slate-600">${teacherForSub.name}</span>
-                    `;
-                    
-                    if (isCounselor && noteText && !options.isBatchItem) {
-                        footerHtml += `
-                            <button type="button" 
-                                    onclick="clearSubjectNote('${studentKey}', '${sub.id}')"
-                                    title="حذف الملاحظة (صلاحية الموجه الطلابي)"
-                                    class="text-rose-600 hover:text-rose-800 hover:bg-rose-50 px-1.5 py-0.5 rounded transition flex items-center gap-1 font-bold">
-                                <i data-lucide="trash-2" class="w-3 h-3"></i>
-                                <span>حذف</span>
-                            </button>
-                        `;
-                    }
-                    footerHtml += `</div>`;
-
-                    card.innerHTML = `
-                        <div>
-                            <div class="flex items-center justify-between">
-                                <span class="font-black text-xs text-andalus-darkBlue">${sub.name}</span>
-                                ${headerBadgeHtml}
+                        card.innerHTML = `
+                            <div>
+                                <div class="flex items-center justify-between">
+                                    <span class="font-black text-xs text-andalus-darkBlue">${sub.name}</span>
+                                    ${headerBadgeHtml}
+                                </div>
+                                ${bodyContentHtml}
                             </div>
-                            ${bodyContentHtml}
-                        </div>
-                        ${footerHtml}
-                    `;
+                            ${footerHtml}
+                        `;
 
-                    notesGrid.appendChild(card);
-                });
+                        notesGrid.appendChild(card);
+                    });
+                }
             }
 
-            // Fill Matrix
+            // 4. Evaluation Matrix Table (STRICT PRIVACY: TEACHER ONLY SEES THEIR OWN SUBJECT COLUMN!)
+            const theadTr = clone.querySelector('.matrix-table thead tr');
+            const tfootTr = clone.querySelector('.matrix-table tfoot tr');
             const tbody = clone.querySelector('.tpl-matrix-body');
             tbody.innerHTML = '';
 
-            criteria.forEach(crit => {
-                const tr = document.createElement('tr');
-                tr.className = 'hover:bg-slate-50 transition border-b border-slate-200';
+            if (isSubjectTeacher) {
+                // Adjust Table Header to ONLY show Criterion + Subject + Score
+                if (theadTr) {
+                    theadTr.innerHTML = `
+                        <th class="p-2.5 text-right w-1/2 border border-slate-400">عناصر ومعايير التقييم</th>
+                        <th class="p-2 border border-amber-300 bg-amber-600 text-white font-black text-center shadow-inner">
+                            ${curSubName} (حصتك ومادتك النشطة ✏️)
+                        </th>
+                        <th class="p-2 border border-slate-400 bg-andalus-darkBlue text-center w-28">الدرجة المكتسبة (من 5)</th>
+                    `;
+                }
 
-                let rowHtml = `
-                    <td class="p-2 text-right font-bold text-slate-800 bg-slate-50/80 border border-slate-300">
-                        ${crit.name}
-                    </td>
-                `;
-
-                let rowSum = 0;
-
-                subjects.forEach(sub => {
-                    const score = (student.scores[crit.id] && student.scores[crit.id][sub.id]) || 1;
-                    rowSum += score;
+                let subTotal = 0;
+                criteria.forEach(crit => {
+                    const score = (student.scores[crit.id] && student.scores[crit.id][curTeacher.subject]) || 1;
+                    subTotal += score;
 
                     let scoreBadgeColor = 'bg-rose-100 text-rose-800 border-rose-300';
                     if (score === 5) scoreBadgeColor = 'bg-emerald-100 text-emerald-800 border-emerald-300';
@@ -2213,66 +2209,209 @@
                     else if (score === 3) scoreBadgeColor = 'bg-sky-100 text-sky-800 border-sky-300';
                     else if (score === 2) scoreBadgeColor = 'bg-amber-100 text-amber-800 border-amber-300';
 
-                    const isSubjectEditable = (mode === 'teacher') && (isCounselor || curTeacher.subject === sub.id) && !options.isBatchItem;
+                    const tr = document.createElement('tr');
+                    tr.className = 'hover:bg-slate-50 transition border-b border-slate-200';
+                    tr.innerHTML = `
+                        <td class="p-2.5 text-right font-bold text-slate-800 bg-slate-50 border border-slate-300">
+                            ${crit.name}
+                        </td>
+                        <td class="p-1.5 border border-slate-300 text-center bg-amber-50/70 ring-2 ring-inset ring-amber-400">
+                            <select onchange="updateCellScore('${crit.id}', '${curTeacher.subject}', this.value)" 
+                                    class="w-full text-xs font-black text-center py-1.5 px-2 rounded-lg border focus:ring-2 focus:ring-andalus-blue focus:outline-none cursor-pointer ${scoreBadgeColor}">
+                                <option value="5" ${score === 5 ? 'selected' : ''}>5 (متفوق)</option>
+                                <option value="4" ${score === 4 ? 'selected' : ''}>4 (متقدم)</option>
+                                <option value="3" ${score === 3 ? 'selected' : ''}>3 (متمكن)</option>
+                                <option value="2" ${score === 2 ? 'selected' : ''}>2 (مقبول)</option>
+                                <option value="1" ${score === 1 ? 'selected' : ''}>1 (ضعيف)</option>
+                            </select>
+                        </td>
+                        <td class="p-2 border border-slate-300 text-center font-black bg-slate-50">
+                            <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md text-xs font-black border ${scoreBadgeColor}">
+                                ${score} / 5
+                            </span>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
 
-                    if (isSubjectEditable) {
-                        rowHtml += `
-                            <td class="p-1 border border-slate-300 text-center ${(!isCounselor && curTeacher.subject === sub.id) ? 'bg-amber-50/70 ring-2 ring-inset ring-amber-400' : ''}">
-                                <select onchange="updateCellScore('${crit.id}', '${sub.id}', this.value)" 
-                                        class="text-xs font-black text-center py-1 px-1 rounded-lg border focus:ring-2 focus:ring-andalus-blue focus:outline-none cursor-pointer ${scoreBadgeColor}">
-                                    <option value="5" ${score === 5 ? 'selected' : ''}>5 (متفوق)</option>
-                                    <option value="4" ${score === 4 ? 'selected' : ''}>4 (متقدم)</option>
-                                    <option value="3" ${score === 3 ? 'selected' : ''}>3 (متمكن)</option>
-                                    <option value="2" ${score === 2 ? 'selected' : ''}>2 (مقبول)</option>
-                                    <option value="1" ${score === 1 ? 'selected' : ''}>1 (ضعيف)</option>
-                                </select>
-                            </td>
-                        `;
-                    } else {
-                        const isLockedForOther = (mode === 'teacher' && !isCounselor && curTeacher.subject !== sub.id);
-                        rowHtml += `
-                            <td class="p-1.5 border border-slate-300 text-center ${isLockedForOther ? 'bg-slate-50/70' : ''}" title="${isLockedForOther ? 'خاصة بمعلم ' + sub.name : ''}">
-                                <span class="inline-flex items-center justify-center gap-1 px-1.5 py-0.5 rounded-md text-xs font-black border ${scoreBadgeColor}">
-                                    ${score}
-                                    ${isLockedForOther ? '<i data-lucide="lock" class="w-3 h-3 text-slate-400"></i>' : ''}
-                                </span>
-                            </td>
-                        `;
+                if (tfootTr) {
+                    const subPercent = Math.round((subTotal / 25) * 100);
+                    tfootTr.innerHTML = `
+                        <td class="p-2.5 text-right font-black border border-slate-300 text-slate-900 bg-slate-100">
+                            إجمالي درجات مقرر ${curSubName} (من 25)
+                        </td>
+                        <td class="p-2 border border-slate-300 text-center font-black bg-amber-100 text-amber-950 text-sm">
+                            ${subTotal} / 25
+                        </td>
+                        <td class="p-2 border border-slate-300 text-center font-black bg-slate-100 text-andalus-blue text-xs">
+                            ${subPercent}%
+                        </td>
+                    `;
+                }
+
+                // Update KPIs specifically for this subject
+                const subPercent = Math.round((subTotal / 25) * 100);
+                const subGpa = (subTotal / 5).toFixed(1);
+
+                clone.querySelector('.tpl-total-score').textContent = subTotal;
+                const matrixSumEl = clone.querySelector('.tpl-total-matrix-sum');
+                if (matrixSumEl) matrixSumEl.textContent = `${subTotal} / 25`;
+                clone.querySelector('.tpl-gpa').textContent = subGpa;
+                clone.querySelector('.tpl-percentage').textContent = `${subPercent}%`;
+                clone.querySelector('.tpl-progress-bar').style.width = `${subPercent}%`;
+
+                // Single Subject Performance Level
+                const statusCard = clone.querySelector('.tpl-status-card');
+                const statusTitle = clone.querySelector('.tpl-status-title');
+                const statusSub = clone.querySelector('.tpl-status-sub');
+                let subLvl = 'يحتاج إلى دعم';
+                let subClasses = 'bg-amber-50 border-2 border-amber-400 text-amber-900';
+                let subSubtitle = `بمقرر ${curSubName}`;
+
+                if (subTotal >= 22) {
+                    subLvl = 'طالب متفوق';
+                    subClasses = 'bg-emerald-50 border-2 border-emerald-400 text-emerald-900';
+                    subSubtitle = `أداء متميز في ${curSubName}`;
+                } else if (subTotal >= 18) {
+                    subLvl = 'طالب متقدم';
+                    subClasses = 'bg-blue-50 border-2 border-blue-400 text-blue-900';
+                    subSubtitle = `أداء جيد جداً في ${curSubName}`;
+                } else if (subTotal >= 15) {
+                    subLvl = 'طالب متمكن';
+                    subClasses = 'bg-sky-50 border-2 border-sky-400 text-sky-900';
+                    subSubtitle = `أداء مستقر في ${curSubName}`;
+                }
+
+                statusCard.className = `col-span-2 sm:col-span-1 rounded-xl p-2.5 flex flex-col justify-center items-center text-center shadow-sm ${subClasses}`;
+                statusTitle.textContent = subLvl;
+                statusSub.textContent = subSubtitle;
+
+                // Hide the 6-subject trend chart & counselor private notes row for subject teachers!
+                const chartCanvas = clone.querySelector('.tpl-chart-canvas');
+                if (chartCanvas) {
+                    const chartRow = chartCanvas.closest('.grid');
+                    if (chartRow) chartRow.classList.add('hidden');
+                }
+
+                // Update Signatures
+                const sigTeacher = clone.querySelector('.tpl-sig-teacher');
+                const sigRemedial = clone.querySelector('.tpl-sig-remedial-teacher');
+                if (sigTeacher) sigTeacher.textContent = `${curTeacher.name} (معلم ${curSubName})`;
+                if (sigRemedial) sigRemedial.textContent = `${curTeacher.name} (معتمد إلكترونياً)`;
+
+            } else {
+                // Counselor or Parent: Full 6-Subject Comprehensive Matrix
+                subjects.forEach(s => {
+                    const th = clone.querySelector(`.tpl-th-${s.id}`);
+                    if (th) {
+                        th.className = 'p-1.5 border border-slate-400 bg-andalus-darkBlue text-white font-bold text-center';
+                        th.textContent = s.name;
                     }
                 });
 
-                rowHtml += `
-                    <td class="p-1.5 border border-slate-300 text-center font-extrabold text-andalus-darkBlue bg-slate-50">
-                        ${rowSum}
-                    </td>
-                `;
+                // Notes
+                const notesEl = clone.querySelector('.tpl-notes-editable');
+                if (isCounselor) {
+                    notesEl.innerHTML = `
+                        <textarea rows="2" onchange="studentsDb['${studentKey}'].notes = this.value; saveDbToStorage();"
+                                  placeholder="التوجيه والملاحظات العامة حول الطالب..."
+                                  class="w-full text-xs text-slate-800 bg-amber-50/50 p-2 border border-amber-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-andalus-blue">${student.notes || ''}</textarea>
+                    `;
+                } else {
+                    notesEl.textContent = student.notes || 'لا توجد ملاحظات عامة مسجلة.';
+                }
 
-                tr.innerHTML = rowHtml;
-                tbody.appendChild(tr);
-            });
+                // Full Matrix Rows
+                criteria.forEach(crit => {
+                    const tr = document.createElement('tr');
+                    tr.className = 'hover:bg-slate-50 transition border-b border-slate-200';
 
-            // Update column sums
-            subjects.forEach(s => {
-                const el = clone.querySelector(`.tpl-col-${s.id}`);
-                if (el) el.textContent = `${stats.subjectSums[s.id]} / 25`;
-            });
+                    let rowHtml = `
+                        <td class="p-2 text-right font-bold text-slate-800 bg-slate-50/80 border border-slate-300">
+                            ${crit.name}
+                        </td>
+                    `;
 
-            // Update KPIs
-            clone.querySelector('.tpl-total-score').textContent = stats.total;
-            clone.querySelector('.tpl-total-matrix-sum').textContent = `${stats.total} / 150`;
-            clone.querySelector('.tpl-gpa').textContent = stats.gpa;
-            clone.querySelector('.tpl-percentage').textContent = `${stats.percentage}%`;
-            clone.querySelector('.tpl-progress-bar').style.width = `${stats.percentage}%`;
+                    let rowSum = 0;
+                    subjects.forEach(sub => {
+                        const score = (student.scores[crit.id] && student.scores[crit.id][sub.id]) || 1;
+                        rowSum += score;
 
-            // Performance Level
-            const statusCard = clone.querySelector('.tpl-status-card');
-            const statusTitle = clone.querySelector('.tpl-status-title');
-            const statusSub = clone.querySelector('.tpl-status-sub');
-            statusCard.className = `col-span-2 sm:col-span-1 rounded-xl p-2.5 flex flex-col justify-center items-center text-center shadow-sm ${stats.cardClasses}`;
-            statusTitle.textContent = stats.level;
-            statusSub.textContent = stats.lvlSub;
+                        let scoreBadgeColor = 'bg-rose-100 text-rose-800 border-rose-300';
+                        if (score === 5) scoreBadgeColor = 'bg-emerald-100 text-emerald-800 border-emerald-300';
+                        else if (score === 4) scoreBadgeColor = 'bg-blue-100 text-blue-800 border-blue-300';
+                        else if (score === 3) scoreBadgeColor = 'bg-sky-100 text-sky-800 border-sky-300';
+                        else if (score === 2) scoreBadgeColor = 'bg-amber-100 text-amber-800 border-amber-300';
 
-            // Remedial Plan Section
+                        if (isCounselor && !options.isBatchItem) {
+                            rowHtml += `
+                                <td class="p-1 border border-slate-300 text-center">
+                                    <select onchange="updateCellScore('${crit.id}', '${sub.id}', this.value)" 
+                                            class="text-xs font-black text-center py-1 px-1 rounded-lg border focus:ring-2 focus:ring-andalus-blue focus:outline-none cursor-pointer ${scoreBadgeColor}">
+                                        <option value="5" ${score === 5 ? 'selected' : ''}>5 (متفوق)</option>
+                                        <option value="4" ${score === 4 ? 'selected' : ''}>4 (متقدم)</option>
+                                        <option value="3" ${score === 3 ? 'selected' : ''}>3 (متمكن)</option>
+                                        <option value="2" ${score === 2 ? 'selected' : ''}>2 (مقبول)</option>
+                                        <option value="1" ${score === 1 ? 'selected' : ''}>1 (ضعيف)</option>
+                                    </select>
+                                </td>
+                            `;
+                        } else {
+                            rowHtml += `
+                                <td class="p-1.5 border border-slate-300 text-center">
+                                    <span class="inline-flex items-center justify-center gap-1 px-1.5 py-0.5 rounded-md text-xs font-black border ${scoreBadgeColor}">
+                                        ${score}
+                                    </span>
+                                </td>
+                            `;
+                        }
+                    });
+
+                    rowHtml += `
+                        <td class="p-1.5 border border-slate-300 text-center font-extrabold text-andalus-darkBlue bg-slate-50">
+                            ${rowSum}
+                        </td>
+                    `;
+
+                    tr.innerHTML = rowHtml;
+                    tbody.appendChild(tr);
+                });
+
+                // Update column sums
+                subjects.forEach(s => {
+                    const el = clone.querySelector(`.tpl-col-${s.id}`);
+                    if (el) el.textContent = `${stats.subjectSums[s.id]} / 25`;
+                });
+
+                // Update KPIs
+                clone.querySelector('.tpl-total-score').textContent = stats.total;
+                clone.querySelector('.tpl-total-matrix-sum').textContent = `${stats.total} / 150`;
+                clone.querySelector('.tpl-gpa').textContent = stats.gpa;
+                clone.querySelector('.tpl-percentage').textContent = `${stats.percentage}%`;
+                clone.querySelector('.tpl-progress-bar').style.width = `${stats.percentage}%`;
+
+                // Overall Performance Level
+                const statusCard = clone.querySelector('.tpl-status-card');
+                const statusTitle = clone.querySelector('.tpl-status-title');
+                const statusSub = clone.querySelector('.tpl-status-sub');
+                statusCard.className = `col-span-2 sm:col-span-1 rounded-xl p-2.5 flex flex-col justify-center items-center text-center shadow-sm ${stats.cardClasses}`;
+                statusTitle.textContent = stats.level;
+                statusSub.textContent = stats.lvlSub;
+
+                // Signatures
+                const sigTeacher = clone.querySelector('.tpl-sig-teacher');
+                const sigRemedial = clone.querySelector('.tpl-sig-remedial-teacher');
+                if (sigTeacher) sigTeacher.textContent = `أ. معلمو المقررات الدراسية`;
+                if (sigRemedial) sigRemedial.textContent = `أ. إبراهيم القرني (الموجه الطلابي)`;
+
+                // Initialize 6-subject Chart
+                const canvas = clone.querySelector('.tpl-chart-canvas');
+                if (canvas && typeof Chart !== 'undefined') {
+                    initChart(canvas, stats.subjectSums);
+                }
+            }
+
+            // 5. Remedial Plan Section
             const remSection = clone.querySelector('.tpl-remedial-section');
             const remBadge = clone.querySelector('.tpl-remedial-badge');
 
@@ -2290,16 +2429,12 @@
                         cb.disabled = true;
                         cb.classList.add('cursor-not-allowed');
                         const lbl = cb.closest('label');
-                        if (lbl) {
-                            lbl.classList.add('cursor-default', 'pointer-events-none', 'select-none');
-                        }
+                        if (lbl) lbl.classList.add('cursor-default', 'pointer-events-none', 'select-none');
                     } else {
                         cb.disabled = false;
                         cb.classList.remove('cursor-not-allowed');
                         const lbl = cb.closest('label');
-                        if (lbl) {
-                            lbl.classList.remove('cursor-default', 'pointer-events-none', 'select-none');
-                        }
+                        if (lbl) lbl.classList.remove('cursor-default', 'pointer-events-none', 'select-none');
                         cb.onchange = (e) => {
                             if (!studentsDb[studentKey].remedial) {
                                 studentsDb[studentKey].remedial = {};
@@ -2326,15 +2461,8 @@
             wrapper.className = 'report-page-wrapper ' + (options.isBatchItem ? 'batch-page-item mb-6' : '');
             wrapper.appendChild(clone);
 
-            // Initialize Chart on canvas
-            const canvas = wrapper.querySelector('.tpl-chart-canvas');
-            if (canvas) {
-                initChart(canvas, stats.subjectSums);
-            }
-
             return wrapper;
         }
-
         // Render Report Template
         function renderReportInContainer(containerId, mode) {
             const container = document.getElementById(containerId);
@@ -2521,10 +2649,10 @@
         function openClassPrintModal() {
             const modal = document.getElementById('modalClassPrint');
             const cls = availableClasses[currentClassCode] || { label: currentClassCode, studentCount: 0 };
-            const titleEl = document.getElementById('modalClassPrintTitle');
-            if (titleEl) {
-                titleEl.textContent = `${cls.label} (${cls.studentCount} طالباً)`;
-            }
+            const labelEl = document.getElementById('modalClassLabel');
+            if (labelEl) labelEl.textContent = cls.code;
+            const countEl = document.getElementById('modalStudentCount');
+            if (countEl) countEl.textContent = cls.studentCount;
             if (modal) modal.classList.remove('hidden');
             lucide.createIcons();
         }
@@ -2551,7 +2679,7 @@
         function executeBatchPrint() {
             const printTypeRadio = document.querySelector('input[name="batchPrintType"]:checked');
             const printType = printTypeRadio ? printTypeRadio.value : 'all';
-            const remedialOnlyLow = document.getElementById('cbRemedialOnlyLow').checked;
+            const remedialOnlyLow = document.getElementById('checkRemedialOnlyLow').checked;
 
             const progress = document.getElementById('batchPrintProgress');
             if (progress) progress.classList.remove('hidden');
