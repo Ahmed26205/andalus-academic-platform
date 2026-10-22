@@ -694,7 +694,7 @@
                     <!-- Progress Gauge Bar -->
                     <div class="mt-2.5 pt-2 border-t border-slate-200">
                         <div class="flex justify-between items-center text-[11px] mb-1">
-                            <span class="font-bold text-slate-600">نسبة الإنجاز الإجمالي:</span>
+                            <span class="tpl-progress-label font-bold text-slate-600">نسبة الإنجاز الإجمالي:</span>
                             <span class="tpl-percentage font-extrabold text-andalus-blue">56.7%</span>
                         </div>
                         <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
@@ -717,12 +717,12 @@
 
                     <!-- Total Weighted Score Card -->
                     <div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5 flex flex-col justify-center items-center text-center">
-                        <span class="text-[10px] font-bold text-slate-500">الدرجة الموزونة</span>
+                        <span class="tpl-score-card-title text-[10px] font-bold text-slate-500">الدرجة الموزونة</span>
                         <div class="flex items-baseline gap-1 mt-0.5">
                             <span class="tpl-total-score text-xl font-black text-andalus-darkBlue">85</span>
-                            <span class="text-xs font-bold text-slate-400">/ 150</span>
+                            <span class="tpl-total-max text-xs font-bold text-slate-400">/ 150</span>
                         </div>
-                        <span class="text-[9.5px] text-slate-500 mt-0.5">إجمالي 30 معياراً</span>
+                        <span class="tpl-score-card-sub text-[9.5px] text-slate-500 mt-0.5">إجمالي 30 معياراً</span>
                     </div>
 
                     <!-- Average GPA Card -->
@@ -736,7 +736,7 @@
                     </div>
 
                     <!-- Grading Scale Legend Box -->
-                    <div class="col-span-2 sm:col-span-3 bg-slate-50/80 border border-slate-200 rounded-lg p-1.5 flex flex-wrap items-center justify-between text-[10px]">
+                    <div class="tpl-scale-box col-span-2 sm:col-span-3 bg-slate-50/80 border border-slate-200 rounded-lg p-1.5 flex flex-wrap items-center justify-between text-[10px]">
                         <span class="font-extrabold text-slate-700 ml-1">سلم المستويات:</span>
                         <div class="flex flex-wrap items-center gap-1.5">
                             <span class="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold border border-emerald-200">متفوق: 150-130</span>
@@ -2166,42 +2166,74 @@
                     `;
                 }
 
-                // Update KPIs specifically for this subject
+                // Update KPIs specifically for this subject (Hedged strictly to 25 points!)
                 const subPercent = Math.round((subTotal / 25) * 100);
                 const subGpa = (subTotal / 5).toFixed(1);
 
                 clone.querySelector('.tpl-total-score').textContent = subTotal;
+                const totalMaxEl = clone.querySelector('.tpl-total-max');
+                if (totalMaxEl) totalMaxEl.textContent = '/ 25';
+
+                const scoreCardTitle = clone.querySelector('.tpl-score-card-title');
+                if (scoreCardTitle) scoreCardTitle.textContent = `درجة ${curSubName}`;
+
+                const scoreCardSub = clone.querySelector('.tpl-score-card-sub');
+                if (scoreCardSub) scoreCardSub.textContent = `إجمالي معايير المادة (من 25)`;
+
                 const matrixSumEl = clone.querySelector('.tpl-total-matrix-sum');
                 if (matrixSumEl) matrixSumEl.textContent = `${subTotal} / 25`;
+
                 clone.querySelector('.tpl-gpa').textContent = subGpa;
                 clone.querySelector('.tpl-percentage').textContent = `${subPercent}%`;
                 clone.querySelector('.tpl-progress-bar').style.width = `${subPercent}%`;
 
-                // Single Subject Performance Level
+                const progressLabel = clone.querySelector('.tpl-progress-label');
+                if (progressLabel) progressLabel.textContent = `نسبة إنجاز مقرر ${curSubName}:`;
+
+                // Single Subject Performance Level & Range (out of 25)
                 const statusCard = clone.querySelector('.tpl-status-card');
                 const statusTitle = clone.querySelector('.tpl-status-title');
                 const statusSub = clone.querySelector('.tpl-status-sub');
                 let subLvl = 'يحتاج إلى دعم';
                 let subClasses = 'bg-amber-50 border-2 border-amber-400 text-amber-900';
-                let subSubtitle = `بمقرر ${curSubName}`;
+                let subSubtitle = `بمقرر ${curSubName} (نطاق: 10 - 14)`;
 
                 if (subTotal >= 22) {
                     subLvl = 'طالب متفوق';
                     subClasses = 'bg-emerald-50 border-2 border-emerald-400 text-emerald-900';
-                    subSubtitle = `أداء متميز في ${curSubName}`;
+                    subSubtitle = `أداء متميز في ${curSubName} (نطاق: 22 - 25)`;
                 } else if (subTotal >= 18) {
                     subLvl = 'طالب متقدم';
                     subClasses = 'bg-blue-50 border-2 border-blue-400 text-blue-900';
-                    subSubtitle = `أداء جيد جداً في ${curSubName}`;
+                    subSubtitle = `أداء جيد جداً في ${curSubName} (نطاق: 18 - 21)`;
                 } else if (subTotal >= 15) {
                     subLvl = 'طالب متمكن';
                     subClasses = 'bg-sky-50 border-2 border-sky-400 text-sky-900';
-                    subSubtitle = `أداء مستقر في ${curSubName}`;
+                    subSubtitle = `أداء مستقر في ${curSubName} (نطاق: 15 - 17)`;
+                } else if (subTotal < 10) {
+                    subLvl = 'منخفض جداً';
+                    subClasses = 'bg-rose-50 border-2 border-rose-400 text-rose-900';
+                    subSubtitle = `ضعف في ${curSubName} (نطاق: أقل من 10)`;
                 }
 
                 statusCard.className = `col-span-2 sm:col-span-1 rounded-xl p-2.5 flex flex-col justify-center items-center text-center shadow-sm ${subClasses}`;
                 statusTitle.textContent = subLvl;
                 statusSub.textContent = subSubtitle;
+
+                // Scale Box adjusted for single subject (25 points)
+                const scaleBox = clone.querySelector('.tpl-scale-box');
+                if (scaleBox) {
+                    scaleBox.innerHTML = `
+                        <span class="font-extrabold text-slate-700 ml-1">سلم درجات ${curSubName} (من 25):</span>
+                        <div class="flex flex-wrap items-center gap-1.5">
+                            <span class="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold border border-emerald-200">متفوق: 22-25</span>
+                            <span class="px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 font-bold border border-blue-200">متقدم: 18-21</span>
+                            <span class="px-1.5 py-0.5 rounded bg-sky-100 text-sky-800 font-bold border border-sky-200">متمكن: 15-17</span>
+                            <span class="px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 font-bold border border-amber-300">يحتاج لدعم: 10-14</span>
+                            <span class="px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 font-bold border border-rose-200">منخفض جداً: &lt;10</span>
+                        </div>
+                    `;
+                }
 
                 // Hide the 6-subject trend chart & counselor private notes row for subject teachers!
                 const chartCanvas = clone.querySelector('.tpl-chart-canvas');
@@ -2300,12 +2332,38 @@
                     if (el) el.textContent = `${stats.subjectSums[s.id]} / 25`;
                 });
 
-                // Update KPIs
+                // Update KPIs for counselor / parent (Full 150 points)
                 clone.querySelector('.tpl-total-score').textContent = stats.total;
+                const totalMaxEl = clone.querySelector('.tpl-total-max');
+                if (totalMaxEl) totalMaxEl.textContent = '/ 150';
+
+                const scoreCardTitle = clone.querySelector('.tpl-score-card-title');
+                if (scoreCardTitle) scoreCardTitle.textContent = 'الدرجة الموزونة';
+
+                const scoreCardSub = clone.querySelector('.tpl-score-card-sub');
+                if (scoreCardSub) scoreCardSub.textContent = 'إجمالي 30 معياراً';
+
                 clone.querySelector('.tpl-total-matrix-sum').textContent = `${stats.total} / 150`;
                 clone.querySelector('.tpl-gpa').textContent = stats.gpa;
                 clone.querySelector('.tpl-percentage').textContent = `${stats.percentage}%`;
                 clone.querySelector('.tpl-progress-bar').style.width = `${stats.percentage}%`;
+
+                const progressLabel = clone.querySelector('.tpl-progress-label');
+                if (progressLabel) progressLabel.textContent = 'نسبة الإنجاز الإجمالي:';
+
+                const scaleBox = clone.querySelector('.tpl-scale-box');
+                if (scaleBox) {
+                    scaleBox.innerHTML = `
+                        <span class="font-extrabold text-slate-700 ml-1">سلم المستويات:</span>
+                        <div class="flex flex-wrap items-center gap-1.5">
+                            <span class="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold border border-emerald-200">متفوق: 150-130</span>
+                            <span class="px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 font-bold border border-blue-200">متقدم: 129-105</span>
+                            <span class="px-1.5 py-0.5 rounded bg-sky-100 text-sky-800 font-bold border border-sky-200">متمكن: 104-90</span>
+                            <span class="px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 font-bold border border-amber-300">يحتاج لدعم: 89-60</span>
+                            <span class="px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 font-bold border border-rose-200">منخفض جداً: &lt;60</span>
+                        </div>
+                    `;
+                }
 
                 // Overall Performance Level
                 const statusCard = clone.querySelector('.tpl-status-card');
